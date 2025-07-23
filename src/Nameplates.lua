@@ -1,5 +1,5 @@
 OnPlayerLogin(function()
-  if not EUIDB.skinNameplates then return end
+  if not EUIDB.skinNameplates or C_AddOns.IsAddOnLoaded('BetterBlizzPlates') then return end
 
   local defaultFriendlyWidth, defaultFriendlyHeight = C_NamePlate.GetNamePlateFriendlySize()
 

@@ -199,7 +199,7 @@ local function init()
     end
   end
 
-  if not dominos and not bartender and (EUIDB.hideHotkeys) then
+  if not dominos and not bartender4 and (EUIDB.hideHotkeys) then
     local frame = CreateFrame("Frame")
     frame:RegisterEvent("UPDATE_BINDINGS")
     frame:RegisterEvent("PLAYER_LOGIN")

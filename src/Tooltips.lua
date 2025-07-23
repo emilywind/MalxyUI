@@ -110,7 +110,7 @@ OnPlayerLogin(function()
 			local guildName, guildRank = GetGuildInfo(unit)
 			if (guildName) then
         playerInfoLine = GameTooltipTextLeft3
-				guildLine = GameTooltipTextLeft2
+				local guildLine = GameTooltipTextLeft2
 				guildLine:SetText('|cff' .. colours.guildName .. guildName .. '|r' .. '|cff' .. colours.guildRank .. ' (' .. guildRank .. ')|r')
 			end
 
