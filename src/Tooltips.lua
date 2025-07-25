@@ -12,33 +12,8 @@ local function getUnitHealthColor(unit)
 	return r, g, b
 end
 
-local function skinNineSlice()
-  local ns = GameTooltip.NineSlice
-
-  local nsPoints = {
-    "TopLeftCorner",
-    "TopRightCorner",
-    "BottomLeftCorner",
-    "BottomRightCorner",
-    "TopEdge",
-    "BottomEdge",
-    "LeftEdge",
-    "RightEdge",
-    "Center"
-  }
-
-  for _, nsPoint in pairs(nsPoints) do
-    ns[nsPoint]:SetTexture(SQUARE_TEXTURE)
-  end
-end
-
 local function skinGameTooltip()
-  if EUIDB.uiStyle == CLEAN_UI then
-    skinNineSlice()
-    GameTooltip.NineSlice:SetBorderColor(0, 0, 0, 0)
-  else
-    GameTooltip.NineSlice:SetBorderColor(getFrameColour())
-  end
+  GameTooltip.NineSlice:SetBorderColor(getFrameColour())
   GameTooltip.NineSlice:SetCenterColor(0.08, 0.08, 0.08)
 end
 

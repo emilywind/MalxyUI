@@ -1,17 +1,12 @@
 local function applyEuiButtonSkin(bu, icon, isLeaveButton)
+  if not EUIDB.darkenUi then return end
+
   if not bu then return end
   if bu.euiClean then return bu.border end
-
-  if EUIDB.uiStyle == CLEAN_UI then
-    local ht = bu:GetHighlightTexture()
-    ht:SetTexture(EUI_TEXTURES.buttons.normal)
-    ht:SetAllPoints(bu)
-  end
 
   local nt = bu:GetNormalTexture()
 
   if not nt then return end
-  nt:SetAllPoints(bu)
   local ct
   if bu.GetCheckedTexture then
     ct = bu:GetCheckedTexture()
@@ -20,47 +15,15 @@ local function applyEuiButtonSkin(bu, icon, isLeaveButton)
   if (isLeaveButton) then
     applyEuiBackdrop(nt, bu)
   else
-    if EUIDB.uiStyle == CLEAN_UI then
-      nt:SetTexture(EUI_TEXTURES.buttons.normal)
-      nt:SetVertexColor(0, 0, 0)
+    nt:SetVertexColor(getFrameColour())
 
-      local pt = bu:GetPushedTexture()
-      pt:SetAllPoints(bu)
-      pt:SetTexture(EUI_TEXTURES.buttons.pushed)
-      pt:SetDrawLayer("OVERLAY")
-
-      if ct then
-        ct:SetAllPoints(bu)
-        ct:SetTexture(EUI_TEXTURES.buttons.checked)
-        ct:SetDrawLayer("OVERLAY", 7)
-      end
-
-      if bu.SpellCastAnimFrame then
-        local glow = bu.SpellCastAnimFrame.Fill.InnerGlowTexture
-        glow:SetPoint("TOPLEFT", bu, "TOPLEFT", 2, -2)
-        glow:SetPoint("BOTTOMRIGHT", bu, "BOTTOMRIGHT", -2, 2)
-      end
-    else
-      nt:SetTexture()
-      nt:SetVertexColor(getFrameColour())
-
-      if ct then
-        ct:SetVertexColor(1, 1, 1)
-      end
-
-      local border = CreateFrame('Frame', nil, bu, "BackdropTemplate")
-      border:SetAllPoints(icon)
-      border:SetBackdrop(EUI_BACKDROP)
-      border:SetBackdropBorderColor(getFrameColour())
+    if ct then
+      ct:SetVertexColor(getFrameColour())
     end
   end
 end
 
 local function init()
-  if not EUIDB.skinActionBars then
-    return
-  end
-
   local dominos = C_AddOns.IsAddOnLoaded("Dominos")
   local bartender4 = C_AddOns.IsAddOnLoaded("Bartender4")
 
@@ -77,7 +40,6 @@ local function init()
     if not bu or (bu and bu.euiClean) then return end
 
     local name = bu:GetName() or bu:GetParent():GetName()
-    local style = bu.style or bu.Style
     local icon = bu.icon or bu.Icon
     local cooldown = bu.cooldown or bu.Cooldown
     local ho = _G[name .. "HotKey"]
@@ -102,15 +64,12 @@ local function init()
     if not bu or (bu and bu.euiClean) then
       return
     end
-    local action = bu.action
     local name = bu:GetName()
     local ic = _G[name .. "Icon"]
-    local co = _G[name .. "Count"]
     local bo = _G[name .. "Border"]
     local ho = _G[name .. "HotKey"]
     local cd = _G[name .. "Cooldown"]
     local na = _G[name .. "Name"]
-    local fl = _G[name .. "Flash"]
     local nt = _G[name .. "NormalTexture"]
     local fbg = _G[name .. "FloatingBG"]
     local fob = _G[name .. "FlyoutBorder"]
@@ -141,7 +100,7 @@ local function init()
     end
 
     -- Macro name
-    if (EUIDB.hideMacroText) then
+    if EUIDB.hideMacroText then
       na:Hide()
     end
 
@@ -154,12 +113,8 @@ local function init()
 
     if bartender4 then --fix the normaltexture
       nt:SetTexCoord(0, 1, 0, 1)
-      nt.SetTexCoord = function()
-        return
-      end
-      bu.SetNormalTexture = function()
-        return
-      end
+      nt.SetTexCoord = function() end
+      bu.SetNormalTexture = function() end
     end
   end
 
@@ -184,7 +139,6 @@ local function init()
     end
     local name = bu:GetName()
     local ic = _G[name .. "Icon"]
-    local fl = _G[name .. "Flash"]
     local nt = _G[name .. "NormalTexture"]
     nt:SetAllPoints(bu)
 

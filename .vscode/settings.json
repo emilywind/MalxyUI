@@ -123,6 +123,21 @@
         "PowerBarColor",
         "MonkStaggerBar",
         "RAID_CLASS_COLORS",
-        "FACTION_BAR_COLORS"
+        "FACTION_BAR_COLORS",
+        "MainMenuBar",
+        "ActionButton1",
+        "ActionButton2",
+        "ActionButton3",
+        "ActionButton4",
+        "ActionButton5",
+        "ActionButton6",
+        "ActionButton7",
+        "ActionButton8",
+        "ActionButton9",
+        "ActionButton10",
+        "ActionButton11"
+    ],
+    "Lua.diagnostics.disable": [
+        "cast-local-type"
     ]
 }

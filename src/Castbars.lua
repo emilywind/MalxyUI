@@ -17,6 +17,8 @@ PlayerCastingBarFrame:HookScript("OnEvent", function()
 
   castBar.Icon:Show()
   castBar.Icon:SetSize(20, 20)
+  castBar.Icon:ClearAllPoints()
+  castBar.Icon:SetPoint("TOPLEFT", castBar, "TOPLEFT", -26, 1)
   applyEuiBackdrop(castBar.Icon, castBar)
 end)
 

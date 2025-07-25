@@ -3,12 +3,9 @@ local LSM = LibStub("LibSharedMedia-3.0")
 -- This table defines the addon's default settings:
 local name, EUI = ...
 EUIDBDefaults = {
-  uiStyle = CLEAN_UI,
-
-  hideHotkeys = true,
-  hideMacroText = true,
+  hideHotkeys = false,
+  hideMacroText = false,
   arenaNumbers = false,
-  skinActionBars = true,
   hideMicroMenu = false,
   hideBagBar = false,
 
@@ -40,7 +37,6 @@ EUIDBDefaults = {
   nameplateTotems = true,
   nameplateHideFriendlyHealthbars = false,
 
-  skinPlayerTargetFrame = true,
   darkenUi = true,
 
   portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
@@ -316,27 +312,6 @@ local function setupEuiOptions()
   )
   damageFontChooser:SetPoint("LEFT", damageFont, "RIGHT", 300, 0)
 
-  --------------
-  -- Skinning --
-  --------------
-  makePanel("EUI_Skinning", eui.panel, "Skinning")
-
-  local skinningText = EUI_Skinning:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-  skinningText:SetText("Skinning")
-  skinningText:SetPoint("TOPLEFT", 16, -16)
-
-  local uiStyle, uiStyleDropdown = newDropdown(
-    "UI Style",
-    flatTableToWowDropdown(UI_STYLES),
-    EUIDB.uiStyle,
-    100,
-    function(value)
-      EUIDB.uiStyle = value
-    end,
-    EUI_Skinning
-  )
-  uiStyle:SetPoint("TOPLEFT", skinningText, "BOTTOMLEFT", 0, -16)
-
   local darkenUi = newCheckbox(
     "Darken UI",
     "Make the UI darker",
@@ -344,54 +319,41 @@ local function setupEuiOptions()
     function(self, value)
       EUIDB.darkenUi = value
     end,
-    uiStyleDropdown,
-    EUI_Skinning
+    damageFont
   )
 
-  local skinPlayerTargetFrame = newCheckbox(
-    "Skin Target/Player/Focus/Pet frame",
-    "Apply status bar texture to Target/Player/Focus/Pet frame",
-    EUIDB.skinPlayerTargetFrame,
+  local pvpText = eui.panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+  pvpText:SetText("PvP")
+  pvpText:SetPoint("TOPLEFT", darkenUi, "BOTTOMLEFT", 0, -16)
+
+  local safeQueue = newCheckbox(
+    "Safe Queue",
+    "Hide Leave Queue button and show timer for Arena/RBG queues.",
+    EUIDB.safeQueue,
     function(self, value)
-      EUIDB.skinPlayerTargetFrame = value
+      EUIDB.safeQueue = value
     end,
-    darkenUi,
-    EUI_Skinning
+    pvpText
   )
 
-  local healthBarChooser = newDropdown(
-    "Health Bar Texture",
-    LSM_STATUSBAR,
-    EUIDB.healthBarTex,
-    200,
-    function(value)
-      EUIDB.healthBarTex = value
-    end,
-    EUI_Skinning
-  )
-  healthBarChooser:SetPoint("LEFT", skinPlayerTargetFrame, "RIGHT", 300, 32)
-
-  local powerBarChooser = newDropdown(
-    "Power Bar Texture",
-    LSM_STATUSBAR,
-    EUIDB.powerBarTex,
-    200,
-    function(value)
-      EUIDB.powerBarTex = value
-    end,
-    EUI_Skinning
-  )
-  powerBarChooser:SetPoint("TOP", healthBarChooser, "BOTTOM", 0, -64)
-
-  local skinActionBars = newCheckbox(
-    "Skin Action Bars",
-    "Applies various skins to action bars.",
-    EUIDB.skinActionBars,
+  local dampeningDisplay = newCheckbox(
+    "Dampening Display",
+    "Display Dampening % under remaining time at the top of the screen in arenas.",
+    EUIDB.dampeningDisplay,
     function(self, value)
-      EUIDB.skinActionBars = value
+      EUIDB.dampeningDisplay = value
     end,
-    skinPlayerTargetFrame,
-    EUI_Skinning
+    safeQueue
+  )
+
+  local tabBinder = newCheckbox(
+    "Tab Binder",
+    "Tab-target only between players in Arenas and BGs.",
+    EUIDB.tabBinder,
+    function(self, value)
+      EUIDB.tabBinder = value
+    end,
+    dampeningDisplay
   )
 
   ------------
@@ -605,48 +567,6 @@ local function setupEuiOptions()
     EUI_Nameplates
   )
 
-  ----------------
-  --     PvP    --
-  ----------------
-  makePanel("EUI_PvP", eui.panel, "PvP")
-
-  local pvpText = EUI_PvP:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-  pvpText:SetText("PvP")
-  pvpText:SetPoint("TOPLEFT", 16, -16)
-
-  local safeQueue = newCheckbox(
-    "Safe Queue",
-    "Hide Leave Queue button and show timer for Arena/RBG queues.",
-    EUIDB.safeQueue,
-    function(self, value)
-      EUIDB.safeQueue = value
-    end,
-    pvpText,
-    EUI_PvP
-  )
-
-  local dampeningDisplay = newCheckbox(
-    "Dampening Display",
-    "Display Dampening % under remaining time at the top of the screen in arenas.",
-    EUIDB.dampeningDisplay,
-    function(self, value)
-      EUIDB.dampeningDisplay = value
-    end,
-    safeQueue,
-    EUI_PvP
-  )
-
-  local tabBinder = newCheckbox(
-    "Tab Binder",
-    "Tab-target only between players in Arenas and BGs.",
-    EUIDB.tabBinder,
-    function(self, value)
-      EUIDB.tabBinder = value
-    end,
-    dampeningDisplay,
-    EUI_PvP
-  )
-
   local arenaNumbers = newCheckbox(
     "Show Arena Numbers on nameplates in arenas",
     "Show Arena number (i.e. 1, 2, 3 etc) on top of nameplates in arenas instead of player names to assist with macro use awareness",
@@ -654,8 +574,8 @@ local function setupEuiOptions()
     function(self, value)
       EUIDB.arenaNumbers = value
     end,
-    tabBinder,
-    EUI_PvP
+    nameplateTotems,
+    EUI_Nameplates
   )
 
   -------------------
@@ -671,10 +591,8 @@ local function setupEuiOptions()
   end)
 
   addReloadButton(eui.panel)
-  addReloadButton(EUI_Skinning)
   addReloadButton(EUI_Hiding)
   addReloadButton(EUI_Nameplates)
-  addReloadButton(EUI_PvP)
 
   -------------------
   -- Slash Command --

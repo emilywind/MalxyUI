@@ -26,7 +26,6 @@
   <Include file="Range.lua" />
   <Include file="SafeQueue.lua" />
   <Include file="DampeningDisplay.lua" />
-  <Include file="SpellNotifications.xml" />
   <Include file="TabBinder.lua" />
   <Include file="BigDebuffsSkin.lua" />
   <Include file="ObjectiveTrackerHider.lua" />

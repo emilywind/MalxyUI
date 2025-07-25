@@ -38,14 +38,6 @@ EUI_TEXTURES = {
   },
 }
 
-CLEAN_UI = "Clean"
-BETTER_BLIZZ_UI = "BetterBlizz"
-
-UI_STYLES = {
-  BETTER_BLIZZ_UI,
-  CLEAN_UI,
-}
-
 FABLED_CLASS_CIRCLES_DATA = {
   class = {
 		path = [[Interface\AddOns\EmsUI\media\textures\class\]],
