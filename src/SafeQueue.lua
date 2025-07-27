@@ -3,7 +3,6 @@
 local SafeQueue = CreateFrame("Frame")
 local queueTime
 local queue = 0
-local remaining = 0
 SafeQueueDB = SafeQueueDB or { announce = "self" }
 
 PVPReadyDialog.leaveButton:Hide()
@@ -18,13 +17,13 @@ end
 local function PrintTime()
 	local announce = SafeQueueDB.announce
 	if announce == "off" then return end
-	local secs, str, mins = floor(GetTime() - queueTime), "Queue popped "
+	local secs, str = floor(GetTime() - queueTime), "Queue popped "
+	local mins = floor(secs/60)
 	if secs < 1 then
 		str = str .. "instantly!"
 	else
 		str = str .. "after "
 		if secs >= 60 then
-			mins = floor(secs/60)
 			str = str .. mins .. "m "
 			secs = secs%60
 		end
