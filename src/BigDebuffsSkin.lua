@@ -10,7 +10,7 @@ OnPlayerLogin(function()
     local bdbNameplate = bdbFrame.BigDebuffs
 
     if (bdbNameplate) then
-      applyEuiBackdrop(bdbNameplate)
+      ApplyEuiBackdrop(bdbNameplate)
     end
   end)
 end)

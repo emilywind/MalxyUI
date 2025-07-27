@@ -15,7 +15,7 @@ OnPlayerLogin(function()
 		PlayerLootSpecFrame:SetHeight(20)
 		PlayerLootSpecFrame:SetWidth(46)
 		PlayerLootSpecFrame.specname = PlayerLootSpecFrame:CreateFontString(nil)
-		setDefaultFont(PlayerLootSpecFrame.specname, 11)
+		SetDefaultFont(PlayerLootSpecFrame.specname, 11)
 		PlayerLootSpecFrame.specname:SetPoint("LEFT", PlayerLootSpecFrame, "LEFT", 0, 0)
 
 		local LootDisplaySetupFrame = CreateFrame("FRAME")

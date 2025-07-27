@@ -7,7 +7,7 @@ local function resetGUID(portraitModel)
   portraitModel.guid = nil
 end
 
-local function makePortraitBG(frame, r, g, b)
+local function makePortraitBG(frame)
   frame.portraitBG = CreateFrame("Frame", nil, frame)
   frame.portraitBG:SetFrameLevel(frame:GetFrameLevel() - 1)
   frame.portraitBG:SetFrameStrata("background")
@@ -18,7 +18,7 @@ local function makePortraitBG(frame, r, g, b)
   backLayer:SetVertexColor(0, 0, 0)
   backLayer:SetAllPoints(frame.portraitBG)
   backLayer:Show()
-  frame.portraitBG.backlayer = backlayer
+  frame.portraitBG.backlayer = backLayer
 end
 
 local function make3DPortraitFG(frame)
@@ -48,7 +48,7 @@ local function makeEUIPortrait(frame)
       if playerClass then
         frame.portrait:SetTexture(EUIDB.classPortraitPack)
         frame.portrait:SetTexCoord(unpack(FABLED_CLASS_CIRCLES_DATA.class[playerClass].texCoords))
-        makePortraitBG(frame,0.05,0.05,0.05)
+        makePortraitBG(frame)
       end
     else
       frame.portrait:SetTexCoord(0.15, 0.85, 0.15, 0.85)
@@ -62,12 +62,12 @@ local function makeEUIPortrait(frame)
       portraitModel.parent = frame
       portraitModel:SetFrameLevel(0)
 
-      makePortraitBG(frame,0.05,0.05,0.05)
+      makePortraitBG(frame)
 
       -- Round portraits
       local coeff = 0.14
-      xoff = coeff*portrait:GetWidth() -- circle portrait has model slightly smaller
-      yoff = coeff*portrait:GetHeight()
+      local xoff = coeff*portrait:GetWidth() -- circle portrait has model slightly smaller
+      local yoff = coeff*portrait:GetHeight()
       portraitModel:SetAllPoints(portrait)
       portraitModel:SetPoint("TOPLEFT", portrait,"TOPLEFT",xoff,-yoff)
       portraitModel:SetPoint("BOTTOMRIGHT",portrait,"BOTTOMRIGHT",-xoff,yoff)

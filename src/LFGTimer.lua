@@ -11,7 +11,7 @@ function init()
   timerBar:SetPoint("TOP", LFGDungeonReadyPopup, "BOTTOM", 0, -5)
   timerBar:SetSize(194, 14)
 
-  skinProgressBar(timerBar)
+  SkinProgressBar(timerBar)
 
   if not bigWigs and not lfgProposalTime then
     timerBar.Text = timerBar:CreateFontString(nil, "OVERLAY")

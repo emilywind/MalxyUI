@@ -120,7 +120,7 @@ for iconStyle, data in next, classInfo.styles do
   CLASS_PORTRAIT_PACKS[format('%s%s', classInfo.path, iconStyle)] = format('%s (by %s)', data.name, data.artist)
 end
 
-function getFrameColour()
+function GetFrameColour()
   if EUIDB.frameColor then
     return unpack(EUIDB.frameColor)
   else
@@ -144,7 +144,7 @@ EUI_FONTS = {
 
 EUI_DAMAGE_FONT = FontsDir.."\\Bangers-Regular.ttf"
 
-function styleIcon(ic)
+function StyleIcon(ic)
   ic:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 end
 
@@ -154,7 +154,7 @@ EUI_BACKDROP = {
   edgeSize = 10,
 }
 
-function applyEuiBackdrop(b, frame)
+function ApplyEuiBackdrop(b, frame)
   if (b.euiClean) then return end
 
   local frame = frame or CreateFrame("Frame", nil, b)
@@ -162,7 +162,7 @@ function applyEuiBackdrop(b, frame)
   -- Icon
   local name = b:GetName()
   local icon = b.icon or b.Icon or (name and _G[name.."Icon"]) or b
-  styleIcon(icon, b)
+  StyleIcon(icon)
 
   local border
   if EUIDB.uiStyle == "BetterBlizz" then
@@ -170,7 +170,7 @@ function applyEuiBackdrop(b, frame)
     border:SetPoint("TOPLEFT",icon,"TOPLEFT",-2,2)
     border:SetPoint("BOTTOMRIGHT",icon,"BOTTOMRIGHT",2,-2)
     border:SetBackdrop(EUI_BACKDROP)
-    border:SetBackdropBorderColor(getFrameColour())
+    border:SetBackdropBorderColor(GetFrameColour())
   else
     border = frame:CreateTexture()
     border:SetDrawLayer("OVERLAY")
@@ -185,7 +185,7 @@ function applyEuiBackdrop(b, frame)
   return border
 end
 
-function setEuiBorderColor(border, r, g, b)
+function SetEuiBorderColor(border, r, g, b)
   if border.SetVertexColor then
     border:SetVertexColor(r, g, b)
   else
@@ -193,7 +193,7 @@ function setEuiBorderColor(border, r, g, b)
   end
 end
 
-function setDefaultFont(textObject, size, outlinestyle)
+function SetDefaultFont(textObject, size, outlinestyle)
   if not textObject then return end
   local _, currSize = textObject:GetFont()
   if not size then size = currSize end
@@ -202,7 +202,7 @@ function setDefaultFont(textObject, size, outlinestyle)
   textObject:SetFont(EUIDB.font, size, outlinestyle)
 end
 
-function skinProgressBar(bar)
+function SkinProgressBar(bar)
   if not bar or (bar and bar.euiClean) then return end
 
   if bar.BorderMid then
@@ -225,7 +225,7 @@ function skinProgressBar(bar)
   back:SetAtlas('ui-castingbar-background')
   back:SetPoint("TOPLEFT", bar, "TOPLEFT", -2, 2)
   back:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 2, -2)
-  back:SetVertexColor(getFrameColour())
+  back:SetVertexColor(GetFrameColour())
 
   bar.back = back
 

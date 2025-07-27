@@ -9,9 +9,9 @@ local function applyEuiButtonSkin(bu, isLeaveButton)
   if not nt then return end
 
   if (isLeaveButton) then
-    applyEuiBackdrop(nt, bu)
+    ApplyEuiBackdrop(nt, bu)
   else
-    nt:SetVertexColor(getFrameColour())
+    nt:SetVertexColor(GetFrameColour())
   end
 
   bu.euiClean = true
@@ -39,7 +39,7 @@ local function init()
     local ho = _G[name .. "HotKey"]
 
     --icon
-    styleIcon(icon)
+    StyleIcon(icon)
 
     --cooldown
     cooldown:SetAllPoints(icon)
@@ -197,7 +197,7 @@ local function init()
       SpellFlyout.Background.End,
     }) do
       texture:SetDesaturation(desaturation)
-      texture:SetVertexColor(getFrameColour())
+      texture:SetVertexColor(GetFrameColour())
     end
 
     -- Button borders.
@@ -210,7 +210,7 @@ local function init()
       end
 
       btnTexture:SetDesaturation(desaturation)
-      btnTexture:SetVertexColor(getFrameColour())
+      btnTexture:SetVertexColor(GetFrameColour())
 
       i = i + 1
     end

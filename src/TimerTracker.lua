@@ -8,7 +8,7 @@ OnPlayerLogin(function()
       local statusBar = _G['TimerTrackerTimer'..i..'StatusBar']
       if statusBar and not timer.isFree and not timer.euiClean then
         _G[prefix..'StatusBarBorder']:Hide()
-        skinProgressBar(statusBar)
+        SkinProgressBar(statusBar)
       end
     end
   end)
@@ -22,7 +22,7 @@ OnPlayerLogin(function()
         timer.Text:ClearAllPoints()
         timer.Text:SetPoint("CENTER", timer.StatusBar, "CENTER")
         timer.Text:SetFont(STANDARD_TEXT_FONT, 11, "OUTLINE")
-        timer.Border:SetVertexColor(getFrameColour())
+        timer.Border:SetVertexColor(GetFrameColour())
         timer.euiClean = true
       end
     end

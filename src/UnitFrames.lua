@@ -85,7 +85,7 @@ OnPlayerLogin(function()
     end
 
     if self.TargetFrameContent.TargetFrameContentMain.ReputationColor then
-      self.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(getFrameColour())
+      self.TargetFrameContent.TargetFrameContentMain.ReputationColor:SetVertexColor(GetFrameColour())
     end
   end
 

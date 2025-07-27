@@ -75,7 +75,7 @@ SafeQueue:SetScript("OnUpdate", function(self)
 		timerBar:SetPoint("TOP", PVPReadyDialog, "BOTTOM", 0, -5)
 		timerBar:SetSize(194, 14)
 
-		skinProgressBar(timerBar)
+		SkinProgressBar(timerBar)
 
 		timerBar.Text = timerBar:CreateFontString(nil, "OVERLAY")
 		timerBar.Text:SetFontObject(GameFontHighlight)

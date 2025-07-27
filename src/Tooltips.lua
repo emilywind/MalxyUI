@@ -13,7 +13,7 @@ local function getUnitHealthColor(unit)
 end
 
 local function skinGameTooltip()
-  GameTooltip.NineSlice:SetBorderColor(getFrameColour())
+  GameTooltip.NineSlice:SetBorderColor(GetFrameColour())
   GameTooltip.NineSlice:SetCenterColor(0.08, 0.08, 0.08)
 end
 
@@ -44,7 +44,7 @@ OnPlayerLogin(function()
 
 	bar.TextString = bar:CreateFontString('GameToolTipTextStatus', "OVERLAY")
 	bar.TextString:SetPoint("CENTER")
-	setDefaultFont(bar.TextString, 11)
+	SetDefaultFont(bar.TextString, 11)
 
 	-- Gametooltip statusbar
   bar:SetStatusBarTexture(EUIDB.healthBarTex)

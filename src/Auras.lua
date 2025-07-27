@@ -4,7 +4,7 @@
 function applyAuraSkin(aura)
   if aura.border and aura.Border then
     aura.Border:SetAlpha(1)
-    setEuiBorderColor(aura.border, aura.Border:GetVertexColor())
+    SetEuiBorderColor(aura.border, aura.Border:GetVertexColor())
     aura.Border:SetAlpha(0)
   end
 
@@ -12,20 +12,20 @@ function applyAuraSkin(aura)
 
   --icon
   local icon = aura.Icon
-  styleIcon(icon)
+  StyleIcon(icon)
 
   --border
-  local border = applyEuiBackdrop(icon, aura)
+  local border = ApplyEuiBackdrop(icon, aura)
   aura.border = border
 
   if aura.Border then
-    setEuiBorderColor(border, aura.Border:GetVertexColor())
+    SetEuiBorderColor(border, aura.Border:GetVertexColor())
     aura.Border:SetAlpha(0)
   else
     if EUIDB.uiStyle == "BetterBlizz" then
-      setEuiBorderColor(border, getFrameColour())
+      SetEuiBorderColor(border, GetFrameColour())
     else
-      setEuiBorderColor(border, 0, 0, 0)
+      SetEuiBorderColor(border, 0, 0, 0)
     end
   end
 

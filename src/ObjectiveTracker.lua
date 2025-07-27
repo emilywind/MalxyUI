@@ -13,7 +13,7 @@ local function skinObjectiveTracker(desaturation)
     ProfessionsRecipeTracker,
   }) do
     objectiveTrackerFrame.Header.Background:SetDesaturation(desaturation)
-    objectiveTrackerFrame.Header.Background:SetVertexColor(getFrameColour())
+    objectiveTrackerFrame.Header.Background:SetVertexColor(GetFrameColour())
   end
 end
 

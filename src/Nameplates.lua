@@ -44,7 +44,7 @@ OnPlayerLogin(function()
 
     if not frame.healthPercentage then
       frame.healthPercentage = frame.healthBar:CreateFontString(frame.healthPercentage, "OVERLAY", "GameFontNormalSmall")
-      setDefaultFont(frame.healthPercentage, EUIDB.nameplateNameFontSize - 1)
+      SetDefaultFont(frame.healthPercentage, EUIDB.nameplateNameFontSize - 1)
       frame.healthPercentage:SetTextColor( 1, 1, 1 )
       frame.healthPercentage:SetPoint("CENTER", frame.healthBar, "CENTER", 0, 0)
     end
@@ -97,9 +97,9 @@ OnPlayerLogin(function()
 
       if (castBar.euiClean) then return end
 
-      setDefaultFont(castBar.Text, EUIDB.nameplateNameFontSize - 1)
+      SetDefaultFont(castBar.Text, EUIDB.nameplateNameFontSize - 1)
 
-      applyEuiBackdrop(castBar.Icon, castBar)
+      ApplyEuiBackdrop(castBar.Icon, castBar)
 
       castBar.euiClean = true
     end
@@ -129,7 +129,7 @@ OnPlayerLogin(function()
       return
     end
 
-    setDefaultFont(frame.name, EUIDB.nameplateNameFontSize)
+    SetDefaultFont(frame.name, EUIDB.nameplateNameFontSize)
 
     local hasArenaNumber = false
 
@@ -227,7 +227,7 @@ OnPlayerLogin(function()
       local name, realm = UnitName(frame.displayedUnit) or UNKNOWN
 
       if not EUIDB.nameplateHideServerNames and realm then
-        name = name.." - "..realm
+        name = name .. " - " .. realm
       end
 
       if EUIDB.nameplateNameLength > 0 then

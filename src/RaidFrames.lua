@@ -26,19 +26,19 @@ local function updateTextures(self)
       self.background:SetVertexColor(0.15, 0.15, 0.15, 0.9)
 
       if self.CcRemoverFrame then
-        applyEuiBackdrop(self.CcRemoverFrame.Icon, self.CcRemoverFrame)
+        ApplyEuiBackdrop(self.CcRemoverFrame.Icon, self.CcRemoverFrame)
       end
 
       local debuffFrame = self.DebuffFrame
       if debuffFrame then
         if not debuffFrame.euiBorder then
-          local border = applyEuiBackdrop(debuffFrame.Icon, debuffFrame)
+          local border = ApplyEuiBackdrop(debuffFrame.Icon, debuffFrame)
           debuffFrame.euiBorder = border
         end
 
         if debuffFrame.Border then
           debuffFrame.Border:SetAlpha(1)
-          setEuiBorderColor(debuffFrame.euiBorder, debuffFrame.Border:GetVertexColor())
+          SetEuiBorderColor(debuffFrame.euiBorder, debuffFrame.Border:GetVertexColor())
           debuffFrame.Border:SetAlpha(0)
         end
       end

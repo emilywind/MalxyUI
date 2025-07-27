@@ -156,6 +156,7 @@
     ],
     "Lua.diagnostics.disable": [
         "cast-local-type",
-        "undefined-field"
+        "undefined-field",
+        "param-type-mismatch"
     ]
 }
