@@ -152,7 +152,8 @@
         "rABS_LeaveVehicleButton",
         "UIWidgetPowerBarContainerFrame",
         "PlayerFrameAlternateManaBar",
-        "ComboPointPlayerFrame"
+        "ComboPointPlayerFrame",
+        "BigDebuffs"
     ],
     "Lua.diagnostics.disable": [
         "cast-local-type",
