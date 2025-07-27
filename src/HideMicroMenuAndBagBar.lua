@@ -1,4 +1,4 @@
-local function setMicroMenuVisibility()
+function SetMicroMenuVisibility()
     local micromenuVisible = not EUIDB.hideMicroMenu
     for _, button in pairs({
         CharacterMicroButton, SpellbookMicroButton, TalentMicroButton,
@@ -13,7 +13,7 @@ local function setMicroMenuVisibility()
     StoreMicroButton:GetParent():SetShown(micromenuVisible)
 end
 
-local function setBagBarVisibility()
+function SetBagBarVisibility()
     local bagsVisible = not EUIDB.hideBagBar
     MainMenuBarBackpackButton:SetShown(bagsVisible)
     BagBarExpandToggle:SetShown(bagsVisible)
@@ -37,6 +37,6 @@ local frame = CreateFrame("Frame")
 frame:RegisterEvent("PLAYER_LOGIN")
 frame:RegisterEvent('EDIT_MODE_LAYOUTS_UPDATED')
 frame:SetScript("OnEvent", function()
-  setMicroMenuVisibility()
-  setBagBarVisibility()
+  SetMicroMenuVisibility()
+  SetBagBarVisibility()
 end)

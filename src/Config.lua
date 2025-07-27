@@ -397,7 +397,7 @@ local function setupEuiOptions()
     EUIDB.hideMicroMenu,
     function(self, value)
       EUIDB.hideMicroMenu = value
-      setMicroMenuVisibility()
+      SetMicroMenuVisibility()
     end,
     hideAltPower,
     EUI_Hiding
@@ -409,7 +409,7 @@ local function setupEuiOptions()
     EUIDB.hideBagBar,
     function(self, value)
       EUIDB.hideBagBar = value
-      setBagBarVisibility()
+      SetBagBarVisibility()
     end,
     hideMicroMenu,
     EUI_Hiding
