@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------
--- TipTacTalents
+-- Credit goes to TipTacTalents
 --
 -- Show player talents/specialization including role and talent/specialization icon and the average item level in the tooltip.
 --
