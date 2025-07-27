@@ -23,25 +23,30 @@ local function skinVigorBar(frame, desaturate, hook)
   end
 end
 
-OnPlayerLogin(function()
+local frame = CreateFrame("Frame")
+frame:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
+frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+frame:SetScript("OnEvent", function()
   if not EUIDB.darkenUi then return end
 
-  for _, child in ipairs({ UIWidgetPowerBarContainerFrame:GetChildren() }) do
-    if child.DecorLeft and child.DecorLeft.GetAtlas then
-      local atlasName = child.DecorLeft:GetAtlas()
-      if atlasName == "dragonriding_vigor_decor" then
-        skinVigorBar(child.DecorLeft, 1, true)
-        skinVigorBar(child.DecorRight, 1, true)
+  C_Timer.After(0.05, function()
+    for _, child in ipairs({ UIWidgetPowerBarContainerFrame:GetChildren() }) do
+      if child.DecorLeft and child.DecorLeft.GetAtlas then
+        local atlasName = child.DecorLeft:GetAtlas()
+        if atlasName == "dragonriding_vigor_decor" then
+          skinVigorBar(child.DecorLeft, 1, true)
+          skinVigorBar(child.DecorRight, 1, true)
+        end
       end
-    end
-    for _, grandchild in ipairs({ child:GetChildren() }) do
-      -- Check for textures with specific atlas names
-      if grandchild.Frame and grandchild.Frame.GetAtlas then
-        local atlasName = grandchild.Frame:GetAtlas()
-        if atlasName == "dragonriding_vigor_frame" then
-          skinVigorBar(grandchild.Frame, 1, true)
+      for _, grandchild in ipairs({ child:GetChildren() }) do
+        -- Check for textures with specific atlas names
+        if grandchild.Frame and grandchild.Frame.GetAtlas then
+          local atlasName = grandchild.Frame:GetAtlas()
+          if atlasName == "dragonriding_vigor_frame" then
+            skinVigorBar(grandchild.Frame, 1, true)
+          end
         end
       end
     end
-  end
+  end)
 end)
