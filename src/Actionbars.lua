@@ -7,19 +7,11 @@ local function applyEuiButtonSkin(bu, icon, isLeaveButton)
   local nt = bu:GetNormalTexture()
 
   if not nt then return end
-  local ct
-  if bu.GetCheckedTexture then
-    ct = bu:GetCheckedTexture()
-  end
 
   if (isLeaveButton) then
     applyEuiBackdrop(nt, bu)
   else
     nt:SetVertexColor(getFrameColour())
-
-    if ct then
-      ct:SetVertexColor(getFrameColour())
-    end
   end
 end
 
