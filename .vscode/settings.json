@@ -136,7 +136,16 @@
         "ActionButton9",
         "ActionButton10",
         "ActionButton11",
-        "SpellFlyout"
+        "SpellFlyout",
+        "AdventureObjectiveTracker",
+        "MonthlyActivitiesObjectiveTracker",
+        "WorldQuestObjectiveTracker",
+        "BonusObjectiveTracker",
+        "QuestObjectiveTracker",
+        "ScenarioObjectiveTracker",
+        "AchievementObjectiveTracker",
+        "CampaignQuestObjectiveTracker",
+        "ProfessionsRecipeTracker"
     ],
     "Lua.diagnostics.disable": [
         "cast-local-type"
