@@ -30,7 +30,6 @@
   <Include file="BigDebuffsSkin.lua" />
   <Include file="ObjectiveTracker.lua" />
   <Include file="Vigor.lua" />
-  <Include file="TooltipTalents.lua" />
-  <Include file="TooltipItemLevel.lua" />
+  <Include file="TooltipSpecAndIlvl.lua" />
   <Include file="HideArenaFrames.lua" />
 </Ui>

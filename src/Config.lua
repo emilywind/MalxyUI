@@ -24,6 +24,7 @@ EUIDBDefaults = {
   font = EUI_FONTS.Andika,
 
   tooltipAnchor = "ANCHOR_CURSOR_LEFT",
+  tooltipSpecAndIlvl = true, -- Show spec and item level in player tooltips
 
   -- Nameplate Settings
   skinNameplates = true,
@@ -82,8 +83,6 @@ local function euiDefaults()
   -- Copy the values from the defaults table into the saved variables table
   -- if it exists, and assign the result to the saved variable:
   EUIDB = copyTable(EUIDBDefaults, EUIDB)
-
-  eui = {}
 end
 
 local function resetToDefaults()
@@ -119,15 +118,15 @@ local function setupEuiOptions()
   LSM_STATUSBAR = tableToWowDropdown(LSM:HashTable('statusbar'))
   LSM_FONTS = tableToWowDropdown(LSM:HashTable('font'))
   -- Creation of the options menu
-  eui.panel = CreateFrame( "Frame", "euiPanel", UIParent )
-  eui.panel.name = "EmsUI";
-  local category = Settings.RegisterCanvasLayoutCategory(eui.panel, "Em's UI")
+  EUI.panel = CreateFrame( "Frame", "euiPanel", UIParent )
+  EUI.panel.name = "EmsUI";
+  local category = Settings.RegisterCanvasLayoutCategory(EUI.panel, "Em's UI")
   category.ID = "EmsUI"
   Settings.RegisterAddOnCategory(category)
 
   local function newCheckbox(label, description, initialValue, onChange, relativeEl, frame)
     if ( not frame ) then
-      frame = eui.panel
+      frame = EUI.panel
     end
 
     local check = CreateFrame("CheckButton", "EUICheck" .. label, frame, "ChatConfigCheckButtonTemplate")
@@ -149,12 +148,13 @@ local function setupEuiOptions()
     else
       check:SetPoint("TOPLEFT", 16, -16)
     end
+
     return check
   end
 
   local function newDropdown(label, options, initialValue, width, onChange, frame)
     if not frame then
-      frame = eui.panel
+      frame = EUI.panel
     end
     local dropdownText = frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
     dropdownText:SetText(label)
@@ -178,6 +178,7 @@ local function setupEuiOptions()
         UIDropDownMenu_AddButton(info)
       end
     end
+
     return dropdownText, dropdown
   end
 
@@ -216,7 +217,7 @@ local function setupEuiOptions()
 
   local version = C_AddOns.GetAddOnMetadata("EmsUI", "Version")
 
-  local euiTitle = eui.panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+  local euiTitle = EUI.panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   euiTitle:SetPoint("TOPLEFT", 16, -16)
   euiTitle:SetText("Em's UI ("..version..")")
 
@@ -242,17 +243,6 @@ local function setupEuiOptions()
   )
   classPortraitPack:SetPoint("LEFT", portraitSelect, "RIGHT", 50, 0)
 
-  local tooltipAnchor, tooltipDropdown = newDropdown(
-    "Tooltip Cursor Anchor",
-    {["ANCHOR_CURSOR_LEFT"] = "Bottom Right", ["ANCHOR_CURSOR_RIGHT"] = "Bottom Left", ['DEFAULT'] = 'Disabled'},
-    EUIDB.tooltipAnchor,
-    100,
-    function(value)
-      EUIDB.tooltipAnchor = value
-    end
-  )
-  tooltipAnchor:SetPoint("TOPLEFT", portraitDropdown, "BOTTOMLEFT", 0, -16)
-
   local lootSpecDisplay = newCheckbox(
     "Display Loot Spec Indicator",
     "Display loot spec icon in your player portrait.",
@@ -260,8 +250,9 @@ local function setupEuiOptions()
     function(value)
       EUIDB.lootSpecDisplay = value
     end,
-    tooltipDropdown
+    portraitSelect
   )
+  lootSpecDisplay:SetPoint("LEFT", portraitDropdown, "RIGHT", 0, -16)
 
   local customFonts = newCheckbox(
     "Use Custom Fonts (Requires Reload)",
@@ -315,7 +306,7 @@ local function setupEuiOptions()
     damageFont
   )
 
-  local pvpText = eui.panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+  local pvpText = EUI.panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   pvpText:SetText("PvP")
   pvpText:SetPoint("TOPLEFT", darkenUi, "BOTTOMLEFT", 0, -16)
 
@@ -362,7 +353,7 @@ local function setupEuiOptions()
 
   local hideObjectiveTracker = newCheckbox(
     "Hide Objective Tracker in Battlegrounds",
-    "Hide Quest Objective Tracker in Battlegrounds to reduce clutter.",
+    "Hide the Quest Objective Tracker in Battlegrounds to reduce clutter.",
     EUIDB.hideObjectiveTracker,
     function(value)
       EUIDB.hideObjectiveTracker = value
@@ -373,7 +364,7 @@ local function setupEuiOptions()
   ------------
   -- Hiding --
   ------------
-  local EUI_Hiding = makePanel("EUI_Hiding", eui.panel, "Hiding")
+  local EUI_Hiding = makePanel("EUI_Hiding", EUI.panel, "Hiding")
 
   local hidingText = EUI_Hiding:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   hidingText:SetText("Hiding")
@@ -439,7 +430,7 @@ local function setupEuiOptions()
   ----------------
   -- Nameplates --
   ----------------
-  local EUI_Nameplates = makePanel("EUI_Nameplates", eui.panel, "Nameplates")
+  local EUI_Nameplates = makePanel("EUI_Nameplates", EUI.panel, "Nameplates")
 
   local nameplateText = EUI_Nameplates:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   nameplateText:SetText("Nameplates")
@@ -447,10 +438,15 @@ local function setupEuiOptions()
 
   local skinNameplates = newCheckbox(
     "Skin Nameplates",
-    "Skin Nameplates",
+    "Enable the customisation options below for nameplates.",
     EUIDB.skinNameplates,
     function(value)
       EUIDB.skinNameplates = value
+      if value then
+        EnableNameplateSettings()
+      else
+        DisableNameplateSettings()
+      end
     end,
     nameplateText,
     EUI_Nameplates
@@ -581,12 +577,81 @@ local function setupEuiOptions()
     EUI_Nameplates
   )
 
+  function DisableNameplateSettings()
+    nameplateFontSlider:Disable()
+    nameplateNameLength:Disable()
+    nameplateHideServerNames:Disable()
+    nameplateFriendlyNamesClassColor:Disable()
+    nameplateFriendlySmall:Disable()
+    nameplateShowLevel:Disable()
+    nameplateShowHealth:Disable()
+    nameplateTotems:Disable()
+    arenaNumbers:Disable()
+    nameplateHideCastText:Disable()
+    nameplateHideFriendlyHealthbars:Disable()
+  end
+
+  function EnableNameplateSettings()
+    nameplateFontSlider:Enable()
+    nameplateNameLength:Enable()
+    nameplateHideServerNames:Enable()
+    nameplateFriendlyNamesClassColor:Enable()
+    nameplateFriendlySmall:Enable()
+    nameplateShowLevel:Enable()
+    nameplateShowHealth:Enable()
+    nameplateTotems:Enable()
+    arenaNumbers:Enable()
+    nameplateHideCastText:Enable()
+    nameplateHideFriendlyHealthbars:Enable()
+  end
+
+  if C_AddOns.IsAddOnLoaded('BetterBlizzPlates') then
+    DisableNameplateSettings()
+    skinNameplates.tooltip = "Disabled due to addon BetterBlizzPlates"
+    skinNameplates:Disable()
+  elseif not EUIDB.skinNameplates then
+    DisableNameplateSettings()
+  else
+    EnableNameplateSettings()
+  end
+
+  --------------
+  -- Tooltips --
+  --------------
+  local EUI_Tooltips = makePanel("EUI_Tooltips", EUI.panel, "Tooltips")
+
+  local tooltipText = EUI_Tooltips:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+  tooltipText:SetText("Tooltips")
+  tooltipText:SetPoint("TOPLEFT", 16, -16)
+
+  local tooltipAnchor, tooltipDropdown = newDropdown(
+    "Cursor Anchor (anchor tooltips to cursor out of combat)",
+    { ["ANCHOR_CURSOR_LEFT"] = "Bottom Right", ["ANCHOR_CURSOR_RIGHT"] = "Bottom Left", ['DEFAULT'] = 'Disabled' },
+    EUIDB.tooltipAnchor,
+    100,
+    function(value)
+      EUIDB.tooltipAnchor = value
+    end,
+    EUI_Tooltips
+  )
+  tooltipAnchor:SetPoint("TOPLEFT", tooltipText, "BOTTOMLEFT", 0, -16)
+
+  local tooltipSpecAndIlvl = newCheckbox(
+    "Show Player Spec and Item Level",
+    "Show item level in tooltips.",
+    EUIDB.tooltipSpecAndIlvl,
+    function(value)
+      EUIDB.tooltipSpecAndIlvl = value
+    end,
+    tooltipDropdown,
+    EUI_Tooltips
+  )
 
   -------------------
   --Reload Buttons --
   -------------------
-  local resetDefaults = CreateFrame("Button", "resettodefaults", eui.panel, "UIPanelButtonTemplate")
-  resetDefaults:SetPoint("BOTTOMLEFT", eui.panel, "BOTTOMLEFT", 10, 10)
+  local resetDefaults = CreateFrame("Button", "resettodefaults", EUI.panel, "UIPanelButtonTemplate")
+  resetDefaults:SetPoint("BOTTOMLEFT", EUI.panel, "BOTTOMLEFT", 10, 10)
   resetDefaults:SetSize(120,22)
   resetDefaults:SetText("Reset to Defaults")
   resetDefaults:SetScript("OnClick", function()
@@ -594,9 +659,10 @@ local function setupEuiOptions()
     ReloadUI()
   end)
 
-  addReloadButton(eui.panel)
+  addReloadButton(EUI.panel)
   addReloadButton(EUI_Hiding)
   addReloadButton(EUI_Nameplates)
+  addReloadButton(EUI_Tooltips)
 
   -------------------
   -- Slash Command --

@@ -1,3 +1,17 @@
+function GetTooltipUnit()
+	local unit = select(2, GameTooltip:GetUnit())
+
+	if not unit then
+		unit = "mouseover"
+		local focus = GetMouseFoci()
+		if (focus and focus.unit) then
+			unit = focus.unit
+		end
+	end
+
+	return unit
+end
+
 local function getUnitHealthColor(unit)
 	local r, g, b
 
@@ -62,9 +76,7 @@ OnPlayerLogin(function()
 
     skinGameTooltip()
 
-    local tooltip = GameTooltip
-		local unit = select(2, tooltip:GetUnit())
-		if not unit then return end
+		local unit = GetTooltipUnit()
 
 		local level = UnitEffectiveLevel(unit)
     if (level < 0) then
@@ -103,14 +115,7 @@ OnPlayerLogin(function()
   TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, onTooltipSetUnit)
 
 	GameTooltipStatusBar:HookScript("OnValueChanged", function(self, hp)
-		local unit = select(2, GameTooltip:GetUnit())
-    if not unit then
-      unit = "mouseover"
-	    local focus = GetMouseFoci()
-	    if (focus and focus.unit) then
-        unit = focus.unit
-	    end
-    end
+		local unit = GetTooltipUnit()
 
 	  self:SetStatusBarColor(getUnitHealthColor(unit))
 

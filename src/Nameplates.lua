@@ -60,7 +60,7 @@ OnPlayerLogin(function()
   SetCVar("nameplateOtherBottomInset", 0.1)
   SetCVar("nameplateOtherTopInset", 0.08)
 
-  function abbrev(str, length)
+  local function abbrev(str, length)
     if ( not str ) then
         return UNKNOWN
     end
