@@ -2,13 +2,13 @@
 ## Title: Em's UI
 ## Notes: Simple skinnning modifications and quality of life features for the default interface to make it cleaner looking.
 ## Author: Emily
-## Version: 6.2.0
+## Version: 6.2.1
 ## SavedVariables: EUIDB
 ## IconTexture: Interface\Addons\EmsUI\media\icons\EmsUI
 ## Email: emlywind@gmail.com
 ## X-Curse-Project-ID: 336153
 
-## OptionalDeps: LibStub, LibSharedMedia-3.0
+## OptionalDeps: LibSharedMedia-3.0
 
 lib\embeds.xml
 src\EmsUI.xml

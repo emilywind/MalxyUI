@@ -1,7 +1,7 @@
 local function hideObjectiveTracker()
   local instanceType = select(2, IsInInstance())
 
-  if instanceType == 'pvp' then
+  if instanceType == 'pvp' or instanceType == 'arena' then
     ObjectiveTrackerFrame:SetAlpha(0)
     RegisterStateDriver(ObjectiveTrackerFrame, 'visibility', 'hide')
   else
