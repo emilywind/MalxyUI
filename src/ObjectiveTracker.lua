@@ -1,3 +1,15 @@
+local function hideObjectiveTracker()
+  local instanceType = select(2, IsInInstance())
+
+  if instanceType == 'pvp' then
+    ObjectiveTrackerFrame:SetAlpha(0)
+    RegisterStateDriver(ObjectiveTrackerFrame, 'visibility', 'hide')
+  else
+    ObjectiveTrackerFrame:SetAlpha(1)
+    RegisterStateDriver(ObjectiveTrackerFrame, 'visibility', 'show')
+  end
+end
+
 local function skinObjectiveTracker(desaturation)
   -- Headers
   for _, objectiveTrackerFrame in pairs({
@@ -14,18 +26,6 @@ local function skinObjectiveTracker(desaturation)
   }) do
     objectiveTrackerFrame.Header.Background:SetDesaturation(desaturation)
     objectiveTrackerFrame.Header.Background:SetVertexColor(GetFrameColour())
-  end
-end
-
-local function hideObjectiveTracker()
-  local instanceType = select(2, IsInInstance())
-
-  if instanceType == 'pvp' then
-    ObjectiveTrackerFrame:SetAlpha(0)
-    RegisterStateDriver(ObjectiveTrackerFrame, 'visibility', 'hide')
-  else
-    ObjectiveTrackerFrame:SetAlpha(1)
-    RegisterStateDriver(ObjectiveTrackerFrame, 'visibility', 'show')
   end
 end
 
