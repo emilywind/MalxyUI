@@ -252,7 +252,7 @@ local function setupEuiOptions()
     end,
     portraitSelect
   )
-  lootSpecDisplay:SetPoint("LEFT", portraitDropdown, "RIGHT", 0, -16)
+  lootSpecDisplay:SetPoint("TOPLEFT", portraitDropdown, "BOTTOMLEFT", 0, -16)
 
   local customFonts = newCheckbox(
     "Use Custom Fonts (Requires Reload)",
