@@ -3,6 +3,8 @@ local LSM = LibStub("LibSharedMedia-3.0")
 -- This table defines the addon's default settings:
 local name, EUI = ...
 EUIDBDefaults = {
+  darkMode = true,
+
   hideHotkeys = false,
   hideMacroText = false,
   arenaNumbers = false,
@@ -38,8 +40,6 @@ EUIDBDefaults = {
   nameplateHealthPercent = true,
   nameplateTotems = true,
   nameplateHideFriendlyHealthbars = false,
-
-  darkenUi = true,
 
   portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
   classPortraitPack = EUI_TEXTURES.classCircles,
@@ -296,19 +296,19 @@ local function setupEuiOptions()
   )
   damageFontChooser:SetPoint("LEFT", damageFont, "RIGHT", 300, 0)
 
-  local darkenUi = newCheckbox(
-    "Darken UI",
-    "Make the UI darker",
-    EUIDB.darkenUi,
+  local darkMode = newCheckbox(
+    "Dark Mode",
+    "Dark mode for action bars, objective tracker, and other HUD elements.",
+    EUIDB.darkMode,
     function(value)
-      EUIDB.darkenUi = value
+      EUIDB.darkMode = value
     end,
     damageFont
   )
 
   local pvpText = EUI.panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   pvpText:SetText("PvP")
-  pvpText:SetPoint("TOPLEFT", darkenUi, "BOTTOMLEFT", 0, -16)
+  pvpText:SetPoint("TOPLEFT", darkMode, "BOTTOMLEFT", 0, -16)
 
   local safeQueue = newCheckbox(
     "Safe Queue",

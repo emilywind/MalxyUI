@@ -37,7 +37,7 @@ frame:SetScript('OnEvent', function()
     hideObjectiveTracker()
   end
 
-  if EUIDB.darkenUi then
+  if EUIDB.darkMode then
     skinObjectiveTracker(1)
   end
 end)

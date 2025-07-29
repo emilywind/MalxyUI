@@ -1,5 +1,5 @@
 local function applyEuiButtonSkin(bu, isLeaveButton)
-  if not EUIDB.darkenUi then return end
+  if not EUIDB.darkMode then return end
 
   if not bu then return end
   if bu.euiClean then return bu.border end

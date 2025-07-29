@@ -1,5 +1,5 @@
 OnPlayerLogin(function()
-  if not EUIDB.darkenUi then return end
+  if not EUIDB.darkMode then return end
 
   -- Minimap
   local compass = MinimapCompassTexture
