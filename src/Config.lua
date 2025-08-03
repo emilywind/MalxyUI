@@ -381,7 +381,7 @@ local function setupEuiOptions()
   nameplateText:SetPoint("TOPLEFT", 16, -16)
 
   local skinNameplates = newCheckbox(
-    "Skin Nameplates",
+    "Enhance Nameplates",
     "Enable the customisation options below for nameplates.",
     EUIDB.skinNameplates,
     function(value)
