@@ -38,7 +38,6 @@ local function cleanupTooltip(tip)
 
 	local hideCreatureTypeIfNoCreatureFamily = ((not unitRecord.isPlayer) or (unitRecord.isWildBattlePet)) and (not creatureFamily) and (creatureType)
 	local hideSpecializationAndClassText = (unitRecord.isPlayer) and (LibFroznFunctions.hasWoWFlavor.specializationAndClassTextInPlayerUnitTip) and (unitRecord.className)
-	local hideRightClickForFrameSettingsText = (LibFroznFunctions.hasWoWFlavor.rightClickForFrameSettingsTextInUnitTip) and (UNIT_POPUP_RIGHT_CLICK)
 
 	local specNames = LibFroznFunctions:CreatePushArray();
 
@@ -57,7 +56,7 @@ local function cleanupTooltip(tip)
 		local gttLineText = gttLine:GetText()
 
 		if (type(gttLineText) == "string") then
-			local isGttLineTextUnitPopupRightClick = (hideRightClickForFrameSettingsText) and (gttLineText == UNIT_POPUP_RIGHT_CLICK)
+			local isGttLineTextUnitPopupRightClick = (gttLineText == UNIT_POPUP_RIGHT_CLICK)
 
 			if (isGttLineTextUnitPopupRightClick) or
 					((gttLineText == FACTION_ALLIANCE) or (gttLineText == FACTION_HORDE) or (gttLineText == FACTION_NEUTRAL)) or
@@ -154,8 +153,10 @@ OnPlayerLogin(function()
 			local race = UnitRace(unit)
 
       -- Class coloured name
-			local text = GameTooltipTextLeft1:GetText()
-			GameTooltipTextLeft1:SetText(unitClassColor:WrapTextInColorCode(text))
+			if (EUIDB.tooltipClassColoredName) then
+				local text = GameTooltipTextLeft1:GetText()
+				GameTooltipTextLeft1:SetText(unitClassColor:WrapTextInColorCode(text))
+			end
 
       local playerInfoLine = GameTooltipTextLeft2
 			local guildName, guildRank = GetGuildInfo(unit)
@@ -168,7 +169,7 @@ OnPlayerLogin(function()
       playerInfoLine:SetText(level .. ' ' .. race .. ' ' .. unitClassColor:WrapTextInColorCode(unitRecord.className))
 
 			-- Mount
-			if EUIDB.showMount then
+			if EUIDB.tooltipShowMount then
 				local unitID = unit
 				local index = 0
 
@@ -222,8 +223,9 @@ OnPlayerLogin(function()
 	end
 
   TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Unit, onTooltipSetUnit)
+	GameTooltip:HookScript("OnUpdate", cleanupTooltip)
 
-	GameTooltipStatusBar:HookScript("OnValueChanged", function(self, hp)
+	GameTooltipStatusBar:HookScript("OnValueChanged", function(self)
 		local unit = GetTooltipUnit()
 		local unitClassColor = getUnitHealthColor(unit)
 
