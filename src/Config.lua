@@ -26,6 +26,7 @@ EUIDBDefaults = {
   font = EUI_FONTS.Andika,
 
   -- Tooltip Settings
+  enhanceTooltips = true, -- Enhance tooltips with additional information
   tooltipAnchor = "ANCHOR_CURSOR_LEFT", -- Anchor tooltips to cursor out of combat
   tooltipClassColoredName = true, -- Class coloured names in tooltips
   tooltipSpecAndIlvl = true, -- Show spec and item level in player tooltips
@@ -178,6 +179,12 @@ local function setupEuiOptions()
         info.text = label
         info.value = value
         info.checked = info.text == selected
+        if not EUIDB.enhanceTooltips then
+          info.disabled = true
+        else
+          info.disabled = false
+        end
+
         UIDropDownMenu_AddButton(info)
       end
     end
@@ -364,72 +371,6 @@ local function setupEuiOptions()
     hideArenaFrames
   )
 
-  ------------
-  -- Hiding --
-  ------------
-  local EUI_Hiding = makePanel("EUI_Hiding", EUI.panel, "Hiding")
-
-  local hidingText = EUI_Hiding:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-  hidingText:SetText("Hiding")
-  hidingText:SetPoint("TOPLEFT", 16, -16)
-
-  local hideHotkeys = newCheckbox(
-    "Hide Hotkeys on Action Bars",
-    "Hides keybinding text on your action bar buttons.",
-    EUIDB.hideHotkeys,
-    function(value)
-      EUIDB.hideHotkeys = value
-    end,
-    hidingText,
-    EUI_Hiding
-  )
-
-  local hideMacroText = newCheckbox(
-    "Hide Macro Text on Action Bars",
-    "Hides macro text on your action bar buttons.",
-    EUIDB.hideMacroText,
-    function(value)
-      EUIDB.hideMacroText = value
-    end,
-    hideHotkeys,
-    EUI_Hiding
-  )
-
-  local hideAltPower = newCheckbox(
-    "Hide Alt Power (Holy Power, Combo Points, etc under Player frame)",
-    "Hides alt power bars on character frame such as combo points or holy power to clean it up, when preferring WeakAura or etc.",
-    EUIDB.hideAltPower,
-    function(value)
-      EUIDB.hideAltPower = value
-    end,
-    hideMacroText,
-    EUI_Hiding
-  )
-
-  local hideMicroMenu = newCheckbox(
-    'Hide Micro Menu',
-    'Hides the micro menu, preserving the queue status icon',
-    EUIDB.hideMicroMenu,
-    function(value)
-      EUIDB.hideMicroMenu = value
-      SetMicroMenuVisibility()
-    end,
-    hideAltPower,
-    EUI_Hiding
-  )
-
-  local hideBagBar = newCheckbox(
-    'Hide Bag Bar',
-    'Hides the bag bar',
-    EUIDB.hideBagBar,
-    function(value)
-      EUIDB.hideBagBar = value
-      SetBagBarVisibility()
-    end,
-    hideMicroMenu,
-    EUI_Hiding
-  )
-
   ----------------
   -- Nameplates --
   ----------------
@@ -492,8 +433,8 @@ local function setupEuiOptions()
   )
 
   local nameplateFriendlyNamesClassColor = newCheckbox(
-    "Class Colour Friendly Names",
-    "Colours friendly players' names on their nameplates.",
+    "Class Color Friendly Names",
+    "Colors friendly players' names on their nameplates.",
     EUIDB.nameplateFriendlyNamesClassColor,
     function(value)
       EUIDB.nameplateFriendlyNamesClassColor = value
@@ -627,6 +568,23 @@ local function setupEuiOptions()
   tooltipText:SetText("Tooltips")
   tooltipText:SetPoint("TOPLEFT", 16, -16)
 
+  local enhanceTooltips = newCheckbox(
+    "Enhance Tooltips",
+    "Enable enhanced tooltips with additional information.",
+    EUIDB.enhanceTooltips,
+    function(value)
+      EUIDB.enhanceTooltips = value
+      if value then
+        EnableTooltipSettings()
+      else
+        DisableTooltipSettings()
+      end
+    end,
+    tooltipText,
+    EUI_Tooltips
+  )
+  enhanceTooltips:SetPoint("TOPLEFT", tooltipText, "BOTTOMLEFT", 0, -16)
+
   local tooltipAnchor, tooltipDropdown = newDropdown(
     "Cursor Anchor (anchor tooltips to cursor out of combat)",
     { ["ANCHOR_CURSOR_LEFT"] = "Bottom Right", ["ANCHOR_CURSOR_RIGHT"] = "Bottom Left", ['DEFAULT'] = 'Disabled' },
@@ -637,7 +595,7 @@ local function setupEuiOptions()
     end,
     EUI_Tooltips
   )
-  tooltipAnchor:SetPoint("TOPLEFT", tooltipText, "BOTTOMLEFT", 0, -16)
+  tooltipAnchor:SetPoint("TOPLEFT", enhanceTooltips, "BOTTOMLEFT", 0, -16)
 
   local tooltipSpecAndIlvl = newCheckbox(
     "Show Player Spec and Item Level",
@@ -670,6 +628,95 @@ local function setupEuiOptions()
     end,
     showMount,
     EUI_Tooltips
+  )
+
+  function DisableTooltipSettings()
+    tooltipSpecAndIlvl:Disable()
+    showMount:Disable()
+    classColoredName:Disable()
+  end
+
+  function EnableTooltipSettings()
+    tooltipSpecAndIlvl:Enable()
+    showMount:Enable()
+    classColoredName:Enable()
+  end
+
+  if
+    C_AddOns.IsAddOnLoaded('TinyTooltip')
+    or C_AddOns.IsAddOnLoaded('TipTac')
+  then
+    DisableTooltipSettings()
+    enhanceTooltips.tooltip = "Disabled due to addon TinyTooltip or TipTac"
+    enhanceTooltips:Disable()
+  elseif not EUIDB.enhanceTooltips then
+    DisableTooltipSettings()
+  end
+
+  ------------
+  -- Hiding --
+  ------------
+  local EUI_Hiding = makePanel("EUI_Hiding", EUI.panel, "Hiding")
+
+  local hidingText = EUI_Hiding:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+  hidingText:SetText("Hiding")
+  hidingText:SetPoint("TOPLEFT", 16, -16)
+
+  local hideHotkeys = newCheckbox(
+    "Hide Hotkeys on Action Bars",
+    "Hides keybinding text on your action bar buttons.",
+    EUIDB.hideHotkeys,
+    function(value)
+      EUIDB.hideHotkeys = value
+    end,
+    hidingText,
+    EUI_Hiding
+  )
+
+  local hideMacroText = newCheckbox(
+    "Hide Macro Text on Action Bars",
+    "Hides macro text on your action bar buttons.",
+    EUIDB.hideMacroText,
+    function(value)
+      EUIDB.hideMacroText = value
+    end,
+    hideHotkeys,
+    EUI_Hiding
+  )
+
+  local hideAltPower = newCheckbox(
+    "Hide Alt Power (Holy Power, Combo Points, etc under Player frame)",
+    "Hides alt power bars on character frame such as combo points or holy power to clean it up, when preferring WeakAura or etc.",
+    EUIDB.hideAltPower,
+    function(value)
+      EUIDB.hideAltPower = value
+    end,
+    hideMacroText,
+    EUI_Hiding
+  )
+
+  local hideMicroMenu = newCheckbox(
+    'Hide Micro Menu',
+    'Hides the micro menu, preserving the queue status icon',
+    EUIDB.hideMicroMenu,
+    function(value)
+      EUIDB.hideMicroMenu = value
+      SetMicroMenuVisibility()
+    end,
+    hideAltPower,
+    EUI_Hiding
+  )
+
+  local hideBagBar = newCheckbox(
+    'Hide Bag Bar',
+    'Hides the bag bar',
+    EUIDB.hideBagBar,
+    function(value)
+      EUIDB.hideBagBar = value
+      SetBagBarVisibility()
+    end,
+    hideMicroMenu,
+    EUI_Hiding
   )
 
   -------------------

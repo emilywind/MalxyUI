@@ -66,7 +66,12 @@ tts:RegisterEvent("ADDON_LOADED")
 local ttsTipLineIndexTalents, ttsTipLineIndexAILAndGS
 
 local function TTS_OnTooltipSetUnit()
-  if (not EUIDB.tooltipSpecAndIlvl) then
+  if (
+    C_AddOns.IsAddOnLoaded('TinyTooltip')
+    or C_AddOns.IsAddOnLoaded('TipTac')
+    or not EUIDB.enhanceTooltips
+    or not EUIDB.tooltipSpecAndIlvl
+  ) then
     return
   end
 

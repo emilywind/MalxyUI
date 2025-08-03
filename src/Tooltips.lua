@@ -141,7 +141,11 @@ local colours = {
 }
 
 OnPlayerLogin(function()
-	if C_AddOns.IsAddOnLoaded('TinyTooltip') or C_AddOns.IsAddOnLoaded('TipTac') then
+	if
+		C_AddOns.IsAddOnLoaded('TinyTooltip')
+		or C_AddOns.IsAddOnLoaded('TipTac')
+		or not EUIDB.enhanceTooltips
+	then
 		return
 	end
 
