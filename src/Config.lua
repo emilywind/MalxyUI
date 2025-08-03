@@ -25,6 +25,8 @@ EUIDBDefaults = {
   customFonts = true, -- Update all fonts to something cooler
   font = EUI_FONTS.Andika,
 
+  -- Tooltip Settings
+  showMount = true, -- Show mount information in tooltips
   tooltipAnchor = "ANCHOR_CURSOR_LEFT",
   tooltipSpecAndIlvl = true, -- Show spec and item level in player tooltips
 

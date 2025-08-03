@@ -244,7 +244,9 @@
         "LibItemString",
         "ITEM_LEVEL",
         "CompactArenaFrame",
-        "PVP"
+        "PVP",
+        "PVP_ENABLED",
+        "UNIT_POPUP_RIGHT_CLICK"
     ],
     "Lua.diagnostics.disable": [
         "cast-local-type",

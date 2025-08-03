@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------------
---            Modified and Simplified version of TipTacTalents            --
+--    Modified and Simplified version of TipTacTalents (thanks Frozn)     --
 -- Includes a custom version of LibFroznFunctions to show PVP Item Levels --
 ----------------------------------------------------------------------------
 local MOD_NAME = ...

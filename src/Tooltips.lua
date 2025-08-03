@@ -1,3 +1,61 @@
+-----------------------------
+--- EmsUI Tooltips Module ---
+--- Thanks to TipTac Reborn for mount code and LibFroznFunctions ---
+-----------------------------
+local LibFroznFunctions = LibStub:GetLibrary("LibFroznFunctions-1.0")
+
+local function cleanupTooltip(tip)
+	local unit = GetTooltipUnit()
+	local unitRecord = {
+		id = unit,
+		guid = UnitGUID(unit),
+		isPlayer = UnitIsPlayer(unit),
+		isWildBattlePet = UnitIsWildBattlePet(unit),
+		classID = select(3, UnitClass(unit)),
+		className = select(2, UnitClass(unit)),
+	}
+	local creatureFamily = UnitCreatureFamily(unitRecord.id);
+	local creatureType = UnitCreatureType(unitRecord.id);
+
+	local hideCreatureTypeIfNoCreatureFamily = ((not unitRecord.isPlayer) or (unitRecord.isWildBattlePet)) and (not creatureFamily) and (creatureType)
+	local hideSpecializationAndClassText = (unitRecord.isPlayer) and (LibFroznFunctions.hasWoWFlavor.specializationAndClassTextInPlayerUnitTip) and (unitRecord.className)
+	local hideRightClickForFrameSettingsText = (LibFroznFunctions.hasWoWFlavor.rightClickForFrameSettingsTextInUnitTip) and (UNIT_POPUP_RIGHT_CLICK)
+
+	local specNames = LibFroznFunctions:CreatePushArray();
+
+	if (hideSpecializationAndClassText) then
+		local specCount = C_SpecializationInfo.GetNumSpecializationsForClassID(unitRecord.classID);
+
+		for i = 1, specCount do
+			local specID, specName = GetSpecializationInfoForClassID(unitRecord.classID, i, unitRecord.sex);
+
+			specNames:Push(specName);
+		end
+	end
+
+	for i = 2, tip:NumLines() do
+		local gttLine = _G["GameTooltipTextLeft" .. i]
+		local gttLineText = gttLine:GetText()
+
+		if (type(gttLineText) == "string") then
+			local isGttLineTextUnitPopupRightClick = (hideRightClickForFrameSettingsText) and (gttLineText == UNIT_POPUP_RIGHT_CLICK)
+
+			if (isGttLineTextUnitPopupRightClick) or
+					((gttLineText == FACTION_ALLIANCE) or (gttLineText == FACTION_HORDE) or (gttLineText == FACTION_NEUTRAL)) or
+					(gttLineText == PVP_ENABLED) or
+					(hideCreatureTypeIfNoCreatureFamily) and (gttLineText == creatureType) or
+					(hideSpecializationAndClassText) and ((gttLineText == unitRecord.className) or (specNames:Contains(gttLineText:match("^(.+) " .. unitRecord.className .. "$")))) then
+
+				gttLine:SetText(nil)
+
+				if (isGttLineTextUnitPopupRightClick) and (i > 1) then
+					_G["GameTooltipTextLeft" .. (i - 1)]:SetText(nil)
+				end
+			end
+		end
+	end
+end
+
 function GetTooltipUnit()
 	local unit = select(2, GameTooltip:GetUnit())
 
@@ -75,6 +133,7 @@ OnPlayerLogin(function()
     if self ~= GameTooltip then return end
 
     skinGameTooltip()
+		cleanupTooltip(self)
 
 		local unit = GetTooltipUnit()
 
@@ -101,6 +160,50 @@ OnPlayerLogin(function()
 			end
 
       playerInfoLine:SetText('Level ' .. level .. ' ' .. race)
+
+			-- Mount
+			if EUIDB.showMount then
+				local unitID = unit
+				local index = 0
+
+				LibFroznFunctions:ForEachAura(unitID, LFF_AURA_FILTERS.Helpful, nil, function(unitAuraInfo)
+					index = index + 1
+
+					local spellID = unitAuraInfo.spellId
+
+					if (spellID) then
+						local mountID = LibFroznFunctions:GetMountFromSpell(spellID)
+
+						if (mountID) then
+							local mountText = LibFroznFunctions:CreatePushArray()
+							local spacer
+
+							local isCollected = LibFroznFunctions:IsMountCollected(mountID)
+
+							if (isCollected) then
+								mountText:Push(CreateAtlasMarkup("common-icon-checkmark"))
+							else
+								mountText:Push(CreateAtlasMarkup("common-icon-redx"))
+							end
+
+							mountText:Push(CreateTextureMarkup(unitAuraInfo.icon, 64, 64, 0, 0, 0.07, 0.93, 0.07, 0.93))
+
+							if (unitAuraInfo.name) then
+								spacer = (mountText:GetCount() > 0) and " " or ""
+
+								mountText:Push(spacer .. HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(unitAuraInfo.name))
+							end
+
+							GameTooltip:AddLine(("Mount: %s"):format(mountText:Concat()))
+
+							return true
+						end
+					end
+				end, true)
+			end
+
+			-- recalculate size of tip to ensure that it has the correct dimensions
+			LibFroznFunctions:RecalculateSizeOfGameTooltip(GameTooltip)
 		end
 
 		local family = UnitCreatureFamily(unit)
