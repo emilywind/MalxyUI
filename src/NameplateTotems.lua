@@ -1,5 +1,11 @@
 OnPlayerLogin(function()
-  if not EUIDB.nameplateTotems then return end
+  if
+    C_AddOns.IsAddOnLoaded('BetterBlizzPlates')
+    or not EUIDB.skinNameplates
+    or not EUIDB.nameplateTotems
+  then
+    return
+  end
 
   local f = CreateFrame("Frame", nil, UIParent)
   f:RegisterEvent("NAME_PLATE_UNIT_ADDED")
