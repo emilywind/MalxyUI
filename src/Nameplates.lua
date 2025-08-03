@@ -143,35 +143,6 @@ OnPlayerLogin(function()
       end
     end
 
-    -- if C_AddOns.IsAddOnLoaded("Details") then
-    --   local isEnemyPlayer = UnitIsPlayer(frame.unit)
-    --   if isEnemyPlayer then
-    --     local guid = UnitGUID(frame.unit)
-    --     local specId = Details:GetSpecByGUID(guid)
-    --     if specId then
-    --       local role = GetSpecializationRole(specId)
-
-    --       if not frame.roleIcon then
-    --         frame.roleIcon = frame.healthBar:CreateTexture(nil, "OVERLAY")
-    --         frame.roleIcon:SetPoint("LEFT", frame.healthBar, "LEFT", 1, 0)
-    --         frame.roleIcon:SetTexture(EUI_TEXTURES.lfg.portraitRoles)
-    --       end
-
-    --       frame.roleIcon:Show()
-
-    --       if role == "DAMAGE" then
-    --         frame.roleIcon:SetTexCoord(0.33, 0.58, 0.36, 0.61)
-    --       elseif role == "HEALER" then
-    --         frame.roleIcon:SetTexCoord(0.33, 0.58, 0.03, 0.28)
-    --       elseif role == "TANK" then
-    --         frame.roleIcon:SetTexCoord(0.16, 0.47, 0.36, 0.61)
-    --       else
-    --         frame.roleIcon:Hide()
-    --       end
-    --     end
-    --   end
-    -- end
-
     if EUIDB.nameplateFriendlyNamesClassColor and UnitIsPlayer(frame.unit) and UnitIsFriend("player", frame.displayedUnit) then
       local _,className = UnitClass(frame.displayedUnit)
       local classR, classG, classB = GetClassColor(className)
