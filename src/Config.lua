@@ -26,9 +26,10 @@ EUIDBDefaults = {
   font = EUI_FONTS.Andika,
 
   -- Tooltip Settings
-  showMount = true, -- Show mount information in tooltips
-  tooltipAnchor = "ANCHOR_CURSOR_LEFT",
+  tooltipAnchor = "ANCHOR_CURSOR_LEFT", -- Anchor tooltips to cursor out of combat
+  tooltipClassColoredName = true, -- Class coloured names in tooltips
   tooltipSpecAndIlvl = true, -- Show spec and item level in player tooltips
+  tooltipShowMount = true, -- Show mount information in tooltips
 
   -- Nameplate Settings
   skinNameplates = true,
@@ -646,6 +647,28 @@ local function setupEuiOptions()
       EUIDB.tooltipSpecAndIlvl = value
     end,
     tooltipDropdown,
+    EUI_Tooltips
+  )
+
+  local showMount = newCheckbox(
+    "Show Mount Information",
+    "Show mount information in tooltips.",
+    EUIDB.tooltipShowMount,
+    function(value)
+      EUIDB.tooltipShowMount = value
+    end,
+    tooltipSpecAndIlvl,
+    EUI_Tooltips
+  )
+
+  local classColoredName = newCheckbox(
+    "Class Colored Names",
+    "Color player names in tooltips by class.",
+    EUIDB.tooltipClassColoredName,
+    function(value)
+      EUIDB.tooltipClassColoredName = value
+    end,
+    showMount,
     EUI_Tooltips
   )
 
