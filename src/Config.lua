@@ -20,8 +20,8 @@ EUIDBDefaults = {
   hideAltPower = false,
   lootSpecDisplay = true, -- Display loot spec icon in the player frame
 
-  damageFont = true, -- Change damage font to something cooler
-  damageFontChosen = EUI_FONTS.Bangers,
+  enableDamageFont = true, -- Change damage font to something cooler
+  damageFont = EUI_FONTS.Bangers,
   customFonts = true, -- Update all fonts to something cooler
   font = EUI_FONTS.Andika,
 
@@ -49,7 +49,6 @@ EUIDBDefaults = {
   classPortraitPack = EUI_TEXTURES.classCircles,
 
   -- PvP Settings
-  safeQueue = true,
   tabBinder = true,
   dampeningDisplay = true,
   hideObjectiveTracker = true,
@@ -265,8 +264,8 @@ local function setupEuiOptions()
   lootSpecDisplay:SetPoint("TOPLEFT", portraitDropdown, "BOTTOMLEFT", 0, -16)
 
   local customFonts = newCheckbox(
-    "Use Custom Fonts (Requires Reload)",
-    "Use custom fonts with support for Cyrillic and other character sets",
+    "Use Custom Fonts",
+    "Use custom fonts. Can be set in the dropdown to the right.",
     EUIDB.customFonts,
     function(value)
       EUIDB.customFonts = value
@@ -285,12 +284,12 @@ local function setupEuiOptions()
   )
   fontChooser:SetPoint("LEFT", lootSpecDisplay, "RIGHT", 300, 0)
 
-  local damageFont = newCheckbox(
+  local enableDamageFont = newCheckbox(
     "Use Custom Damage Font",
-    "Use custom damage font, Bangers.",
-    EUIDB.damageFont,
+    "Use a custom font for damage numbers. Can be set in the dropdown to the right. Requires relogging.",
+    EUIDB.enableDamageFont,
     function(value)
-      EUIDB.damageFont = value
+      EUIDB.enableDamageFont = value
     end,
     customFonts
   )
@@ -298,13 +297,13 @@ local function setupEuiOptions()
   local damageFontChooser = newDropdown(
     "Damage Font",
     LSM_FONTS,
-    EUIDB.damageFontChosen,
+    EUIDB.damageFont,
     200,
     function(value)
-      EUIDB.damageFontChosen = value
+      EUIDB.damageFont = value
     end
   )
-  damageFontChooser:SetPoint("LEFT", damageFont, "RIGHT", 300, 0)
+  damageFontChooser:SetPoint("LEFT", enableDamageFont, "RIGHT", 300, 0)
 
   local darkMode = newCheckbox(
     "Dark Mode",
@@ -313,22 +312,12 @@ local function setupEuiOptions()
     function(value)
       EUIDB.darkMode = value
     end,
-    damageFont
+    enableDamageFont
   )
 
   local pvpText = EUI.panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   pvpText:SetText("PvP")
   pvpText:SetPoint("TOPLEFT", darkMode, "BOTTOMLEFT", 0, -16)
-
-  local safeQueue = newCheckbox(
-    "Safe Queue",
-    "Hide Leave Queue button and show timer for Arena/RBG queues.",
-    EUIDB.safeQueue,
-    function(value)
-      EUIDB.safeQueue = value
-    end,
-    pvpText
-  )
 
   local dampeningDisplay = newCheckbox(
     "Dampening Display",
@@ -337,7 +326,7 @@ local function setupEuiOptions()
     function(value)
       EUIDB.dampeningDisplay = value
     end,
-    safeQueue
+    pvpText
   )
 
   local tabBinder = newCheckbox(
