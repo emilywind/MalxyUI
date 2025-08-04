@@ -29,6 +29,7 @@ local function init()
   local timeLeft = 0
   local function barUpdate(self, elapsed)
     timeLeft = (timeLeft or 0) - elapsed
+    timeLeft = max(timeLeft, 0) -- Ensure timeLeft doesn't go negative
 
     self:SetValue(timeLeft)
     self.Text:SetFormattedText("%.1f", timeLeft)
