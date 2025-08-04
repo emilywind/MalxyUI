@@ -67,7 +67,7 @@ SafeQueue:SetScript("OnUpdate", function()
 	if not PVPReadyDialog_Showing(queue) then return end
 
 	if not timerBar then
-		timerBar = CreateFrame("StatusBar", nil, PVPReadyDialog)
+		timerBar = CreateFrame("StatusBar", "EmsUISafeQueueStatusBar", PVPReadyDialog)
 		timerBar:SetPoint("TOP", PVPReadyDialog, "BOTTOM", 0, -5)
 		timerBar:SetSize(194, 14)
 
@@ -84,12 +84,10 @@ SafeQueue:SetScript("OnUpdate", function()
 		if justPopped then
 			justPopped = false
 			timerBar:SetMinMaxValues(0, timeLeft)
-			timerBar:Show()
 		end
 
 		if (timeLeft <= 0) then
 			justPopped = true
-			self:Hide()
 		end
 
 		self:SetValue(timeLeft)
