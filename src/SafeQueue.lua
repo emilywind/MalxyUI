@@ -1,9 +1,10 @@
--- Enhanced version of SafeQueue by Jordon
-
+--------------------------------
+--- Em's UI SafeQueue Module ---
+--------------------------------
 local SafeQueue = CreateFrame("Frame")
-local queueTime = {}
-local queue = 0
-local justPopped = true
+local queueTime = {} -- Use an array so we can store the time for each queue
+local queue = 0 -- Current queue index of popped queue
+local justPopped = true -- Flag to indicate if the queue just popped
 
 PVPReadyDialog.leaveButton:Hide()
 PVPReadyDialog.leaveButton.Show = function() end -- Prevent other mods from showing the button
@@ -15,7 +16,6 @@ local function Print(msg)
 end
 
 local function PrintTime()
-	print(queueTime[queue])
 	local secs, str = floor(GetTime() - queueTime[queue]), "Queue popped "
 	local mins = floor(secs/60)
 	if secs < 1 then
@@ -44,7 +44,7 @@ SafeQueue:SetScript("OnEvent", function()
 		if status == "queued" then
 			queued = true
 			if not queueTime[i] then
-				justPopped = true
+				justPopped = true -- Queue just started, so reset this
 				queueTime[i] = GetTime()
 			end
 		elseif status == "confirm" then
@@ -84,7 +84,6 @@ SafeQueue:SetScript("OnUpdate", function()
 		if justPopped then
 			justPopped = false
 			timerBar:SetMinMaxValues(0, timeLeft)
-			print(timeLeft)
 			timerBar:Show()
 		end
 
