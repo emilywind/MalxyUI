@@ -8,11 +8,7 @@ local function applyEuiButtonSkin(bu, isLeaveButton)
 
   if not nt then return end
 
-  if (isLeaveButton) then
-    ApplyEuiBackdrop(nt, bu)
-  else
-    nt:SetVertexColor(GetFrameColour())
-  end
+  nt:SetVertexColor(GetFrameColour())
 
   bu.euiClean = true
 end
@@ -22,7 +18,6 @@ local function init()
   local function styleExtraActionButton(bu)
     if not bu or (bu and bu.euiClean) then return end
 
-    local name = bu:GetName() or bu:GetParent():GetName()
     local icon = bu.icon or bu.Icon
 
     --icon
@@ -52,15 +47,6 @@ local function init()
     end
 
     applyEuiButtonSkin(bu)
-  end
-
-  -- style leave button
-  local function styleLeaveButton(bu)
-    if not bu or (bu and bu.euiClean) then
-      return
-    end
-
-    applyEuiButtonSkin(bu, true)
   end
 
   -- Style stance buttons
@@ -123,9 +109,6 @@ local function init()
   for i = 1, 6 do
     styleActionButton(_G["OverrideActionBarButton" .. i])
   end
-  --style leave button
-  styleLeaveButton(MainMenuBarVehicleLeaveButton)
-  styleLeaveButton(rABS_LeaveVehicleButton)
   --petbar buttons
   for i = 1, NUM_PET_ACTION_SLOTS do
     styleActionButton(_G["PetActionButton" .. i])
