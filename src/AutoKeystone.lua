@@ -3,12 +3,12 @@
 local InsertKeystone = function()
 	for bag = 0, NUM_BAG_SLOTS do
          for bagSlot = 1, GetContainerNumSlots(bag) do
-            local _,_,_,_,_,_,itemName = GetContainerItemInfo(bag, bagSlot);
+            local _,_,_,_,_,_,itemName = GetContainerItemInfo(bag, bagSlot)
             if itemName  ~= nil and string.match(itemName, "Keystone") then
                if (ChallengesKeystoneFrame:IsShown()) then
-                  PickupContainerItem(bag, bagSlot);
+                  PickupContainerItem(bag, bagSlot)
                   if (CursorHasItem()) then
-                     C_ChallengeMode.SlotKeystone();
+                     C_ChallengeMode.SlotKeystone()
                   end
                end
             end
@@ -16,13 +16,13 @@ local InsertKeystone = function()
       end
 end
 
-local frame = CreateFrame("Frame", "EUI", UIParent);
-frame:RegisterEvent("ADDON_LOADED");
+local frame = CreateFrame("Frame", "EUI", UIParent)
+frame:RegisterEvent("ADDON_LOADED")
 
 frame:SetScript("OnEvent", function(self, event, addonName, ...)
     if event == "ADDON_LOADED" and addonName == "Blizzard_ChallengesUI" then
-		ChallengesKeystoneFrame:HookScript("OnShow", InsertKeystone);
-        frame:UnregisterEvent("ADDON_LOADED");
-        return;
+		ChallengesKeystoneFrame:HookScript("OnShow", InsertKeystone)
+        frame:UnregisterEvent("ADDON_LOADED")
+        return
 	end
-end);
+end)
