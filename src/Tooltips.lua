@@ -20,6 +20,7 @@ end
 
 local function skinGameTooltip()
 	local ns = GameTooltip.NineSlice
+
 	local nsPoints = {
     "TopLeftCorner",
     "TopRightCorner",
