@@ -37,7 +37,7 @@ local function skinGameTooltip()
     ns[nsPoint]:SetTexture(SQUARE_TEXTURE)
   end
 
-	ns:SetCenterColor(0.08, 0.08, 0.08, 0.9)
+	ns:SetCenterColor(0.08, 0.08, 0.08, 0.8)
 	ns:SetBorderColor(0, 0, 0, 0)
 
 	local border = GameTooltip.border
@@ -46,7 +46,7 @@ local function skinGameTooltip()
 		border:SetPoint("TOPLEFT", GameTooltip, "TOPLEFT")
 		border:SetPoint("BOTTOMRIGHT", GameTooltip, "BOTTOMRIGHT")
 		border:SetBackdrop(EUI_BACKDROP)
-		border:SetBackdropBorderColor(0.08, 0.08, 0.08, 0.9)
+		border:SetBackdropBorderColor(0.08, 0.08, 0.08, 0.8)
 		GameTooltip.border = border
 	end
 end
