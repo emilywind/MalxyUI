@@ -1,23 +1,19 @@
-local function skinVigorBar(frame, desaturate, hook)
+local function skinVigorBar(frame)
   if frame then
-    if desaturate ~= nil and frame.SetDesaturated then
-      frame:SetDesaturated(desaturate)
-    end
+    frame:SetDesaturated(true)
 
     if frame.SetVertexColor then
       frame:SetVertexColor(GetFrameColour())
-      if hook then
-        if not frame.bbfHooked then
-          frame.bbfHooked = true
+      if not frame.euiHooked then
+        frame.euiHooked = true
 
-          hooksecurefunc(frame, "SetVertexColor", function(self)
-            if self.changing or self:IsProtected() then return end
-            self.changing = true
-            self:SetDesaturated(desaturate)
-            self:SetVertexColor(GetFrameColour())
-            self.changing = false
-          end)
-        end
+        hooksecurefunc(frame, "SetVertexColor", function(self)
+          if self.changing or self:IsProtected() then return end
+          self.changing = true
+          self:SetDesaturated(true)
+          self:SetVertexColor(GetFrameColour())
+          self.changing = false
+        end)
       end
     end
   end
@@ -34,8 +30,8 @@ frame:SetScript("OnEvent", function()
       if child.DecorLeft and child.DecorLeft.GetAtlas then
         local atlasName = child.DecorLeft:GetAtlas()
         if atlasName == "dragonriding_vigor_decor" then
-          skinVigorBar(child.DecorLeft, 1, true)
-          skinVigorBar(child.DecorRight, 1, true)
+          skinVigorBar(child.DecorLeft)
+          skinVigorBar(child.DecorRight)
         end
       end
       for _, grandchild in ipairs({ child:GetChildren() }) do
@@ -43,7 +39,7 @@ frame:SetScript("OnEvent", function()
         if grandchild.Frame and grandchild.Frame.GetAtlas then
           local atlasName = grandchild.Frame:GetAtlas()
           if atlasName == "dragonriding_vigor_frame" then
-            skinVigorBar(grandchild.Frame, 1, true)
+            skinVigorBar(grandchild.Frame)
           end
         end
       end
