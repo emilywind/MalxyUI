@@ -63,6 +63,7 @@ local function getUnitRecord(unit)
 		classID = classID,
 		className = className,
 		classFileName = classFileName,
+		sex = UnitSex(unit),
 	}
 end
 
@@ -83,21 +84,21 @@ end
 local function cleanupTooltip(tip)
 	local unit = GetTooltipUnit()
 	local unitRecord = getUnitRecord(unit)
-	local creatureFamily = UnitCreatureFamily(unitRecord.id);
-	local creatureType = UnitCreatureType(unitRecord.id);
+	local creatureFamily = UnitCreatureFamily(unitRecord.id)
+	local creatureType = UnitCreatureType(unitRecord.id)
 
 	local hideCreatureTypeIfNoCreatureFamily = ((not unitRecord.isPlayer) or (unitRecord.isWildBattlePet)) and (not creatureFamily) and (creatureType)
 	local hideSpecializationAndClassText = (unitRecord.isPlayer) and (LibFroznFunctions.hasWoWFlavor.specializationAndClassTextInPlayerUnitTip) and (unitRecord.className)
 
-	local specNames = LibFroznFunctions:CreatePushArray();
+	local specNames = LibFroznFunctions:CreatePushArray()
 
 	if (hideSpecializationAndClassText) then
-		local specCount = C_SpecializationInfo.GetNumSpecializationsForClassID(unitRecord.classID);
+		local specCount = C_SpecializationInfo.GetNumSpecializationsForClassID(unitRecord.classID)
 
 		for i = 1, specCount do
-			local _, specName = GetSpecializationInfoForClassID(unitRecord.classID, i, unitRecord.sex);
+			local _, specName = GetSpecializationInfoForClassID(unitRecord.classID, i, unitRecord.sex)
 
-			specNames:Push(specName);
+			specNames:Push(specName)
 		end
 	end
 
@@ -291,7 +292,7 @@ OnPlayerLogin(function()
 		end
 
 		local family = UnitCreatureFamily(unit)
-		if (family) then -- UnitIsBattlePetCompanion(unit);
+		if (family) then
 			GameTooltipTextLeft2:SetText(level .. " " .. family)
 		end
 
