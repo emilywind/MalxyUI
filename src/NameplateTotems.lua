@@ -20,17 +20,7 @@ OnPlayerLogin(function()
   local showCooldownCount = true
   local showFriendlyTotems = true
 
-  local activeTotems = {}
-  local totemStartTimes = setmetatable({ __mode = "v" }, {})
-
-  -- /script SetCVar("nameplateShowFriendlyTotems", 1)
-
-  -- nameplateShowEnemyGuardians = "0",
-  -- nameplateShowEnemyMinions   = "0",
-  -- nameplateShowEnemyMinus     = "0",
-  -- nameplateShowEnemyTotems    = "1",
-  -- nameplateShowEnemyPets      = "1",
-  local APILevel = math.floor(select(4, GetBuildInfo()) / 10000)
+  local totemStartTimes = setmetatable({}, { __mode = "v" })
 
   local function GetNPCIDByGUID(guid)
     local _, _, _, _, _, npcID = strsplit("-", guid);
@@ -74,14 +64,10 @@ OnPlayerLogin(function()
     frame:SetPoint("BOTTOM", nameplate, "TOP", 0, 5)
 
     local icon = frame:CreateTexture(nil, "ARTWORK")
-    icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
     icon:SetAllPoints()
+    frame.icon = icon
 
-    local bg = frame:CreateTexture(nil, "BACKGROUND")
-    bg:SetTexture(SQUARE_TEXTURE)
-    bg:SetVertexColor(0, 0, 0, 0.5)
-    bg:SetPoint("TOPLEFT", frame, "TOPLEFT", -2, 2)
-    bg:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 2, -2)
+    local bg = ApplyEuiBackdrop(frame, frame)
 
     local cd = CreateFrame("Cooldown", nil, frame, "CooldownFrameTemplate")
     if not showCooldownCount then
@@ -102,6 +88,9 @@ OnPlayerLogin(function()
   function f.NAME_PLATE_UNIT_ADDED(self, event, unit)
     local np = C_NamePlate.GetNamePlateForUnit(unit)
     local guid = UnitGUID(unit)
+
+    if not np or not guid then return end
+
     local npcID = GetNPCIDByGUID(guid)
 
     if npcID and totemNpcIDs[npcID] then
@@ -111,11 +100,11 @@ OnPlayerLogin(function()
         if isFriendly then return end
       end
 
-      if not np.NugTotemIcon then
-        np.NugTotemIcon = CreateIcon(np)
+      if not np.totemIcon then
+        np.totemIcon = CreateIcon(np)
       end
 
-      local iconFrame = np.NugTotemIcon
+      local iconFrame = np.totemIcon
       iconFrame:Show()
 
       local totemData = totemNpcIDs[npcID]
@@ -129,18 +118,16 @@ OnPlayerLogin(function()
         iconFrame.cooldown:SetCooldown(startTime, duration)
         iconFrame.cooldown:Show()
       end
-
-      activeTotems[guid] = np
     end
   end
 
   function f.NAME_PLATE_UNIT_REMOVED(self, event, unit)
     local np = C_NamePlate.GetNamePlateForUnit(unit)
-    if np.NugTotemIcon then
-      np.NugTotemIcon:Hide()
 
-      local guid = UnitGUID(unit)
-      activeTotems[guid] = nil
+    if not np then return end
+
+    if np.totemIcon then
+      np.totemIcon:Hide()
     end
   end
 

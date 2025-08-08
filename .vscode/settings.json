@@ -252,6 +252,7 @@
     "Lua.diagnostics.disable": [
         "cast-local-type",
         "undefined-field",
-        "param-type-mismatch"
+        "param-type-mismatch",
+        "inject-field"
     ]
 }
