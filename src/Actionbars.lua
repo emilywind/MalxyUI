@@ -18,31 +18,15 @@ local function applyEuiButtonSkin(bu, isLeaveButton)
 end
 
 local function init()
-  local dominos = C_AddOns.IsAddOnLoaded("Dominos")
-  local bartender4 = C_AddOns.IsAddOnLoaded("Bartender4")
-
-  ---------------------------------------
-  -- FUNCTIONS
-  ---------------------------------------
-  if C_AddOns.IsAddOnLoaded("Masque") and (dominos or bartender4) then
-    return
-  end
-
   --style extraactionbutton
   local function styleExtraActionButton(bu)
     if not bu or (bu and bu.euiClean) then return end
 
     local name = bu:GetName() or bu:GetParent():GetName()
     local icon = bu.icon or bu.Icon
-    local ho = _G[name .. "HotKey"]
 
     --icon
     StyleIcon(icon)
-
-    --hotkey
-    if EUIDB.hideHotkeys and ho then
-      ho:Hide()
-    end
 
     --apply background
     applyEuiButtonSkin(bu)
@@ -54,15 +38,8 @@ local function init()
       return
     end
     local name = bu:GetName()
-    local ho = _G[name .. "HotKey"]
     local na = _G[name .. "Name"]
     local nt = _G[name .. "NormalTexture"]
-
-    --hotkey
-    ho:SetTextColor(1, 1, 1, 1)
-    if EUIDB.hideHotkeys then
-      ho:Hide()
-    end
 
     -- Macro name
     if EUIDB.hideMacroText then
@@ -75,12 +52,6 @@ local function init()
     end
 
     applyEuiButtonSkin(bu)
-
-    if bartender4 then --fix the normaltexture
-      nt:SetTexCoord(0, 1, 0, 1)
-      nt.SetTexCoord = function(x, y, z, r, n) end
-      bu.SetNormalTexture = function() end
-    end
   end
 
   -- style leave button
@@ -117,7 +88,7 @@ local function init()
     end
   end
 
-  if not dominos and not bartender4 and (EUIDB.hideHotkeys) then
+  if EUIDB.hideHotkeys then
     local frame = CreateFrame("Frame")
     frame:RegisterEvent("UPDATE_BINDINGS")
     frame:RegisterEvent("PLAYER_LOGIN")
@@ -166,22 +137,6 @@ local function init()
 
   --extraactionbutton1
   styleExtraActionButton(ExtraActionButton1)
-
-  --dominos styling
-  if dominos then
-    print("Dominos found")
-    for i = 1, 60 do
-      styleActionButton(_G["DominosActionButton" .. i])
-    end
-  end
-  --bartender4 styling
-  if bartender4 then
-    --print("Bartender4 found")
-    for i = 1, 120 do
-      styleActionButton(_G["BT4Button" .. i])
-      styleActionButton(_G["BT4PetButton" .. i])
-    end
-  end
 
   local function skinSpellFlyout()
     -- Main frame.
