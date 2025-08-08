@@ -2,6 +2,7 @@ OnPlayerLogin(function()
   local LEM = LibStub('LibEditMode')
 
   local db = EUIDB
+  local inQueue = false
 
   -- Queue Status Icon
   local function queueIconPos(frame, layoutName, point, x, y)
