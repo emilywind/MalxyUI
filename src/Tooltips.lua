@@ -163,6 +163,41 @@ local function addMount(unitID)
 	end, true)
 end
 
+local function addMythicPlusScore(unitRecord)
+	if (C_PlayerInfo.GetPlayerMythicPlusRatingSummary) then
+		local ratingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary(unitRecord.id)
+		if (ratingSummary) then
+			local mythicPlusDungeonScore = ratingSummary.currentSeasonScore
+			local mythicPlusBestRunLevel
+			if (ratingSummary.runs) then
+				for _, ratingMapSummary in ipairs(ratingSummary.runs or {}) do
+					if (ratingMapSummary.finishedSuccess) and ((not mythicPlusBestRunLevel) or (mythicPlusBestRunLevel < ratingMapSummary.bestRunLevel)) then
+						mythicPlusBestRunLevel = ratingMapSummary.bestRunLevel
+					end
+				end
+			end
+
+			local mythicPlusText = LibFroznFunctions:CreatePushArray()
+			if (mythicPlusDungeonScore > 0) then
+				local mythicPlusDungeonScoreColor = (C_ChallengeMode.GetDungeonScoreRarityColor(mythicPlusDungeonScore) or HIGHLIGHT_FONT_COLOR)
+				mythicPlusText:Push(mythicPlusDungeonScoreColor:WrapTextInColorCode(mythicPlusDungeonScore))
+			end
+			if mythicPlusText:GetCount() > 0 then
+				local lineInfo = LibFroznFunctions:CreatePushArray()
+				lineInfo:Push("\n")
+				lineInfo:Push("|cffffd100")
+				lineInfo:Push(CHALLENGE_COMPLETE_DUNGEON_SCORE:format(mythicPlusText:Concat()))
+
+				if mythicPlusBestRunLevel then
+					lineInfo:Push(" |cffffff99(+" .. mythicPlusBestRunLevel .. ")|r")
+				end
+
+				GameTooltip:AddLine(lineInfo:Concat())
+			end
+		end
+	end
+end
+
 local colours = {
   guildName = 'f232e7',
   guildRank = 'bd8cf2',
@@ -245,6 +280,10 @@ OnPlayerLogin(function()
 			-- Mount
 			if EUIDB.tooltipShowMount then
 				addMount(unit)
+			end
+
+			if EUIDB.tooltipShowMythicPlus then
+				addMythicPlusScore(unitRecord)
 			end
 
 			-- recalculate size of tip to ensure that it has the correct dimensions

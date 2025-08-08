@@ -31,6 +31,7 @@ EUIDBDefaults = {
   tooltipClassColoredName = true, -- Class coloured names in tooltips
   tooltipSpecAndIlvl = true, -- Show spec and item level in player tooltips
   tooltipShowMount = true, -- Show mount information in tooltips
+  tooltipShowMythicPlus = true, -- Show Mythic+ information in tooltips
 
   -- Nameplate Settings
   skinNameplates = true,
@@ -642,11 +643,23 @@ local function setupEuiOptions()
     EUI_Tooltips
   )
 
+  local showMythicPlus = newCheckbox(
+    "Show Mythic+ Information",
+    "Show Mythic+ information in player tooltips.",
+    EUIDB.tooltipShowMythicPlus,
+    function(value)
+      EUIDB.tooltipShowMythicPlus = value
+    end,
+    classColoredName,
+    EUI_Tooltips
+  )
+
   function DisableTooltipSettings()
     tooltipAnchorDropdown.disabled = true
     tooltipSpecAndIlvl:Disable()
     showMount:Disable()
     classColoredName:Disable()
+    showMythicPlus:Disable()
   end
 
   function EnableTooltipSettings()
@@ -654,6 +667,7 @@ local function setupEuiOptions()
     tooltipSpecAndIlvl:Enable()
     showMount:Enable()
     classColoredName:Enable()
+    showMythicPlus:Enable()
   end
 
   if
