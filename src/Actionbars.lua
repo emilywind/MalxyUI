@@ -35,14 +35,10 @@ local function init()
 
     local name = bu:GetName() or bu:GetParent():GetName()
     local icon = bu.icon or bu.Icon
-    local cooldown = bu.cooldown or bu.Cooldown
     local ho = _G[name .. "HotKey"]
 
     --icon
     StyleIcon(icon)
-
-    --cooldown
-    cooldown:SetAllPoints(icon)
 
     --hotkey
     if EUIDB.hideHotkeys and ho then
