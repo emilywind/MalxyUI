@@ -16,10 +16,6 @@ OnPlayerLogin(function()
     return self[event](self, event, ...)
   end)
 
-  local showDuration = true
-  local showCooldownCount = true
-  local showFriendlyTotems = true
-
   local totemStartTimes = setmetatable({}, { __mode = "v" })
 
   local function GetNPCIDByGUID(guid)
@@ -70,10 +66,6 @@ OnPlayerLogin(function()
     local bg = ApplyEuiBackdrop(frame, frame)
 
     local cd = CreateFrame("Cooldown", nil, frame, "CooldownFrameTemplate")
-    if not showCooldownCount then
-      cd.noCooldownCount = true -- disable OmniCC for this cooldown
-      cd:SetHideCountdownNumbers(true)
-    end
     cd:SetReverse(true)
     cd:SetDrawEdge(false)
     cd:SetAllPoints(frame)
@@ -94,12 +86,6 @@ OnPlayerLogin(function()
     local npcID = GetNPCIDByGUID(guid)
 
     if npcID and totemNpcIDs[npcID] then
-      if not showFriendlyTotems then
-        -- local isAttackable = UnitCanAttack("player", unit)
-        local isFriendly = UnitReaction(unit, "player") >= 4
-        if isFriendly then return end
-      end
-
       if not np.totemIcon then
         np.totemIcon = CreateIcon(np)
       end
@@ -114,7 +100,7 @@ OnPlayerLogin(function()
 
       iconFrame.icon:SetTexture(tex)
       local startTime = totemStartTimes[guid]
-      if startTime and showDuration then
+      if startTime then
         iconFrame.cooldown:SetCooldown(startTime, duration)
         iconFrame.cooldown:Show()
       end
