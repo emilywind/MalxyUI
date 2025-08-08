@@ -42,7 +42,7 @@ local function skinGameTooltip()
 
 	local border = GameTooltip.border
 	if not border then
-		border = CreateFrame('Frame', nil, GameTooltip, "BackdropTemplate")
+		border = CreateFrame('Frame', 'GameTooltipBorder', GameTooltip, "BackdropTemplate")
 		border:SetPoint("TOPLEFT", GameTooltip, "TOPLEFT")
 		border:SetPoint("BOTTOMRIGHT", GameTooltip, "BOTTOMRIGHT")
 		border:SetBackdrop(EUI_BACKDROP)
