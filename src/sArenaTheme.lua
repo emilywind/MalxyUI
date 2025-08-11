@@ -1,6 +1,6 @@
-local layoutName = "Blizz Modern Dark"
+local layoutName = "Em's UI Dark"
 local layout = {}
-layout.name = "|cff00b4ffBlizz|r Modern Dark"
+layout.name = "Em's UI Dark"
 
 layout.defaultSettings = {
   posX = 400,
@@ -171,28 +171,22 @@ function layout:Initialize(frame)
   local castBarTextbox = frame.TexturePool:Acquire()
   local castBarBorder = frame.TexturePool:Acquire()
   f = frame.CastBar
-  f:SetHeight(8)
+  local castBar = f
+  f:SetHeight(16)
   f.Text:ClearAllPoints()
-  f.Text:SetPoint("BOTTOM", f, 0, -12)
+  f.Text:SetPoint("CENTER", f, "CENTER")
   f.Text:SetScale(0.9)
+  f.Text:SetDrawLayer("OVERLAY", 4)
   f.Icon:ClearAllPoints()
-  f.Icon:SetPoint("LEFT", f, -18, -5)
+  f.Icon:SetPoint("LEFT", f, -20, -5)
   f.Icon:SetScale(1.1)
+  ApplyEuiBackdrop(castBar.Icon, castBar)
   f.BorderShield:ClearAllPoints()
   f.BorderShield:SetPoint("LEFT", f.Icon, -6, 0)
   f.BorderShield:SetScale(1.1)
-  castBarBackground:SetParent(f)
-  castBarBackground:SetDrawLayer("BACKGROUND", 4)
-  castBarBackground:SetAtlas("UI-CastingBar-Background")
-  castBarBackground:SetPoint("TOPLEFT", f, "TOPLEFT", 0, 1)
-  castBarBackground:SetPoint("BOTTOMRIGHT", f, "BOTTOMRIGHT", 0, 0)
-  castBarBackground:Show()
-  castBarTextbox:SetParent(f)
-  castBarTextbox:SetDrawLayer("BACKGROUND", 3)
-  castBarTextbox:SetAtlas("UI-CastingBar-TextBox")
-  castBarTextbox:SetPoint("TOPLEFT", f, "TOPLEFT", 0, -6)
-  castBarTextbox:SetPoint("BOTTOMRIGHT", f, "BOTTOMRIGHT", 0, -11)
-  castBarTextbox:Show()
+  castBar.Text:SetFont(EUIDB.font, 12, "OUTLINE")
+  castBar.Text:SetDrawLayer("OVERLAY", 4)
+  castBarBorder:SetVertexColor(GetFrameColour())
   castBarBorder:SetParent(f)
   castBarBorder:SetDrawLayer("OVERLAY", 3)
   castBarBorder:SetAtlas("UI-CastingBar-Frame")
