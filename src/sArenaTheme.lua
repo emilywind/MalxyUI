@@ -1,6 +1,6 @@
-local layoutName = "Em's UI Dark"
+local layoutName = "Em's UI"
 local layout = {}
-layout.name = "Em's UI Dark"
+layout.name = "Em's UI"
 
 layout.defaultSettings = {
   posX = 400,
@@ -74,6 +74,7 @@ end
 
 function layout:Initialize(frame)
   self.db = frame.parent.db.profile.layoutSettings[layoutName]
+  local isDark = EUIDB.darkMode
 
   if (not self.optionsTable) then
     setupOptionsTable(frame.parent)
@@ -133,8 +134,10 @@ function layout:Initialize(frame)
   trinketBorder:SetPoint("TOPLEFT", trinket, "TOPLEFT", -4, 4)
   trinketBorder:SetPoint("BOTTOMRIGHT", trinket, "BOTTOMRIGHT", 4, -4)
   trinketBorder:SetDrawLayer("ARTWORK", 3)
-  trinketBorder:SetDesaturated(true)
-  trinketBorder:SetVertexColor(GetFrameColour())
+  if isDark then
+    trinketBorder:SetDesaturated(true)
+    trinketBorder:SetVertexColor(GetFrameColour())
+  end
   trinketBorder:Show()
 
   -- racial
@@ -149,8 +152,10 @@ function layout:Initialize(frame)
   racialBorder:SetPoint("TOPLEFT", racial, "TOPLEFT", -4, 4)
   racialBorder:SetPoint("BOTTOMRIGHT", racial, "BOTTOMRIGHT", 4, -4)
   racialBorder:SetDrawLayer("ARTWORK", 3)
-  racialBorder:SetDesaturated(true)
-  racialBorder:SetVertexColor(GetFrameColour())
+  if isDark then
+    racialBorder:SetDesaturated(true)
+    racialBorder:SetVertexColor(GetFrameColour())
+  end
   racialBorder:Show()
 
   -- spec icon
@@ -162,8 +167,10 @@ function layout:Initialize(frame)
   specBorder:SetAtlas("UI-HUD-UnitFrame-TotemFrame")
   specBorder:SetPoint("TOPLEFT", frame.SpecIcon, "TOPLEFT", -3, 3)
   specBorder:SetPoint("BOTTOMRIGHT", frame.SpecIcon, "BOTTOMRIGHT", 6, -6)
-  specBorder:SetDesaturated(true)
-  specBorder:SetVertexColor(GetFrameColour())
+  if isDark then
+    specBorder:SetDesaturated(true)
+    specBorder:SetVertexColor(GetFrameColour())
+  end
   specBorder:Show()
 
   -- castBar
@@ -184,7 +191,9 @@ function layout:Initialize(frame)
   f.BorderShield:ClearAllPoints()
   f.BorderShield:SetPoint("LEFT", f.Icon, -6, 0)
   f.BorderShield:SetScale(1.1)
-  castBarBorder:SetVertexColor(GetFrameColour())
+  if isDark then
+    castBarBorder:SetVertexColor(GetFrameColour())
+  end
   castBarBorder:SetParent(f)
   castBarBorder:SetDrawLayer("OVERLAY", 3)
   castBarBorder:SetAtlas("UI-CastingBar-Frame")
@@ -217,8 +226,10 @@ function layout:Initialize(frame)
   frameTexture:SetDrawLayer("ARTWORK", 3)
   frameTexture:SetAllPoints(frame)
   frameTexture:SetAtlas("UI-HUD-UnitFrame-Target-PortraitOn")
-  frameTexture:SetDesaturated(true)
-  frameTexture:SetVertexColor(GetFrameColour())
+  if isDark then
+    frameTexture:SetDesaturated(true)
+    frameTexture:SetVertexColor(GetFrameColour())
+  end
   frameTexture:Show()
 
   self:UpdateOrientation(frame)
