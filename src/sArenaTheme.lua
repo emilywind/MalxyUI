@@ -28,7 +28,7 @@ layout.defaultSettings = {
   },
   castBar = {
     posX = -165,
-    posY = -6,
+    posY = -12,
     scale = 1,
     width = 120,
   },
