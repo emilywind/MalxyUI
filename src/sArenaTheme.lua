@@ -225,6 +225,8 @@ function layout:Initialize(frame)
   frameTexture:SetDrawLayer("ARTWORK", 3)
   frameTexture:SetAllPoints(frame)
   frameTexture:SetAtlas("UI-HUD-UnitFrame-Target-PortraitOn")
+  frameTexture:SetDesaturated(true)
+  frameTexture:SetVertexColor(GetFrameColour())
   frameTexture:Show()
 
   self:UpdateOrientation(frame)
