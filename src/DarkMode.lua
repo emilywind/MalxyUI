@@ -30,8 +30,7 @@ OnPlayerLogin(function()
 
   -- Pet Frame
   PetFrame:HookScript("OnUpdate", function()
-    PetFrameTexture:SetDesaturated(true)
-    PetFrameTexture:SetVertexColor(GetFrameColour())
+    DarkenTexture(PetFrameTexture)
   end)
 
   -- Target Frame
