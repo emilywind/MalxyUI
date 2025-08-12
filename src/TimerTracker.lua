@@ -22,7 +22,7 @@ OnPlayerLogin(function()
         timer.Text:ClearAllPoints()
         timer.Text:SetPoint("CENTER", timer.StatusBar, "CENTER")
         timer.Text:SetFont(STANDARD_TEXT_FONT, 11, "OUTLINE")
-        timer.Border:SetVertexColor(GetFrameColour())
+        DarkenTexture(timer.Border)
         timer.euiClean = true
       end
     end
