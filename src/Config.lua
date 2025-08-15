@@ -44,7 +44,8 @@ EUIDBDefaults = {
   nameplateShowLevel = true,
   nameplateHealthPercent = true,
   nameplateTotems = true,
-  nameplateHideFriendlyHealthbars = false,
+  nameplateHideFriendlyHealthbars = true,
+  nameplateHideFriendlyCastbars = true,
 
   portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
   classPortraitPack = EUI_TEXTURES.classCircles,
@@ -534,6 +535,17 @@ local function setupEuiOptions()
     EUI_Nameplates
   )
 
+  local nameplateHideFriendlyCastbars = newCheckbox(
+    "Hide Friendly Nameplate Cast Bars",
+    "Hide cast bars for friendly players.",
+    EUIDB.nameplateHideFriendlyCastbars,
+    function(value)
+      EUIDB.nameplateHideFriendlyCastbars = value
+    end,
+    nameplateHideFriendlyHealthbars,
+    EUI_Nameplates
+  )
+
   function DisableNameplateSettings()
     nameplateFontSlider:Disable()
     nameplateNameLength:Disable()
@@ -546,6 +558,7 @@ local function setupEuiOptions()
     arenaNumbers:Disable()
     nameplateHideCastText:Disable()
     nameplateHideFriendlyHealthbars:Disable()
+    nameplateHideFriendlyCastbars:Disable()
   end
 
   function EnableNameplateSettings()
@@ -560,6 +573,7 @@ local function setupEuiOptions()
     arenaNumbers:Enable()
     nameplateHideCastText:Enable()
     nameplateHideFriendlyHealthbars:Enable()
+    nameplateHideFriendlyCastbars:Enable()
   end
 
   if C_AddOns.IsAddOnLoaded('BetterBlizzPlates') then
