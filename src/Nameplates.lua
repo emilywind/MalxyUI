@@ -22,7 +22,7 @@ OnPlayerLogin(function()
     local isPersonal = C_NamePlate.GetNamePlateForUnit(frame.unit) == C_NamePlate.GetNamePlateForUnit("player")
 
     if isPersonal then
-      local _, className = UnitClass(frame.displayedUnit)
+      local _, className = UnitClass("player")
       local classR, classG, classB = GetClassColor(className)
       if not frame.emsUISkinned then
         local healthTex = EUIDB.healthBarTex
