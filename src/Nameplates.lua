@@ -22,6 +22,8 @@ OnPlayerLogin(function()
     local isPersonal = C_NamePlate.GetNamePlateForUnit(frame.unit) == C_NamePlate.GetNamePlateForUnit("player")
 
     if isPersonal then
+      local _, className = UnitClass(frame.displayedUnit)
+      local classR, classG, classB = GetClassColor(className)
       if not frame.emsUISkinned then
         local healthTex = EUIDB.healthBarTex
         local powerTex = EUIDB.powerBarTex
@@ -33,7 +35,7 @@ OnPlayerLogin(function()
       end
       if frame.optionTable.colorNameBySelection and not frame:IsForbidden() then
         if healthPercentage <= 100 and healthPercentage >= 30 then
-          frame.healthBar:SetStatusBarColor(0, 1, 0)
+          frame.healthBar:SetStatusBarColor(classR, classG, classB, 1)
         elseif healthPercentage < 30 then
           frame.healthBar:SetStatusBarColor(1, 0, 0)
         end
@@ -83,6 +85,12 @@ OnPlayerLogin(function()
     )
   end
 
+  local function setNil(table, member)
+    TextureLoadingGroupMixin.RemoveTexture(
+      { textures = table }, member
+    )
+  end
+
   local function modifyNamePlates(frame, options)
     if ( frame:IsForbidden() ) then return end
 
@@ -110,6 +118,55 @@ OnPlayerLogin(function()
   end
 
   hooksecurefunc("DefaultCompactNamePlateFrameSetup", modifyNamePlates)
+
+  function GetUnitReaction(unit)
+    local reaction = UnitReaction(unit, "player")
+    local isEnemy = false
+    local isFriend = false
+    local isNeutral = false
+
+    if reaction then
+      if reaction < 4 then
+        isEnemy = true
+      elseif reaction == 4 then
+        isNeutral = true
+      else
+        isFriend = true
+      end
+    end
+
+    return isEnemy, isFriend, isNeutral
+  end
+
+  hooksecurefunc(
+    NamePlateDriverFrame,
+    'GetNamePlateTypeFromUnit',
+    function(_, unit)
+      local _, isFriend, _ = GetUnitReaction(unit)
+      local isPlayer = UnitIsPlayer(unit)
+      if not isFriend then
+        setNil(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar')
+        setNil(DefaultCompactNamePlateFrameSetUpOptions, 'hideCastbar')
+      else
+        if isPlayer then
+          -- local role = UnitGroupRolesAssigned(unit)
+          if EUIDB.nameplateHideFriendlyHealthbars then
+            setTrue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar')
+          else
+            setNil(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar')
+          end
+          -- This method doesnt seem to work for castbar, works fine for healthbar.
+          if EUIDB.nameplateHideFriendlyCastbars then
+            setTrue(DefaultCompactNamePlateFrameSetUpOptions, 'hideCastbar')
+          else
+            setNil(DefaultCompactNamePlateFrameSetUpOptions, 'hideCastbar')
+          end
+        else
+          setNil(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar')
+          setNil(DefaultCompactNamePlateFrameSetUpOptions, 'hideCastbar')
+        end
+      end
+  end)
 
   hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
     if not frame.unit or not frame.isNameplate then return end
