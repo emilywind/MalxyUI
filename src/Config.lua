@@ -45,7 +45,7 @@ EUIDBDefaults = {
   nameplateHealthPercent = true,
   nameplateTotems = true,
   nameplateHideFriendlyHealthbars = true,
-  nameplateHideFriendlyCastbars = true,
+  nameplateHideFriendlyCastbars = false,
 
   portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
   classPortraitPack = EUI_TEXTURES.classCircles,
