@@ -55,9 +55,9 @@ EUIDBDefaults = {
   hideObjectiveTracker = true,
 
   queueicon = {
-    point = 'TOPRIGHT',
-    x = nil,
-    y = nil,
+    point = 'BOTTOMRIGHT',
+    x = -330,
+    y = 5,
   },
 }
 
