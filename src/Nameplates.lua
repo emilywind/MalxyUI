@@ -1,11 +1,7 @@
 OnPlayerLogin(function()
   if not EUIDB.skinNameplates or C_AddOns.IsAddOnLoaded('BetterBlizzPlates') then return end
 
-  if EUIDB.nameplateFriendlyClickthrough then
-    C_NamePlate.SetNamePlateFriendlyClickThrough(true)
-  else
-    C_NamePlate.SetNamePlateFriendlyClickThrough(false)
-  end
+  C_NamePlate.SetNamePlateFriendlyClickThrough(EUIDB.nameplateFriendlyClickthrough)
 
   local defaultFriendlyWidth, defaultFriendlyHeight = C_NamePlate.GetNamePlateFriendlySize()
 
