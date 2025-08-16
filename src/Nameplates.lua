@@ -163,9 +163,7 @@ OnPlayerLogin(function()
   end)
 
   hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
-    if not frame.unit or not frame.isNameplate then return end
-
-    if frame:IsForbidden() then return end
+    if not frame.unit or not frame.isNameplate or frame:IsForbidden() then return end
 
     if EUIDB.nameplateHideClassificationIcon then
       frame.classificationIndicator:SetAlpha(0)
@@ -173,11 +171,14 @@ OnPlayerLogin(function()
       frame.classificationIndicator:SetAlpha(1)
     end
 
-    if EUIDB.nameplateHideFriendlyHealthbars and not frame:IsForbidden() then
-      local _, isFriend = GetUnitReaction(frame.displayedUnit)
-      local alpha = isFriend and 0 or 1
-      frame.HealthBarsContainer:SetAlpha(alpha)
-      frame.selectionHighlight:SetAlpha(0)
+    if EUIDB.nameplateHideFriendlyHealthbars then
+      local isPersonal = C_NamePlate.GetNamePlateForUnit(frame.unit) == C_NamePlate.GetNamePlateForUnit("player")
+      if not isPersonal then
+        local isFriend = select(2, GetUnitReaction(frame.displayedUnit))
+        local alpha = isFriend and 0 or 1
+        frame.HealthBarsContainer:SetAlpha(alpha)
+        frame.selectionHighlight:SetAlpha(0)
+      end
     end
 
     local isPersonal = UnitIsUnit(frame.displayedUnit, "player")
