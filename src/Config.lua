@@ -10,7 +10,7 @@ EUIDBDefaults = {
   arenaNumbers = false,
   hideMicroMenu = false,
   hideBagBar = false,
-  hideArenaFrames = true,
+  hideArenaFrames = false,
 
   healthBarTex = EUI_TEXTURES.healthBar,
   powerBarTex = EUI_TEXTURES.powerBar,
@@ -56,8 +56,8 @@ EUIDBDefaults = {
 
   queueicon = {
     point = 'TOPRIGHT',
-    x = -300,
-    y = 0,
+    x = nil,
+    y = nil,
   },
 }
 
