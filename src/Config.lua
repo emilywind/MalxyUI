@@ -45,6 +45,7 @@ EUIDBDefaults = {
   nameplateTotems = true,
   nameplateHideClassificationIcon = true,
   nameplateHideFriendlyHealthbars = true,
+  nameplateFriendlyClickthrough = true,
 
   portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
   classPortraitPack = EUI_TEXTURES.classCircles,
@@ -618,6 +619,18 @@ local function setupEuiOptions()
     EUI_Nameplates
   )
 
+  local nameplateFriendlyClickthrough = newCheckbox(
+    "Friendly Nameplate Clickthrough",
+    "Allow clicking through friendly nameplates to interact with objects behind them.",
+    EUIDB.nameplateFriendlyClickthrough,
+    function(value)
+      EUIDB.nameplateFriendlyClickthrough = value
+      C_NamePlate.SetNamePlateFriendlyClickThrough(value)
+    end,
+    nameplateHideClassificationIcon,
+    EUI_Nameplates
+  )
+
   function DisableNameplateSettings()
     nameplateFontSlider:Disable()
     nameplateNameLength:Disable()
@@ -631,6 +644,7 @@ local function setupEuiOptions()
     nameplateHideCastText:Disable()
     nameplateHideFriendlyHealthbars:Disable()
     nameplateHideClassificationIcon:Disable()
+    nameplateFriendlyClickthrough:Disable()
   end
 
   function EnableNameplateSettings()
@@ -646,6 +660,7 @@ local function setupEuiOptions()
     nameplateHideCastText:Enable()
     nameplateHideFriendlyHealthbars:Enable()
     nameplateHideClassificationIcon:Enable()
+    nameplateFriendlyClickthrough:Enable()
   end
 
   if C_AddOns.IsAddOnLoaded('BetterBlizzPlates') then
