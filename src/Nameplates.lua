@@ -160,7 +160,8 @@ OnPlayerLogin(function()
           setNil(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar')
         end
       end
-  end)
+    end
+  )
 
   hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
     if not frame.unit or not frame.isNameplate or frame:IsForbidden() then return end
@@ -173,6 +174,8 @@ OnPlayerLogin(function()
         local isFriend = select(2, GetUnitReaction(frame.displayedUnit))
         local alpha = isFriend and 0 or 1
         frame.HealthBarsContainer:SetAlpha(alpha)
+      else
+        frame.HealthBarsContainer:SetAlpha(1)
       end
     end
 
