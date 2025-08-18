@@ -8,10 +8,10 @@ OnPlayerLogin(function()
 
   local defaultFriendlyWidth, defaultFriendlyHeight = C_NamePlate.GetNamePlateFriendlySize()
 
-  function SetFriendlyNameplateSize(isChange)
+  function SetFriendlyNameplateSize()
     if EUIDB.nameplateFriendlySmall then
       C_NamePlate.SetNamePlateFriendlySize((0.5 * defaultFriendlyWidth), defaultFriendlyHeight)
-    elseif isChange then
+    else
       C_NamePlate.SetNamePlateFriendlySize(defaultFriendlyWidth, defaultFriendlyHeight)
     end
   end

@@ -536,7 +536,7 @@ local function setupEuiOptions()
     EUIDB.nameplateFriendlySmall,
     function(value)
       EUIDB.nameplateFriendlySmall = value
-      SetFriendlyNameplateSize(true)
+      SetFriendlyNameplateSize()
     end,
     nameplateFriendlyNamesClassColor,
     EUI_Nameplates
