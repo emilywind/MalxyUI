@@ -34,6 +34,9 @@ OnPlayerLogin(function()
         ClassNameplateManaBarFrame:SetStatusBarTexture(powerTex)
         ClassNameplateManaBarFrame.FeedbackFrame.BarTexture:SetTexture(powerTex)
         ClassNameplateManaBarFrame.FeedbackFrame.LossGlowTexture:SetTexture(powerTex)
+        if frame.healthBar.myHealPrediction then
+          frame.healthBar.myHealPrediction:SetTexture(healthTex)
+        end
         frame.emsUISkinned = true
       end
       if frame.optionTable.colorNameBySelection and not frame:IsForbidden() then
@@ -94,7 +97,7 @@ OnPlayerLogin(function()
     )
   end
 
-  local function modifyNamePlates(frame, options)
+  local function modifyNamePlates(frame)
     if ( frame:IsForbidden() ) then return end
 
     local healthBar = frame.healthBar
