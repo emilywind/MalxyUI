@@ -31,11 +31,7 @@ local function make3DPortraitFG(frame)
   local foreground = frame.portraitFG:CreateTexture("foreLayer", "OVERLAY", nil)
   foreground:Hide()
   foreground:SetTexture(EUI_TEXTURES.portraitModelFront)
-  if EUIDB.uiMode == 'dark' then
-    foreground:SetVertexColor(0, 0, 0)
-  else
-    foreground:SetVertexColor(0.6, 0.6, 0.6)
-  end
+  foreground:SetVertexColor(0, 0, 0)
   foreground:SetAllPoints(frame.portraitFG)
   foreground:Show()
   frame.portraitFG.forelayer = foreground
