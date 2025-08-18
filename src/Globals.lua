@@ -122,10 +122,10 @@ for iconStyle, data in next, classInfo.styles do
 end
 
 function GetFrameColour()
-  if EUIDB.frameColor then
-    return unpack(EUIDB.frameColor)
+  if EUIDB.uiMode == 'dark' then
+    return 0.2, 0.2, 0.2
   else
-    return unpack(DEFAULT_FRAME_COLOUR)
+    return 0.8, 0.8, 0.8
   end
 end
 
@@ -179,6 +179,9 @@ function ApplyEuiBackdrop(b, frame)
 end
 
 function SetEuiBorderColor(border, r, g, b)
+  if not r or not g or not b then
+    border:SetVertexColor(unpack(GetFrameColour()))
+  end
   if border.SetVertexColor then
     border:SetVertexColor(r, g, b)
   else

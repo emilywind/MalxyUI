@@ -1,19 +1,24 @@
 function DarkenTexture(texture)
-  if not EUIDB.darkMode then return end
+  if EUIDB.uiMode == 'blizzard' then return end
 
   texture:SetDesaturated(true)
   texture:SetVertexColor(GetFrameColour())
 end
 
 function BlackenTexture(texture)
-  if not EUIDB.darkMode then return end
+  if EUIDB.uiMode == 'blizzard' then return end
 
-  texture:SetDesaturated(false)
-  texture:SetVertexColor(0.1, 0.1, 0.1)
+  texture:SetDesaturated(true)
+
+  if EUIDB.uiMode == 'dark' then
+    texture:SetVertexColor(0, 0, 0)
+  else
+    texture:SetVertexColor(0.8, 0.8, 0.8)
+  end
 end
 
 OnPlayerLogin(function()
-  if not EUIDB.darkMode then return end
+  if EUIDB.uiMode == 'blizzard' then return end
 
   -- Minimap
   DarkenTexture(MinimapCompassTexture)

@@ -22,7 +22,7 @@ local frame = CreateFrame("Frame")
 frame:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
 frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 frame:SetScript("OnEvent", function()
-  if not EUIDB.darkMode then
+  if EUIDB.uiMode == 'blizzard' then
     frame:UnregisterAllEvents()
     return
   end

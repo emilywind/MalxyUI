@@ -1,5 +1,5 @@
 local function applyEuiButtonSkin(bu)
-  if not EUIDB.darkMode then return end
+  if EUIDB.uiMode == 'blizzard' then return end
 
   if not bu then return end
   if bu.euiClean then return bu.border end
@@ -8,7 +8,7 @@ local function applyEuiButtonSkin(bu)
 
   if not nt then return end
 
-  DarkenTexture(nt)
+  BlackenTexture(nt)
 
   bu.euiClean = true
 end

@@ -3,7 +3,7 @@ local LSM = LibStub("LibSharedMedia-3.0")
 -- This table defines the addon's default settings:
 local name, EUI = ...
 EUIDBDefaults = {
-  darkMode = true,
+  uiMode = 'dark', -- 'dark', 'light', or 'blizzard'
 
   hideHotkeys = false,
   hideMacroText = false,
@@ -290,6 +290,17 @@ local function setupEuiOptions()
   euiTitle:SetPoint("TOPLEFT", 16, -16)
   euiTitle:SetText("Em's UI ("..version..")")
 
+  local uiModeChooser, uiModeDropdown = newDropdown(
+    "UI Mode",
+    { ["blizzard"] = "Blizzard", ["dark"] = "Dark", ["light"] = "Light" },
+    EUIDB.uiMode,
+    80,
+    function(value)
+      EUIDB.uiMode = value
+    end
+  )
+  uiModeChooser:SetPoint("TOPLEFT", euiTitle, "BOTTOMLEFT", 0, -16)
+
   local portraitSelect, portraitDropdown = newDropdown(
     "Portrait Style",
     {["3D"] = "3D", ["class"] = "Class", ["default"] = "Default"},
@@ -299,7 +310,7 @@ local function setupEuiOptions()
       EUIDB.portraitStyle = value
     end
   )
-  portraitSelect:SetPoint("TOPLEFT", euiTitle, "BOTTOMLEFT", 0, -16)
+  portraitSelect:SetPoint("TOPLEFT", uiModeDropdown, "BOTTOMLEFT", 0, -16)
 
   local classPortraitPack = newDropdown(
     "Class Portrait Pack",
@@ -377,32 +388,9 @@ local function setupEuiOptions()
   end
   UpdateDamageFontChooser()
 
-  local darkMode = newCheckbox(
-    "Dark Mode",
-    "Dark mode for action bars, objective tracker, and other HUD elements.",
-    EUIDB.darkMode,
-    function(value)
-      EUIDB.darkMode = value
-    end,
-    enableDamageFont
-  )
-
   local pvpText = EUI.panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   pvpText:SetText("PvP")
-  pvpText:SetPoint("TOPLEFT", darkMode, "BOTTOMLEFT", 0, -16)
-
-  local statusBarChooser = newDropdown(
-    "Status Bar Texture (Raid Frames and Nameplates)",
-    LSM_STATUSBAR,
-    EUIDB.healthBarTex,
-    200,
-    function(value)
-      EUIDB.healthBarTex = value
-      EUIDB.powerBarTex = value -- Sync power bar texture with health bar texture
-    end,
-    darkMode
-  )
-  statusBarChooser:SetPoint("LEFT", pvpText, "RIGHT", 295, 0)
+  pvpText:SetPoint("TOPLEFT", enableDamageFont, "BOTTOMLEFT", 0, -16)
 
   local dampeningDisplay = newCheckbox(
     "Dampening Display",
@@ -413,6 +401,18 @@ local function setupEuiOptions()
     end,
     pvpText
   )
+
+  local statusBarChooser = newDropdown(
+    "Status Bar Texture (Raid Frames and Nameplates)",
+    LSM_STATUSBAR,
+    EUIDB.healthBarTex,
+    200,
+    function(value)
+      EUIDB.healthBarTex = value
+      EUIDB.powerBarTex = value -- Sync power bar texture with health bar texture
+    end
+  )
+  statusBarChooser:SetPoint("LEFT", dampeningDisplay, "RIGHT", 300, 0)
 
   local tabBinder = newCheckbox(
     "Tab Binder",

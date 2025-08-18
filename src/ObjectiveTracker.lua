@@ -36,7 +36,7 @@ frame:SetScript('OnEvent', function()
     hideObjectiveTracker()
   end
 
-  if EUIDB.darkMode then
+  if EUIDB.uiMode ~= 'blizzard' then
     skinObjectiveTracker()
   end
 end)
