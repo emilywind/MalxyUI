@@ -34,6 +34,7 @@ OnPlayerLogin(function()
         ClassNameplateManaBarFrame.FeedbackFrame.BarTexture:SetTexture(powerTex)
         ClassNameplateManaBarFrame.FeedbackFrame.LossGlowTexture:SetTexture(powerTex)
         frame.emsUISkinned = true
+        frame.healthBar.myHealPrediction:SetTexture(healthTex)
       end
       if frame.optionTable.colorNameBySelection and not frame:IsForbidden() then
         if healthPercentage <= 100 and healthPercentage >= 30 then
