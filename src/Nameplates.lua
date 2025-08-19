@@ -28,8 +28,7 @@ OnPlayerLogin(function()
     local isPersonal = C_NamePlate.GetNamePlateForUnit(frame.unit) == C_NamePlate.GetNamePlateForUnit("player")
 
     if isPersonal then
-      local className = select(2, UnitClass("player"))
-      local classR, classG, classB = GetClassColor(className)
+      local classColor = GetUnitClassColor("player")
       if not frame.emsUISkinned then
         healthBar:SetStatusBarTexture(healthTex)
         ClassNameplateManaBarFrame:SetStatusBarTexture(powerTex)
@@ -42,7 +41,7 @@ OnPlayerLogin(function()
       end
       if frame.optionTable.colorNameBySelection then
         if healthPercentage <= 100 and healthPercentage >= 30 then
-          healthBar:SetStatusBarColor(classR, classG, classB, 1)
+          healthBar:SetStatusBarColor(classColor.r, classColor.g, classColor.b, 1)
         elseif healthPercentage < 30 then
           healthBar:SetStatusBarColor(1, 0, 0)
         end
@@ -189,10 +188,9 @@ OnPlayerLogin(function()
     end
 
     if EUIDB.nameplateFriendlyNamesClassColor and UnitIsPlayer(frame.unit) and UnitIsFriend("player", frame.displayedUnit) then
-      local _,className = UnitClass(frame.displayedUnit)
-      local classR, classG, classB = GetClassColor(className)
+      local classColor = GetUnitClassColor(frame.displayedUnit)
 
-      frame.name:SetTextColor(classR, classG, classB, 1)
+      frame.name:SetTextColor(classColor.r, classColor.g, classColor.b, 1)
     end
 
     if (EUIDB.nameplateShowLevel) then

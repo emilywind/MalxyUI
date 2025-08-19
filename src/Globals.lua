@@ -248,3 +248,8 @@ function GetUnitReaction(unit)
 
   return isEnemy, isFriend, isNeutral
 end
+
+function GetUnitClassColor(unit)
+  local class = select(2, UnitClass(unit))
+  return RAID_CLASS_COLORS[class]
+end
