@@ -9,8 +9,7 @@ OnPlayerLogin(function()
     local unit = healthbar.unit
     healthbar:SetStatusBarDesaturated(1)
     if UnitIsPlayer(unit) and UnitIsConnected(unit) and UnitClass(unit) then
-      local _, class = UnitClass(unit)
-      local color = RAID_CLASS_COLORS[class]
+      local color = GetUnitClassColor(unit)
       healthbar:SetStatusBarColor(color.r, color.g, color.b)
     elseif UnitIsPlayer(unit) and (not UnitIsConnected(unit)) then
       healthbar:SetStatusBarColor(0.5, 0.5, 0.5)
