@@ -16,15 +16,16 @@ OnPlayerLogin(function()
 
       local function getLatency() return "|c00ffffff" .. select(4, GetNetStats()) .. "|r ms" end
 
-      local isGliding, canGlide, forwardSpeed = C_PlayerInfo.GetGlidingInfo()
+      local isGliding, _, forwardSpeed = C_PlayerInfo.GetGlidingInfo()
       local function getMovementSpeed()
+        local speed = 0
         if isGliding then
-          return "|c00ffffff" ..
-              string.format("%d", forwardSpeed and (forwardSpeed / BASE_MOVEMENT_SPEED * 100)) .. "%|r speed"
+          speed = forwardSpeed and (forwardSpeed / BASE_MOVEMENT_SPEED * 100)
         else
-          return "|c00ffffff" ..
-              string.format("%d", (GetUnitSpeed("player") / BASE_MOVEMENT_SPEED * 100)) .. "%|r speed"
+          speed = (GetUnitSpeed("player") / BASE_MOVEMENT_SPEED * 100)
         end
+
+        return "|c00ffffff" .. string.format("%d", speed) .. "%|r speed"
       end
 
       local result = {}
