@@ -158,13 +158,11 @@ OnPlayerLogin(function()
 
     SetDefaultFont(frame.name, EUIDB.nameplateNameFontSize)
 
-    local hasArenaNumber = false
-
     if EUIDB.arenaNumbers and IsActiveBattlefieldArena() and UnitIsPlayer(frame.unit) and UnitIsEnemy("player", frame.unit) then -- Check to see if unit is a player to avoid needless checks on pets
       for i = 1, 5 do
         if UnitIsUnit(frame.unit, "arena" .. i) then
           frame.name:SetText(i)
-          hasArenaNumber = true
+          frame.hasArenaNumber = true
           break
         end
       end
@@ -220,7 +218,7 @@ OnPlayerLogin(function()
       end
     end
 
-    if not hasArenaNumber and (EUIDB.nameplateHideServerNames or EUIDB.nameplateNameLength > 0) then
+    if not frame.hasArenaNumber and (EUIDB.nameplateHideServerNames or EUIDB.nameplateNameLength > 0) then
       local name, realm = UnitName(frame.displayedUnit)
 
       if not EUIDB.nameplateHideServerNames and realm then
