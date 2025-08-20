@@ -129,17 +129,12 @@ OnPlayerLogin(function()
     'GetNamePlateTypeFromUnit',
     function(_, unit)
       local isFriend = select(2, GetUnitReaction(unit))
-      local isPlayer = UnitIsPlayer(unit)
       if not isFriend then
         setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', false)
       else
-        if isPlayer then
-          -- local role = UnitGroupRolesAssigned(unit)
-          if EUIDB.nameplateHideFriendlyHealthbars then
-            setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', true)
-          else
-            setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', false)
-          end
+        -- local role = UnitGroupRolesAssigned(unit)
+        if EUIDB.nameplateHideFriendlyHealthbars then
+          setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', true)
         else
           setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', false)
         end
@@ -151,18 +146,6 @@ OnPlayerLogin(function()
     if not frame.unit or not frame.isNameplate or frame:IsForbidden() then return end
 
     frame.classificationIndicator:SetAlpha(EUIDB.nameplateHideClassificationIcon and 0 or 1)
-
-    if EUIDB.nameplateHideFriendlyHealthbars then
-      local isPersonal = C_NamePlate.GetNamePlateForUnit(frame.unit) == C_NamePlate.GetNamePlateForUnit("player")
-      if not isPersonal then
-        local isFriend = select(2, GetUnitReaction(frame.displayedUnit))
-        local alpha = isFriend and 0 or 1
-        frame.HealthBarsContainer:SetAlpha(alpha)
-      else
-        frame.HealthBarsContainer:SetAlpha(1)
-      end
-    end
-
     frame.selectionHighlight:SetAlpha(0) -- Hide the ugly target background
 
     local isPersonal = UnitIsUnit(frame.displayedUnit, "player")
