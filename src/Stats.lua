@@ -31,7 +31,10 @@ OnPlayerLogin(function()
       local result = {}
       table.insert(result, getFPS())
       table.insert(result, getLatency())
-      table.insert(result, getMovementSpeed())
+
+      if EUIDB.enableStatsSpeed then
+        table.insert(result, getMovementSpeed())
+      end
 
       return table.concat(result, " ")
     end

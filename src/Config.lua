@@ -65,6 +65,7 @@ EUIDBDefaults = {
   },
 
   enableStatsFrame = false,
+  enableStatsSpeed = false,
   statsframe = {
     point = 'BOTTOMLEFT',
     x = 5,
@@ -139,7 +140,7 @@ local function setupEuiOptions()
   category.ID = "EmsUI"
   Settings.RegisterAddOnCategory(category)
 
-  local function newCheckbox(label, description, initialValue, onChange, relativeEl, frame)
+  local function newCheckbox(label, description, initialValue, onChange, relativeEl, frame, point1, point2, x, y)
     if ( not frame ) then
       frame = EUI.panel
     end
@@ -159,7 +160,7 @@ local function setupEuiOptions()
     check.tooltip = description
     check:SetChecked(initialValue)
     if (relativeEl) then
-      check:SetPoint("TOPLEFT", relativeEl, "BOTTOMLEFT", 0, -8)
+      check:SetPoint(point1 or "TOPLEFT", relativeEl, point2 or "BOTTOMLEFT", x or 0, y or -8)
     else
       check:SetPoint("TOPLEFT", 16, -16)
     end
@@ -473,9 +474,36 @@ local function setupEuiOptions()
     EUIDB.enableStatsFrame,
     function(value)
       EUIDB.enableStatsFrame = value
+      UpdateStatsSpeed()
     end,
     castBarScale
   )
+
+  local enableStatsSpeed = newCheckbox(
+    "Show Movement Speed",
+    "Show movement speed percentage in the stats frame.",
+    EUIDB.enableStatsSpeed,
+    function(value)
+      EUIDB.enableStatsSpeed = value
+    end,
+    enableStatsFrame,
+    EUI.panel,
+    "LEFT",
+    "RIGHT",
+    0,
+    0
+  )
+
+  enableStatsSpeed:SetPoint("LEFT", enableStatsFrame, "RIGHT", 200, 0)
+
+  function UpdateStatsSpeed()
+    if EUIDB.enableStatsFrame then
+      enableStatsSpeed:Enable()
+    else
+      enableStatsSpeed:Disable()
+    end
+  end
+  UpdateStatsSpeed()
 
   ----------------
   -- Nameplates --
