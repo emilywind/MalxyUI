@@ -158,7 +158,7 @@ EUI_BACKDROP = {
 }
 
 function ApplyEuiBackdrop(b, frame)
-  if (b.euiClean) then return end
+  if b.euiClean then return end
 
   frame = frame or CreateFrame("Frame", nil, b)
 
