@@ -34,4 +34,5 @@
   <Include file="TooltipSpecAndIlvl.lua" />
   <Include file="HideArenaFrames.lua" />
   <Include file="sArenaTheme.lua" />
+  <Include file="OmnibarSkin.lua" />
 </Ui>

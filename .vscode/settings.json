@@ -251,7 +251,8 @@
         "CHALLENGE_COMPLETE_DUNGEON_SCORE",
         "sArenaMixin",
         "BASE_MOVEMENT_SPEED",
-        "ColorManager"
+        "ColorManager",
+        "OmniBar_StartCooldown"
     ],
     "Lua.diagnostics.disable": [
         "cast-local-type",
