@@ -12,7 +12,7 @@
         "utf8": "disable"
     },
     "Lua.workspace.library": [
-        "~/.vscode/extensions/ketho.wow-api-0.20.8/Annotations/Core"
+        "~/.vscode/extensions/ketho.wow-api-0.21.0/Annotations/Core"
     ],
     "Lua.diagnostics.globals": [
         "EditModeManagerFrame",
@@ -250,7 +250,8 @@
         "BigWigsLoader",
         "CHALLENGE_COMPLETE_DUNGEON_SCORE",
         "sArenaMixin",
-        "BASE_MOVEMENT_SPEED"
+        "BASE_MOVEMENT_SPEED",
+        "ColorManager"
     ],
     "Lua.diagnostics.disable": [
         "cast-local-type",
