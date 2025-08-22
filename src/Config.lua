@@ -103,8 +103,7 @@ local function euiDefaults()
 end
 
 local function resetToDefaults()
-  EUIDB = {}
-  EUIDB = copyTable(EUIDBDefaults, EUIDB)
+  EUIDB = copyTable(EUIDBDefaults, {})
 end
 
 OnPlayerLogin(euiDefaults)
