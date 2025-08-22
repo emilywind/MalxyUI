@@ -1,6 +1,5 @@
 local LSM = LibStub("LibSharedMedia-3.0")
 
--- This table defines the addon's default settings:
 local name, EUI = ...
 EUIDBDefaults = {
   uiMode = 'dark', -- 'dark', 'light', 'black', or 'blizzard'
@@ -74,39 +73,24 @@ EUIDBDefaults = {
   },
 }
 
--- This function copies values from one table into another
 local function copyTable(src, dst)
-  -- If no source (defaults) is specified, return an empty table:
   if type(src) ~= "table" then return {} end
-  -- If no target (saved variable) is specified, create a new table:
   if type(dst) ~= "table" then dst = {} end
-  -- Loop through the source (defaults):
+
   for k, v in pairs(src) do
-    -- If the value is a sub-table:
     if type(v) == "table" then
-      -- Recursively call the function:
       dst[k] = copyTable(v, dst[k])
-    -- Or if the default value type doesn't match the existing value type:
     elseif type(v) ~= type(dst[k]) then
-      -- Overwrite the existing value with the default one:
       dst[k] = v
     end
   end
-  -- Return the destination table:
+
   return dst
 end
 
-local function euiDefaults()
-  -- Copy the values from the defaults table into the saved variables table
-  -- if it exists, and assign the result to the saved variable:
+OnPlayerLogin(function()
   EUIDB = copyTable(EUIDBDefaults, EUIDB)
-end
-
-local function resetToDefaults()
-  EUIDB = copyTable(EUIDBDefaults, {})
-end
-
-OnPlayerLogin(euiDefaults)
+end)
 
 local function tableToWowDropdown(table)
   local wowTable = {}
@@ -907,7 +891,7 @@ local function setupEuiOptions()
   resetDefaults:SetSize(120,22)
   resetDefaults:SetText("Reset to Defaults")
   resetDefaults:SetScript("OnClick", function()
-    resetToDefaults()
+    EUIDB = copyTable(EUIDBDefaults)
     ReloadUI()
   end)
 
