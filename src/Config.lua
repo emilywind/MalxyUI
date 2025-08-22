@@ -682,8 +682,8 @@ local function setupEuiOptions()
   )
 
   local nameplateColorInterrupt = newCheckbox(
-    "Color Castbars by interrupt availability",
-    "Color castbars red when no interrupt is available, yellow when it will be, and green when it is ready.",
+    "Color Castbars by Interrupt Availability",
+    "Color castbars based upon interrupt availability. This allows you to track your interrupt cooldown without having to look elsewhere.",
     EUIDB.nameplateCastbarColorInterrupt,
     function(value)
       EUIDB.nameplateCastbarColorInterrupt = value
