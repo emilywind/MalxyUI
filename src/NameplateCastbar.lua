@@ -26,8 +26,6 @@ local interruptSpells = {
   --47482, -- Leap (DK Transform)
 }
 
-local knownInterruptSpellID = nil
-
 local petSummonSpells = {
   [30146]  = true,   -- Summon Demonic Tyrant (Demonology)
   [691]    = true,   -- Summon Felhunter (for Spell Lock)
@@ -37,17 +35,17 @@ local petSummonSpells = {
 local function GetInterruptSpell()
   for _, spellID in ipairs(interruptSpells) do
     if C_SpellBook.IsSpellKnown(spellID) or (UnitExists("pet") and C_SpellBook.IsSpellKnown(spellID, true)) then
-      knownInterruptSpellID = spellID
       petSummonSpells[spellID] = true
       return spellID
     elseif petSummonSpells[spellID] then
       petSummonSpells[spellID] = nil
     end
   end
-  knownInterruptSpellID = nil
+
+  return nil
 end
 
-local function OnEvent(self, event, unit, _, spellID)
+local function OnEvent(_, event, _, _, spellID)
   if event == "UNIT_SPELLCAST_SUCCEEDED" then
     if not petSummonSpells[spellID] then return end
   end
@@ -89,12 +87,10 @@ function SkinCastbar(frame, unitToken)
 
   if EUIDB.nameplateCastbarColorInterrupt then
     if spellName or spellID then
-      local isFriend = select(2, GetUnitCharacteristics(unitToken))
+      local isFriend = false -- select(2, GetUnitCharacteristics(unitToken))
       if isFriend then return end
 
-      if not knownInterruptSpellID then
-        GetInterruptSpell()
-      end
+      local knownInterruptSpellID = GetInterruptSpell()
       if not knownInterruptSpellID or notInterruptible then return end
 
       local start, duration = TWWGetSpellCooldown(knownInterruptSpellID)
@@ -129,14 +125,14 @@ function SkinCastbar(frame, unitToken)
           -- Adjust the spark position based on the percentage, reverse if channeling
           local sparkPosition
           if channeling then
-              -- Channeling: reverse the direction, starting from the right
-              sparkPosition = (1 - interruptPercent) * castBar:GetWidth()
+            -- Channeling: reverse the direction, starting from the right
+            sparkPosition = (1 - interruptPercent) * castBar:GetWidth()
           else
-              -- Casting: normal direction, from left to right
-              sparkPosition = interruptPercent * castBar:GetWidth()
-              if empoweredCast then
-                  sparkPosition = sparkPosition * 0.7 -- ? idk why but on empowered casts it needs to be roughly 30% to the left compared to cast/channel
-              end
+            -- Casting: normal direction, from left to right
+            sparkPosition = interruptPercent * castBar:GetWidth()
+            if empoweredCast then
+                sparkPosition = sparkPosition * 0.7 -- ? idk why but on empowered casts it needs to be roughly 30% to the left compared to cast/channel
+            end
           end
 
           castBar.spark:SetPoint("CENTER", castBar, "LEFT", sparkPosition, 0)
@@ -148,6 +144,7 @@ function SkinCastbar(frame, unitToken)
               if castBarTexture then
                 castBarTexture:SetDesaturated(false)
               end
+              castBar:SetStatusBarColor(1, 1, 1)
               if castBar.spark then
                 castBar.spark:Hide()
               end
@@ -162,6 +159,7 @@ function SkinCastbar(frame, unitToken)
         if castBarTexture then
           castBarTexture:SetDesaturated(false)
         end
+        castBar:SetStatusBarColor(1, 1, 1)
         if castBar.spark then
           castBar.spark:Hide()
         end
