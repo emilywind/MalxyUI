@@ -17,6 +17,20 @@ OnPlayerLogin(function()
   end
   SetFriendlyNameplateSize()
 
+  local function colorPersonalNameplate(frame)
+    local healthBar = frame.healthBar
+    local healthPercentage = ceil((UnitHealth(frame.displayedUnit) / UnitHealthMax(frame.displayedUnit) * 100))
+    local classColor = GetUnitClassColor("player")
+
+    if frame.optionTable.colorNameBySelection then
+      if healthPercentage <= 100 and healthPercentage >= 30 then
+        healthBar:SetStatusBarColor(classColor.r, classColor.g, classColor.b, 1)
+      elseif healthPercentage < 30 then
+        healthBar:SetStatusBarColor(1, 0, 0)
+      end
+    end
+  end
+
   -------------------------------------------------------
   -- Red color when below 30% on Personal Resource Bar --
   -------------------------------------------------------
@@ -28,7 +42,6 @@ OnPlayerLogin(function()
     local isPersonal = C_NamePlate.GetNamePlateForUnit(frame.unit) == C_NamePlate.GetNamePlateForUnit("player")
 
     if isPersonal then
-      local classColor = GetUnitClassColor("player")
       if not frame.emsUISkinned then
         healthBar:SetStatusBarTexture(healthTex)
         ClassNameplateManaBarFrame:SetStatusBarTexture(powerTex)
@@ -39,13 +52,7 @@ OnPlayerLogin(function()
         end
         frame.emsUISkinned = true
       end
-      if frame.optionTable.colorNameBySelection then
-        if healthPercentage <= 100 and healthPercentage >= 30 then
-          healthBar:SetStatusBarColor(classColor.r, classColor.g, classColor.b, 1)
-        elseif healthPercentage < 30 then
-          healthBar:SetStatusBarColor(1, 0, 0)
-        end
-      end
+      colorPersonalNameplate(frame)
     end
 
     if not frame.healthPercentage then
@@ -96,7 +103,7 @@ OnPlayerLogin(function()
   end
 
   local function modifyNamePlates(frame)
-    if ( frame:IsForbidden() ) then return end
+    if frame:IsForbidden() or not frame.isNameplate then return end
 
     local healthBar = frame.healthBar
     healthBar:SetStatusBarTexture(healthTex)
