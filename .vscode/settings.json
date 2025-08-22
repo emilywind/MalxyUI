@@ -252,7 +252,9 @@
         "sArenaMixin",
         "BASE_MOVEMENT_SPEED",
         "ColorManager",
-        "OmniBar_StartCooldown"
+        "OmniBar_StartCooldown",
+        "CastingBarMixin",
+        "CompactUnitFrame_UpdateName"
     ],
     "Lua.diagnostics.disable": [
         "cast-local-type",

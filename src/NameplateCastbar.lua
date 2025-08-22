@@ -177,3 +177,49 @@ function TWWGetSpellCooldown(spellID)
       spellCooldownInfo.modRate
   end
 end
+
+function GetSafeNameplate(unit)
+  local nameplate = C_NamePlate.GetNamePlateForUnit(unit, issecure())
+  -- If there's no nameplate or the nameplate doesn't have a UnitFrame, return nils.
+  if not nameplate or not nameplate.UnitFrame then return nil, nil end
+
+  local frame = nameplate.UnitFrame
+  -- If none of the above conditions are met, return both the nameplate and the frame.
+  return nameplate, frame
+end
+
+hooksecurefunc(CastingBarMixin, "OnEvent", function(self, event, ...)
+  if not self.unit or not self.unit:find("nameplate") then return end
+
+  local frame = select(2, GetSafeNameplate(self.unit))
+  if not frame then return end
+  if self.unit == "player" then return end
+
+  if frame.hideCastbarOverride then
+    frame.castBar:Hide()
+    return
+  end
+
+  -- if showNameplateCastbarTimer then
+  --   BBP.UpdateCastTimer(frame, self.unit)
+  -- end
+
+  -- if showNameplateTargetText then
+  --   BBP.UpdateNameplateTargetText(frame, self.unit)
+  -- end
+
+  if EUIDB.nameplateCastbarColorInterrupt then
+    SkinCastbar(frame, self.unit)
+
+    if not UnitTargetCastbarUpdate then
+      UnitTargetCastbarUpdate = CreateFrame("Frame")
+      UnitTargetCastbarUpdate:RegisterEvent("UNIT_TARGET")
+      UnitTargetCastbarUpdate:SetScript("OnEvent", function(_, _, unit)
+        local npFrame = select(2, GetSafeNameplate(unit))
+        if npFrame and not UnitIsPlayer(unit) then
+          SkinCastbar(npFrame, unit)
+        end
+      end)
+    end
+  end
+end)
