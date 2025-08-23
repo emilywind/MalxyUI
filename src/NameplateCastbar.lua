@@ -34,7 +34,7 @@ local petSummonSpells = {
 
 local function GetInterruptSpell()
   for _, spellID in ipairs(interruptSpells) do
-    if C_SpellBook.IsSpellKnown(spellID) or (UnitExists("pet") and C_SpellBook.IsSpellKnown(spellID, 1)) then
+    if IsSpellKnownOrOverridesKnown(spellID) or (UnitExists("pet") and IsSpellKnownOrOverridesKnown(spellID, true)) then
       petSummonSpells[spellID] = true
       return spellID
     elseif petSummonSpells[spellID] then
