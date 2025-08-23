@@ -32,9 +32,13 @@ local petSummonSpells = {
   [108503] = true,   -- Grimoire of Sacrifice
 }
 
+local isSpellKnown = function(spellID, isPet)
+  return C_SpellBook.IsSpellInSpellBook(spellID, isPet and 1 or 0, true)
+end
+
 local function GetInterruptSpell()
   for _, spellID in ipairs(interruptSpells) do
-    if IsSpellKnownOrOverridesKnown(spellID) or (UnitExists("pet") and IsSpellKnownOrOverridesKnown(spellID, true)) then
+    if isSpellKnown(spellID, false) or (UnitExists("pet") and isSpellKnown(spellID, true)) then
       petSummonSpells[spellID] = true
       return spellID
     elseif petSummonSpells[spellID] then
@@ -87,8 +91,8 @@ function SkinCastbar(frame, unitToken)
 
   if EUIDB.nameplateCastbarColorInterrupt then
     if spellName or spellID then
-      local isFriend = select(2, GetUnitCharacteristics(unitToken))
-      if isFriend then return end
+      local isEnemy = GetUnitCharacteristics(unitToken)
+      if not isEnemy then return end
 
       local knownInterruptSpellID = GetInterruptSpell()
       if not knownInterruptSpellID or notInterruptible then return end
