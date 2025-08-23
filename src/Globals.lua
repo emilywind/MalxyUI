@@ -201,7 +201,7 @@ function SetDefaultFont(textObject, size, outlinestyle)
 end
 
 function SkinStatusBar(bar)
-  if not bar or (bar and bar.euiClean) then return end
+  if not bar or bar.euiClean then return end
 
   if bar.BorderMid then
     bar.BorderMid:SetAlpha(0)
