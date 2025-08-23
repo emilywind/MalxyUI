@@ -20,7 +20,7 @@ local function init()
   timerBar:SetPoint("TOP", LFGDungeonReadyPopup, "BOTTOM", 0, -5)
   timerBar:SetSize(194, 14)
 
-  SkinProgressBar(timerBar)
+  SkinStatusBar(timerBar)
 
   timerBar.Text = timerBar:CreateFontString(nil, "OVERLAY")
   timerBar.Text:SetFontObject(GameFontHighlight)

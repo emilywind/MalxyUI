@@ -200,7 +200,7 @@ function SetDefaultFont(textObject, size, outlinestyle)
   textObject:SetFont(EUIDB.font, size, outlinestyle)
 end
 
-function SkinProgressBar(bar)
+function SkinStatusBar(bar)
   if not bar or (bar and bar.euiClean) then return end
 
   if bar.BorderMid then
