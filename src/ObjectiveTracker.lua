@@ -1,8 +1,8 @@
 local function hideObjectiveTracker()
-  local instanceType = select(2, IsInInstance())
+  local instanceData = GetInstanceData()
   local numTrackedQuests = C_QuestLog.GetNumQuestWatches()
 
-  if instanceType == 'pvp' or instanceType == 'arena' or numTrackedQuests == 0 then
+  if instanceData.isInPvP or numTrackedQuests == 0 then
     ObjectiveTrackerFrame:SetAlpha(0)
     RegisterStateDriver(ObjectiveTrackerFrame, 'visibility', 'hide')
   else

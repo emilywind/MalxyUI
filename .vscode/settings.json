@@ -283,7 +283,10 @@
         "LFG_FOLLOWER_NAME_PREFIX",
         "PartyUtil",
         "TSMDestroyBtn",
-        "Game15Font_Shadow"
+        "Game15Font_Shadow",
+        "ShouldShowName",
+        "ALL_SPECS",
+        "class"
     ],
     "Lua.diagnostics.disable": [
         "cast-local-type",

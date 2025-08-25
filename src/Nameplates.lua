@@ -14,8 +14,10 @@ OnPlayerLogin(function()
   }
 
   for cVar, value in pairs(cVars) do
-    SetCVar(cVar, value)
+    C_CVar.SetCVar(cVar, value)
   end
+
+  C_CVar.SetCVar("nameplateResourceOnTarget", EUIDB.nameplateResourceOnTarget and 1 or 0)
 
   C_NamePlate.SetNamePlateFriendlyClickThrough(EUIDB.nameplateFriendlyClickthrough)
 
@@ -139,6 +141,10 @@ OnPlayerLogin(function()
       castBar.euiClean = true
     end
 
+    if EUIDB.partyPointer then
+      PartyPointer(frame)
+    end
+
     if (frame.ClassificationFrame) then
       frame.ClassificationFrame:SetPoint('CENTER', frame.healthBar, 'LEFT', 0, 0)
     end
@@ -163,6 +169,9 @@ OnPlayerLogin(function()
       end
     end
   )
+
+  -- local duelEventFrame = CreateFrame("Frame")
+  -- duelEventFrame:RegisterEvent("DUEL_STARTED")
 
   hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
     if not frame.unit or not frame.isNameplate or frame:IsForbidden() then return end

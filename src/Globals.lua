@@ -264,3 +264,83 @@ end
 CASTBAR_NO_INTERRUPT_COLOR = { 1, 0, 0.01568627543747425 }
 
 CASTBAR_DELAYED_INTERRUPT_COLOR = { 1, 0.4784314036369324, 0.9568628072738647 }
+
+function GetNameplateUnitInfo(frame, unit)
+  unit = unit or frame.unit or frame.displayedUnit
+  if not unit then return end
+
+  if not frame.BetterBlizzPlates.unitInfo then
+    frame.BetterBlizzPlates.unitInfo = {}
+  end
+  local info = frame.BetterBlizzPlates.unitInfo
+
+  info.name = UnitName(unit)
+  info.isSelf = UnitIsUnit("player", unit)
+  info.isTarget = UnitIsUnit("target", unit)
+  info.isFocus = UnitIsUnit("focus", unit)
+  info.isPet = UnitIsUnit("pet", unit)
+  info.isPlayer = UnitIsPlayer(unit)
+  info.isNpc = not info.isPlayer
+  info.unitGUID = UnitGUID(unit)
+  info.class = info.isPlayer and UnitClassBase(unit) or nil
+  info.reaction = UnitReaction(unit, "player")
+  info.isEnemy = (info.reaction and info.reaction < 4) and not info.isSelf
+  info.isNeutral = (info.reaction and info.reaction == 4) and not info.isSelf
+  info.isFriend = (info.reaction and info.reaction >= 5) and not info.isSelf
+  info.playerClass = select(2, UnitClass("player"))
+
+  return info
+end
+
+local SpecCache = {}
+function GetSpecID(frame)
+  local unit = frame.unit
+  -- Check if the unit is a player
+  if not UnitIsPlayer(unit) then
+    return nil
+  end
+
+  local guid = UnitGUID(frame.unit)
+  local instanceData = GetInstanceData()
+
+  -- Return cached specID if already found
+  if SpecCache[guid] and instanceData.isInPvP then
+    return SpecCache[guid]
+  end
+
+  local tooltipData = C_TooltipInfo.GetUnit(unit)
+  if not tooltipData or not tooltipData.guid or not tooltipData.lines then
+    return nil
+  end
+
+  local tooltipGUID = tooltipData.guid
+  if not tooltipGUID then return nil end
+
+  -- Iterate through tooltip lines to find the spec name
+  for _, line in ipairs(tooltipData.lines) do
+    if line and line.type == Enum.TooltipDataLineType.None and line.leftText and line.leftText ~= "" then
+      local specID = ALL_SPECS[line.leftText]
+      if specID then
+        SpecCache[tooltipGUID] = specID         -- Cache result
+        return specID
+      end
+    end
+  end
+
+  return nil   -- Return nil if no spec ID was found
+end
+
+function GetInstanceData()
+  local inInstance, instanceType = IsInInstance()
+  local isInArena = inInstance and (instanceType == "arena")
+  local isInBg = inInstance and (instanceType == "pvp")
+  local isInPvP = isInBg or isInArena
+  local isInPvE = inInstance and (instanceType == "party" or instanceType == "raid" or instanceType == "scenario")
+
+  return {
+    isInPvP = isInPvP,
+    isInBg = isInBg,
+    isInArena = isInArena,
+    isInPvE = isInPvE
+  }
+end

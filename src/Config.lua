@@ -47,6 +47,11 @@ EUIDBDefaults = {
   nameplateHideFriendlyHealthbars = true,
   nameplateFriendlyClickthrough = true,
   nameplateCastbarColorInterrupt = true,
+  nameplateResourceOnTarget = 1,
+
+  partyPointer = true,
+  partyPointerScale = 1,
+  partyPointerTexture = 14,
 
   portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
   classPortraitPack = EUI_TEXTURES.classCircles,
@@ -703,6 +708,18 @@ local function setupEuiOptions()
     EUI_Nameplates
   )
 
+  local nameplateResourceOnTarget = newCheckbox(
+    "Show Resource on Target Nameplate",
+    "Show the resource (mana, energy, rage, etc) on the nameplate of your current target.",
+    EUIDB.nameplateResourceOnTarget == 1,
+    function(value)
+      EUIDB.nameplateResourceOnTarget = value and 1 or 0
+      C_CVar.SetCVar("nameplateResourceOnTarget", EUIDB.nameplateResourceOnTarget)
+    end,
+    nameplateColorInterrupt,
+    EUI_Nameplates
+  )
+
   function DisableNameplateSettings()
     nameplateFontDropdown:Disable()
     nameplateFontSlider:Disable()
@@ -719,6 +736,7 @@ local function setupEuiOptions()
     nameplateHideClassificationIcon:Disable()
     nameplateFriendlyClickthrough:Disable()
     nameplateColorInterrupt:Disable()
+    nameplateResourceOnTarget:Disable()
   end
 
   function EnableNameplateSettings()
@@ -737,6 +755,7 @@ local function setupEuiOptions()
     nameplateHideClassificationIcon:Enable()
     nameplateFriendlyClickthrough:Enable()
     nameplateColorInterrupt:Enable()
+    nameplateResourceOnTarget:Enable()
   end
 
   if C_AddOns.IsAddOnLoaded('BetterBlizzPlates') then
@@ -934,7 +953,22 @@ local function setupEuiOptions()
     end,
     autoSellGrey
   )
-  autoRepairOptions:SetPoint("TOPLEFT", autoSellGrey, "BOTTOMRIGHT", -20, 0)
+  autoRepairOptions:SetPoint("TOPLEFT", autoSellGrey, "BOTTOMRIGHT", -20, -6)
+
+  local partyPointerText = EUI_Misc:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+  partyPointerText:SetText("Party Pointer")
+  partyPointerText:SetPoint("TOPLEFT", autoRepairOptions, "BOTTOMLEFT", 0, -48)
+
+  local partyPointer = newCheckbox(
+    "Enable Party Pointer",
+    "Show a pointer for your party members on their nameplates.",
+    EUIDB.partyPointer,
+    function(value)
+      EUIDB.partyPointer = value
+    end,
+    partyPointerText,
+    EUI_Misc
+  )
 
   -------------------
   --Reload Buttons --
