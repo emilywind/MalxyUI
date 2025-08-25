@@ -4,8 +4,11 @@ OnPlayerLogin(function()
     g:RegisterEvent("MERCHANT_SHOW")
     g:SetScript("OnEvent", function()
       if (CanMerchantRepair()) then
-        local cost = GetRepairAllCost()
+        local cost, canRepair = GetRepairAllCost()
+        if not canRepair then return end
+
         if cost > 0 then
+          local costText = C_CurrencyInfo.GetCoinText(cost)
           local money = GetMoney()
           if IsInGuild() and EUIDB.autoRepair == 'Guild' then
             local guildMoney = GetGuildBankWithdrawMoney()
@@ -15,13 +18,13 @@ OnPlayerLogin(function()
 
             if guildMoney > cost and CanGuildBankRepair() then
               RepairAllItems(1)
-              print(format("|cfff07100Repair cost covered by G-Bank: %.1fg|r", cost * 0.0001))
+              print(format("|cfff07100Repair cost covered by G-Bank: " .. costText .. "|r"))
               return
             end
           end
           if money > cost then
             RepairAllItems()
-            print(format("|cffead000Repair cost: %.1fg|r", cost * 0.0001))
+            print(format("|cffead000Repair cost: " .. costText .. "|r"))
           else
             print("Not enough gold to cover the repair cost.")
           end
