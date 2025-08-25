@@ -109,6 +109,8 @@ OnPlayerLogin(function()
     healthBar:SetStatusBarTexture(healthTex)
     healthBar.myHealPrediction:SetTexture(healthTex)
 
+    ModifyFont(frame.name, EUIDB.nameplateFont, EUIDB.nameplateNameFontSize)
+
     local castBar = frame.castBar
     if (castBar) then
       if EUIDB.nameplateHideCastText then
@@ -117,7 +119,7 @@ OnPlayerLogin(function()
 
       if (castBar.euiClean) then return end
 
-      SetDefaultFont(castBar.Text, EUIDB.nameplateNameFontSize - 1)
+      ModifyFont(castBar.Text, EUIDB.nameplateFont, EUIDB.nameplateNameFontSize - 1)
 
       ApplyEuiBackdrop(castBar.Icon, castBar)
 
@@ -165,8 +167,6 @@ OnPlayerLogin(function()
       return
     end
 
-    SetDefaultFont(frame.name, EUIDB.nameplateNameFontSize)
-
     if EUIDB.arenaNumbers and IsActiveBattlefieldArena() and isPlayer and isEnemy then -- Check to see if unit is a player to avoid needless checks on pets
       for i = 1, 5 do
         if UnitIsUnit(frame.unit, "arena" .. i) then
@@ -188,6 +188,7 @@ OnPlayerLogin(function()
         frame.levelText = frame.healthBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
         local isLargeNameplates = tonumber(GetCVar("nameplateVerticalScale")) >= 2.7
         frame.levelText:SetPoint("RIGHT", frame.healthBar, "RIGHT", -1, 0)
+        ModifyFont(frame.levelText, EUIDB.nameplateFont)
       end
       frame.unitLevel = UnitEffectiveLevel(frame.unit)
       local c = GetCreatureDifficultyColor(frame.unitLevel)

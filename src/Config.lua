@@ -33,6 +33,7 @@ EUIDBDefaults = {
 
   -- Nameplate Settings
   skinNameplates = true,
+  nameplateFont = EUI_FONTS.Andika,
   nameplateNameFontSize = 16,
   nameplateHideServerNames = true,
   nameplateNameLength = 20,
@@ -185,6 +186,14 @@ local function setupEuiOptions()
 
         UIDropDownMenu_AddButton(info)
       end
+    end
+
+    dropdown.Disable = function()
+      dropdown.disabled = true
+    end
+
+    dropdown.Enable = function()
+      dropdown.disabled = false
     end
 
     return dropdownText, dropdown
@@ -518,6 +527,18 @@ local function setupEuiOptions()
     EUI_Nameplates
   )
 
+  local nameplateFont, nameplateFontDropdown = newDropdown(
+    "Nameplate Font",
+    LSM_FONTS,
+    EUIDB.nameplateFont,
+    200,
+    function(value)
+      EUIDB.nameplateFont = value
+    end,
+    EUI_Nameplates
+  )
+  nameplateFont:SetPoint("TOPLEFT", skinNameplates, "BOTTOMLEFT", 0, -16)
+
   local nameplateFontSlider = newSlider(
     "EUI_NameplateFontSlider",
     FONT_SIZE.." "..FONT_SIZE_TEMPLATE,
@@ -526,9 +547,10 @@ local function setupEuiOptions()
     24,
     1,
     "Font size for Nameplates",
-    skinNameplates,
+    nameplateFont,
     EUI_Nameplates
   )
+  nameplateFontSlider:SetPoint("LEFT", nameplateFontDropdown, "RIGHT", 0, 0)
 
   local nameplateNameLength = newCheckbox(
     "Abbreviate Unit Names",
@@ -680,6 +702,7 @@ local function setupEuiOptions()
   )
 
   function DisableNameplateSettings()
+    nameplateFontDropdown:Disable()
     nameplateFontSlider:Disable()
     nameplateNameLength:Disable()
     nameplateHideServerNames:Disable()
@@ -697,6 +720,7 @@ local function setupEuiOptions()
   end
 
   function EnableNameplateSettings()
+    nameplateFontDropdown:Enable()
     nameplateFontSlider:Enable()
     nameplateNameLength:Enable()
     nameplateHideServerNames:Enable()

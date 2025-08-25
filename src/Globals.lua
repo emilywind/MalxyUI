@@ -193,11 +193,16 @@ end
 
 function SetDefaultFont(textObject, size, outlinestyle)
   if not textObject then return end
-  local _, currSize = textObject:GetFont()
+  local currSize = select(2, textObject:GetFont())
   if not size then size = currSize end
   if not outlinestyle then outlinestyle = "THINOUTLINE" end
 
   textObject:SetFont(EUIDB.font, size, outlinestyle)
+end
+
+function ModifyFont(textObject, font, size)
+  local fontFile, currSize, flags = textObject:GetFont()
+  textObject:SetFont(font or fontFile, size or currSize, flags)
 end
 
 function SkinStatusBar(bar)
