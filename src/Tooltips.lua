@@ -68,6 +68,7 @@ end
 local function cleanupTooltip(tip)
 	local unit = GetTooltipUnit()
 	local unitRecord = GetUnitRecord(unit)
+	if not unitRecord then return end
 	local creatureFamily = UnitCreatureFamily(unitRecord.id)
 	local creatureType = UnitCreatureType(unitRecord.id)
 
@@ -92,14 +93,19 @@ local function cleanupTooltip(tip)
 
 		if (type(gttLineText) == "string") then
 			local isGttLineTextUnitPopupRightClick = (gttLineText == UNIT_POPUP_RIGHT_CLICK)
+			local isSpecLine = unitRecord.className and (specNames:Contains(gttLineText:match("^(.+) " .. unitRecord.className .. "$")))
 
 			if (isGttLineTextUnitPopupRightClick) or
 					((gttLineText == FACTION_ALLIANCE) or (gttLineText == FACTION_HORDE) or (gttLineText == FACTION_NEUTRAL)) or
 					(gttLineText == PVP_ENABLED) or
 					(hideCreatureTypeIfNoCreatureFamily) and (gttLineText == creatureType) or
-					(hideSpecializationAndClassText) and ((gttLineText == unitRecord.className) or (specNames:Contains(gttLineText:match("^(.+) " .. unitRecord.className .. "$")))) then
+					(hideSpecializationAndClassText) and ((gttLineText == unitRecord.className) or isSpecLine) then
 
-				gttLine:SetText(nil)
+				if isSpecLine then
+					tip.spec = gttLineText
+				else
+					gttLine:SetText(nil)
+				end
 
 				if (isGttLineTextUnitPopupRightClick) and (i > 1) then
 					_G["GameTooltipTextLeft" .. (i - 1)]:SetText(nil)

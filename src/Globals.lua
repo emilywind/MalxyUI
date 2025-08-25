@@ -289,7 +289,31 @@ function GetNameplateUnitInfo(frame, unit)
   return info
 end
 
+local function GetLocalizedSpecs()
+  local specs = {}
+
+  for classID = 1, GetNumClasses() do
+    local _, class = GetClassInfo(classID)
+    local classMale = LOCALIZED_CLASS_NAMES_MALE[class]
+    local classFemale = LOCALIZED_CLASS_NAMES_FEMALE[class]
+
+    for specIndex = 1, C_SpecializationInfo.GetNumSpecializationsForClassID(classID) do
+      local specID, specName = GetSpecializationInfoForClassID(classID, specIndex)
+
+      if classMale then
+        specs[string.format("%s %s", specName, classMale)] = specID
+      end
+      if classFemale and classFemale ~= classMale then
+        specs[string.format("%s %s", specName, classFemale)] = specID
+      end
+    end
+  end
+
+  return specs
+end
+
 local SpecCache = {}
+local ALL_SPECS = GetLocalizedSpecs()
 function GetSpecID(frame)
   local unit = frame.unit or frame.displayedUnit
   if not UnitIsPlayer(unit) then
@@ -320,8 +344,6 @@ function GetSpecID(frame)
       end
     end
   end
-
-  return nil
 end
 
 function GetInstanceData()

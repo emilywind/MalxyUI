@@ -17,7 +17,7 @@ OnPlayerLogin(function()
     C_CVar.SetCVar(cVar, value)
   end
 
-  C_CVar.SetCVar("nameplateResourceOnTarget", EUIDB.nameplateResourceOnTarget and '1' or '0')
+  C_CVar.SetCVar("nameplateResourceOnTarget", EUIDB.nameplateResourceOnTarget and 1 or 0)
 
   C_NamePlate.SetNamePlateFriendlyClickThrough(EUIDB.nameplateFriendlyClickthrough)
 

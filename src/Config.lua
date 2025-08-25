@@ -47,7 +47,7 @@ EUIDBDefaults = {
   nameplateHideFriendlyHealthbars = true,
   nameplateFriendlyClickthrough = true,
   nameplateCastbarColorInterrupt = true,
-  nameplateResourceOnTarget = 1,
+  nameplateResourceOnTarget = true,
 
   partyPointer = true,
   partyPointerScale = 1,
@@ -713,10 +713,10 @@ local function setupEuiOptions()
   local nameplateResourceOnTarget = newCheckbox(
     "Show Resource on Target Nameplate",
     "Show the resource (mana, energy, rage, etc) on the nameplate of your current target.",
-    EUIDB.nameplateResourceOnTarget == 1,
+    EUIDB.nameplateResourceOnTarget,
     function(value)
-      EUIDB.nameplateResourceOnTarget = value and 1 or 0
-      C_CVar.SetCVar("nameplateResourceOnTarget", EUIDB.nameplateResourceOnTarget)
+      EUIDB.nameplateResourceOnTarget = value
+      C_CVar.SetCVar("nameplateResourceOnTarget", EUIDB.nameplateResourceOnTarget and 1 or 0)
     end,
     nameplateColorInterrupt,
     EUI_Nameplates

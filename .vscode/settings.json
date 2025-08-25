@@ -286,7 +286,9 @@
         "Game15Font_Shadow",
         "ShouldShowName",
         "ALL_SPECS",
-        "class"
+        "class",
+        "LOCALIZED_CLASS_NAMES_MALE",
+        "LOCALIZED_CLASS_NAMES_FEMALE"
     ],
     "Lua.diagnostics.disable": [
         "cast-local-type",
