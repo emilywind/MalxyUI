@@ -36,4 +36,6 @@
   <Include file="HideArenaFrames.lua" />
   <Include file="sArenaTheme.lua" />
   <Include file="OmnibarSkin.lua" />
+  <Include file="FasterLoot.lua" />
+  <Include file="AutoVendor.lua" />
 </Ui>

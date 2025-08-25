@@ -281,7 +281,8 @@
         "INCOMING_SUMMON_TOOLTIP_SUMMON_DECLINED",
         "TableUtil",
         "LFG_FOLLOWER_NAME_PREFIX",
-        "PartyUtil"
+        "PartyUtil",
+        "TSMDestroyBtn"
     ],
     "Lua.diagnostics.disable": [
         "cast-local-type",
