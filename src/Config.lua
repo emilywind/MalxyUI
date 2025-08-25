@@ -71,6 +71,10 @@ EUIDBDefaults = {
     x = 5,
     y = 3
   },
+
+  -- Automation
+  autoRepair = 'Personal', -- 'Off', 'Guild', or 'Personal'
+  autoSellGrey = true,
 }
 
 local function copyTable(src, dst)
@@ -829,13 +833,13 @@ local function setupEuiOptions()
   end
 
   ------------
-  -- Hiding --
+  -- Misc --
   ------------
-  local EUI_Hiding = makePanel("EUI_Hiding", EUI.panel, "Hiding")
+  local EUI_Misc = makePanel("EUI_Misc", EUI.panel, "Misc")
 
-  local hidingText = EUI_Hiding:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-  hidingText:SetText("Hiding")
-  hidingText:SetPoint("TOPLEFT", 16, -16)
+  local miscSectionText = EUI_Misc:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+  miscSectionText:SetText("Miscellaneous")
+  miscSectionText:SetPoint("TOPLEFT", 16, -16)
 
   local hideHotkeys = newCheckbox(
     "Hide Hotkeys on Action Bars",
@@ -844,8 +848,8 @@ local function setupEuiOptions()
     function(value)
       EUIDB.hideHotkeys = value
     end,
-    hidingText,
-    EUI_Hiding
+    miscSectionText,
+    EUI_Misc
   )
 
   local hideMacroText = newCheckbox(
@@ -856,7 +860,7 @@ local function setupEuiOptions()
       EUIDB.hideMacroText = value
     end,
     hideHotkeys,
-    EUI_Hiding
+    EUI_Misc
   )
 
   local hideMicroMenu = newCheckbox(
@@ -868,7 +872,7 @@ local function setupEuiOptions()
       SetMicroMenuVisibility()
     end,
     hideMacroText,
-    EUI_Hiding
+    EUI_Misc
   )
 
   local hideBagBar = newCheckbox(
@@ -880,8 +884,31 @@ local function setupEuiOptions()
       SetBagBarVisibility()
     end,
     hideMicroMenu,
-    EUI_Hiding
+    EUI_Misc
   )
+
+  local autoSellGrey = newCheckbox(
+    "Auto Sell Grey Items",
+    "Automatically sell grey items when visiting a vendor.",
+    EUIDB.autoSellGrey,
+    function(value)
+      EUIDB.autoSellGrey = value
+    end,
+    hideBagBar,
+    EUI_Misc
+  )
+
+  local autoRepairOptions = newDropdown(
+    "Auto Repair",
+    { ["Off"] = "Off", ["Personal"] = "Personal", ["Guild"] = "Guild" },
+    EUIDB.autoRepair,
+    80,
+    function(value)
+      EUIDB.autoRepair = value
+    end,
+    autoSellGrey
+  )
+  autoRepairOptions:SetPoint("TOPLEFT", autoSellGrey, "BOTTOMRIGHT", -20, 0)
 
   -------------------
   --Reload Buttons --
@@ -896,7 +923,7 @@ local function setupEuiOptions()
   end)
 
   addReloadButton(EUI.panel)
-  addReloadButton(EUI_Hiding)
+  addReloadButton(EUI_Misc)
   addReloadButton(EUI_Nameplates)
   addReloadButton(EUI_Tooltips)
 
