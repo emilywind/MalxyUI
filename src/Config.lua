@@ -52,6 +52,8 @@ EUIDBDefaults = {
   partyPointer = true,
   partyPointerScale = 1,
   partyPointerTexture = 14,
+  partyPointerHealer = true,
+  partyPointerHideRaidmarker = true,
 
   portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
   classPortraitPack = EUI_TEXTURES.classCircles,

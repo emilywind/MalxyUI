@@ -269,10 +269,7 @@ function GetNameplateUnitInfo(frame, unit)
   unit = unit or frame.unit or frame.displayedUnit
   if not unit then return end
 
-  if not frame.BetterBlizzPlates.unitInfo then
-    frame.BetterBlizzPlates.unitInfo = {}
-  end
-  local info = frame.BetterBlizzPlates.unitInfo
+  local info = {}
 
   info.name = UnitName(unit)
   info.isSelf = UnitIsUnit("player", unit)
@@ -294,12 +291,12 @@ end
 
 local SpecCache = {}
 function GetSpecID(frame)
-  local unit = frame.unit
+  local unit = frame.unit or frame.displayedUnit
   if not UnitIsPlayer(unit) then
     return nil
   end
 
-  local guid = UnitGUID(frame.unit)
+  local guid = UnitGUID(unit)
   local instanceData = GetInstanceData()
 
   if SpecCache[guid] and instanceData.isInPvP then
@@ -312,7 +309,7 @@ function GetSpecID(frame)
   end
 
   local tooltipGUID = tooltipData.guid
-  if not tooltipGUID then return nil end
+  if not tooltipGUID then return end
 
   for _, line in ipairs(tooltipData.lines) do
     if line and line.type == Enum.TooltipDataLineType.None and line.leftText and line.leftText ~= "" then
@@ -339,5 +336,21 @@ function GetInstanceData()
     isInBg = isInBg,
     isInArena = isInArena,
     isInPvE = isInPvE
+  }
+end
+
+function GetUnitRecord(unit)
+  local className, classFileName, classID = UnitClass(unit)
+
+  return {
+    id = unit,
+    guid = UnitGUID(unit),
+    isPlayer = UnitIsPlayer(unit),
+    level = UnitEffectiveLevel(unit),
+    isWildBattlePet = UnitIsWildBattlePet(unit),
+    classID = classID,
+    className = className,
+    classFileName = classFileName,
+    sex = UnitSex(unit),
   }
 end

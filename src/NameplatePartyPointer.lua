@@ -1,4 +1,3 @@
--- Healer spec id's
 local HealerSpecs = {
   [105]  = true,   --> druid resto
   [270]  = true,   --> monk mw
@@ -26,47 +25,31 @@ local ppTextures = {
   [14] = 'plunderstorm-glues-logoarrow',
 }
 
-local pointerOffsets = {
-  [2] = 2,
-  [5] = -2,
-}
-
-local RAID_CLASS_COLORS = RAID_CLASS_COLORS
-
-local playerClass = select(2, UnitClass("player"))
-
--- Class Indicator
 function PartyPointer(frame)
-  if not frame.EUI then
-    frame.EUI = {}
-  end
+  if not EUIDB.partyPointer or frame:IsForbidden() then return end
 
-  local info = frame.EUI.unitInfo or GetNameplateUnitInfo(frame)
-  frame.EUI.unitInfo = info
-  if not info or not info.isPlayer then return end
+  local info = GetNameplateUnitInfo(frame)
+  if not info then return end
 
-  local instanceInfo = GetInstanceData()
-
-  local isInParty = UnitInParty(frame.unit)
+  local isInParty = UnitInParty(frame.displayedUnit)
 
   local pointerMode =  EUIDB.partyPointerTexture
   local normalTexture = ppTextures[pointerMode]
 
-  if isInParty and not info.isFriend or info.isSelf then
+  if info.isEnemy or not isInParty or not info.isPlayer or info.isSelf or info.isNpc then
     if EUIDB.partyPointerHideRaidmarker then
       frame.RaidTargetFrame.RaidTargetIcon:SetAlpha(1)
     end
     if frame.partyPointer then
       frame.partyPointer:Hide()
     end
-    if frame.ppChange then
-      frame.hideNameOverride = nil
-      frame.ppChange = nil
-    end
     return
+  else
+    if frame.partyPointer then
+      frame.partyPointer:Show()
+    end
   end
 
-  -- Initialize Class Icon Frame
   if not frame.partyPointer then
     frame.partyPointer = CreateFrame("Frame", nil, frame)
     frame.partyPointer:SetFrameLevel(0)
@@ -96,42 +79,9 @@ function PartyPointer(frame)
 
     frame.partyPointer:SetIgnoreParentAlpha(true)
     frame.partyPointer:SetFrameStrata("LOW")
-
-    if not frame.classIndicatorCC then
-      frame.classIndicatorCC = CreateFrame("Frame", nil, frame.partyPointer)
-      frame.classIndicatorCC:SetSize(39, 39)
-      frame.classIndicatorCC:SetFrameStrata("HIGH")
-      frame.classIndicatorCC:Hide()
-
-      frame.classIndicatorCC.Icon = frame.classIndicatorCC:CreateTexture(nil, "OVERLAY", nil, 6)
-      frame.classIndicatorCC.Icon:SetPoint("CENTER", frame.partyPointer.icon)
-      frame.classIndicatorCC.mask = frame.classIndicatorCC:CreateMaskTexture()
-      frame.classIndicatorCC.mask:SetTexture("Interface/Masks/CircleMaskScalable")
-      frame.classIndicatorCC.mask:SetSize(40, 40)
-      frame.classIndicatorCC.mask:SetPoint("CENTER", frame.partyPointer.icon)
-      frame.classIndicatorCC.Icon:AddMaskTexture(frame.classIndicatorCC.mask)
-      frame.classIndicatorCC.Icon:SetSize(39, 39)
-
-      frame.classIndicatorCC.Cooldown = CreateFrame("Cooldown", nil, frame.classIndicatorCC, "CooldownFrameTemplate")
-      frame.classIndicatorCC.Cooldown:SetAllPoints(frame.classIndicatorCC.Icon)
-      frame.classIndicatorCC.Cooldown:SetDrawEdge(false)
-      frame.classIndicatorCC.Cooldown:SetDrawSwipe(true)
-      frame.classIndicatorCC.Cooldown:SetSwipeColor(0, 0, 0, 0.7)
-      frame.classIndicatorCC.Cooldown:SetSwipeTexture("Interface\\CharacterFrame\\TempPortraitAlphaMask")
-      frame.classIndicatorCC.Cooldown:SetUseCircularEdge(true)
-      frame.classIndicatorCC.Cooldown:SetReverse(true)
-
-      frame.classIndicatorCC.Glow = frame.classIndicatorCC:CreateTexture(nil, "OVERLAY", nil, 7)
-      frame.classIndicatorCC.Glow:SetAtlas("charactercreate-ring-select")
-      frame.classIndicatorCC.Glow:SetPoint("CENTER", frame.partyPointer.icon, "CENTER", 0, 0)
-      frame.classIndicatorCC.Glow:SetDesaturated(true)
-      frame.classIndicatorCC.Glow:SetSize(54, 54)
-      frame.classIndicatorCC.Glow:SetDrawLayer("OVERLAY", 7)
-    end
   end
   frame.partyPointer.icon:SetAtlas(normalTexture)
   frame.partyPointer:SetAlpha(1)
-
 
   if pointerMode == 2 or pointerMode == 3 then
     frame.partyPointer.icon:SetRotation(math.rad(90))
@@ -141,30 +91,19 @@ function PartyPointer(frame)
 
   frame.partyPointer:SetScale(EUIDB.partyPointerScale)
   frame.partyPointer.icon:SetWidth(120)
+  frame.partyPointer.icon:SetHeight(120)
   frame.partyPointer.highlight:SetWidth(120 + 26)
+  frame.partyPointer.highlight:SetHeight(120 + 26)
   frame.partyPointer.healerIcon:SetScale(EUIDB.partyPointerScale)
-
-  -- Visibility checks
-  -- if ((config.partyPointerArenaOnly and not BBP.isInArena) or (config.partyPointerBgOnly and not BBP.isInBg)) and not config.partyPointerTestMode then
-  --   if not ((config.partyPointerArenaOnly and config.partyPointerBgOnly) and (BBP.isInArena or BBP.isInBg)) then
-  --     frame.partyPointer:Hide()
-  --     if config.partyPointerHideRaidmarker then
-  --       if not config.hideRaidmarkIndicator then
-  --         frame.RaidTargetFrame.RaidTargetIcon:SetAlpha(1)
-  --       end
-  --     end
-  --     return
-  --   end
-  -- end
 
   local resourceAnchor = nil
   if EUIDB.nameplateResourceOnTarget then
     resourceAnchor = frame:GetParent().driverFrame.classNamePlateMechanicFrame
   end
 
-  frame.partyPointer:SetPoint("BOTTOM", resourceAnchor or frame.name, "TOP", 0, 70)
+  frame.partyPointer:SetPoint("BOTTOM", resourceAnchor or frame.name, "TOP", 0, 0)
 
-  local classColor = RAID_CLASS_COLORS[class]
+  local classColor = GetUnitClassColor(frame.displayedUnit)
   local r, g, b = classColor.r, classColor.g, classColor.b
 
   frame.partyPointer.icon:SetVertexColor(r, g, b)
@@ -178,10 +117,9 @@ function PartyPointer(frame)
     end
   end
 
-  -- Check for Healer Only Mode
   local specID = GetSpecID(frame)
 
-  if EUIDB.partyPointerHealer then
+  if specID and EUIDB.partyPointerHealer then
     if HealerSpecs[specID] then
       frame.partyPointer.healerIcon:Show()
       frame.partyPointer.healerIcon:ClearAllPoints()
@@ -193,15 +131,47 @@ function PartyPointer(frame)
     end
   else
     frame.partyPointer.healerIcon:Hide()
-  end
-  frame.partyPointer:Show()
-  if EUIDB.partyPointerHideRaidmarker then
-    frame.RaidTargetFrame.RaidTargetIcon:SetAlpha(0)
-  end
-
-  if frame.ppChange then
-    frame.HealthBarsContainer:SetAlpha(1)
-    frame.hideNameOverride = nil
-    frame.ppChange = nil
+    frame.partyPointer:Show()
+    if EUIDB.partyPointerHideRaidmarker then
+      frame.RaidTargetFrame.RaidTargetIcon:SetAlpha(0)
+    end
   end
 end
+
+local function RefreshAllNameplates()
+  for _, frame in pairs(C_NamePlate.GetNamePlates()) do
+    PartyPointer(frame)
+  end
+end
+
+local updateFrame = CreateFrame("Frame")
+
+local function UpdateNpWidthShuffle(_, event)
+  local instanceInfo = GetInstanceData()
+  if event == "ARENA_OPPONENT_UPDATE" or event == "GROUP_ROSTER_UPDATE" then
+    if not instanceInfo.isInArena then return end
+    local aura = C_UnitAuras.GetPlayerAuraBySpellID(32727)     -- Arena Preparation
+    if not aura then return end
+
+    if InCombatLockdown() then
+      if not updateFrame.eventRegistered then
+        updateFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+        updateFrame.eventRegistered = true
+      end
+    else
+      RefreshAllNameplates()
+      C_Timer.After(1, function()
+        if not InCombatLockdown() then
+          RefreshAllNameplates()
+        end
+      end)
+    end
+  elseif event == "PLAYER_REGEN_ENABLED" then
+    updateFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
+    updateFrame.eventRegistered = false
+    RefreshAllNameplates()
+  end
+end
+updateFrame:SetScript("OnEvent", UpdateNpWidthShuffle)
+updateFrame:RegisterEvent("ARENA_OPPONENT_UPDATE")
+updateFrame:RegisterEvent("GROUP_ROSTER_UPDATE")

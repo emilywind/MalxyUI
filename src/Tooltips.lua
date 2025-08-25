@@ -51,22 +51,6 @@ local function skinGameTooltip()
 	end
 end
 
-local function getUnitRecord(unit)
-	local className, classFileName, classID = UnitClass(unit)
-
-	return {
-		id = unit,
-		guid = UnitGUID(unit),
-		isPlayer = UnitIsPlayer(unit),
-		level = UnitEffectiveLevel(unit),
-		isWildBattlePet = UnitIsWildBattlePet(unit),
-		classID = classID,
-		className = className,
-		classFileName = classFileName,
-		sex = UnitSex(unit),
-	}
-end
-
 local function getUnitHealthColor(unit)
 	local r, g, b
 
@@ -83,7 +67,7 @@ end
 
 local function cleanupTooltip(tip)
 	local unit = GetTooltipUnit()
-	local unitRecord = getUnitRecord(unit)
+	local unitRecord = GetUnitRecord(unit)
 	local creatureFamily = UnitCreatureFamily(unitRecord.id)
 	local creatureType = UnitCreatureType(unitRecord.id)
 
@@ -246,7 +230,7 @@ OnPlayerLogin(function()
     if self ~= GameTooltip then return end
 
 		local unit = GetTooltipUnit()
-		local unitRecord = getUnitRecord(unit)
+		local unitRecord = GetUnitRecord(unit)
 
     skinGameTooltip()
 		cleanupTooltip(self)
