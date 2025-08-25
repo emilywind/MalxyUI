@@ -958,17 +958,28 @@ local function setupEuiOptions()
   autoRepairOptions:SetPoint("TOPLEFT", autoSellGrey, "BOTTOMRIGHT", -20, -6)
 
   local partyPointerText = EUI_Misc:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-  partyPointerText:SetText("Party Pointer")
+  partyPointerText:SetText("Party Pointers")
   partyPointerText:SetPoint("TOPLEFT", autoRepairOptions, "BOTTOMLEFT", 0, -48)
 
   local partyPointer = newCheckbox(
-    "Enable Party Pointer",
+    "Enable Party Pointers",
     "Show a pointer for your party members on their nameplates.",
     EUIDB.partyPointer,
     function(value)
       EUIDB.partyPointer = value
     end,
     partyPointerText,
+    EUI_Misc
+  )
+
+  local partyPointerHealer = newCheckbox(
+    "Show Healer Markers",
+    "Show a specific marker for healers in your party.",
+    EUIDB.partyPointerHealer,
+    function(value)
+      EUIDB.partyPointerHealer = value
+    end,
+    partyPointer,
     EUI_Misc
   )
 
