@@ -1,7 +1,8 @@
 local function hideObjectiveTracker()
   local instanceType = select(2, IsInInstance())
+  local numTrackedQuests = C_QuestLog.GetNumQuestWatches()
 
-  if instanceType == 'pvp' or instanceType == 'arena' then
+  if instanceType == 'pvp' or instanceType == 'arena' or numTrackedQuests == 0 then
     ObjectiveTrackerFrame:SetAlpha(0)
     RegisterStateDriver(ObjectiveTrackerFrame, 'visibility', 'hide')
   else
@@ -31,6 +32,7 @@ end
 local frame = CreateFrame('Frame')
 frame:RegisterEvent('PLAYER_ENTERING_WORLD')
 frame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+frame:RegisterEvent("QUEST_WATCH_LIST_CHANGED")
 frame:SetScript('OnEvent', function()
   if EUIDB.hideObjectiveTracker then
     hideObjectiveTracker()
