@@ -295,12 +295,14 @@ OnPlayerLogin(function()
 	GameTooltip:HookScript("OnUpdate", cleanupTooltip)
 
 	GameTooltipStatusBar:HookScript("OnValueChanged", function(self)
-		local unit = GetTooltipUnit()
-
 		if EUIDB.tooltipHideHealthBar then
 			self:Hide()
 			return
+		else
+			self:Show()
 		end
+
+		local unit = GetTooltipUnit()
 		local unitClassColor = getUnitHealthColor(unit)
 
 	  self:SetStatusBarColor(unitClassColor:GetRGB())
