@@ -209,7 +209,6 @@ OnPlayerLogin(function()
     if (EUIDB.nameplateShowLevel) then
       if not frame.levelText then
         frame.levelText = frame.healthBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-        local isLargeNameplates = tonumber(GetCVar("nameplateVerticalScale")) >= 2.7
         frame.levelText:SetPoint("RIGHT", frame.healthBar, "RIGHT", -1, 0)
         ModifyFont(frame.levelText, EUIDB.nameplateFont)
       end
