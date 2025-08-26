@@ -148,43 +148,50 @@ OnPlayerLogin(function()
     end
   end
 
-  hooksecurefunc(
-    NamePlateDriverFrame,
-    'GetNamePlateTypeFromUnit',
-    function(_, unit)
-      local isFriend = select(2, GetUnitCharacteristics(unit))
-      if not isFriend then
-        setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', false)
-      else
-        -- local role = UnitGroupRolesAssigned(unit)
-        if EUIDB.nameplateHideFriendlyHealthbars then
-          setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', true)
-        else
+  local instanceInfo = GetInstanceData()
+
+  if instanceInfo.isInPvE then
+    hooksecurefunc(
+      NamePlateDriverFrame,
+      'GetNamePlateTypeFromUnit',
+      function(_, unit)
+        local isFriend = select(2, GetUnitCharacteristics(unit))
+        if not isFriend then
           setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', false)
+        else
+          -- local role = UnitGroupRolesAssigned(unit)
+          if EUIDB.nameplateHideFriendlyHealthbars then
+            setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', true)
+          else
+            setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', false)
+          end
         end
       end
-    end
-  )
+    )
+  end
 
   -- local duelEventFrame = CreateFrame("Frame")
   -- duelEventFrame:RegisterEvent("DUEL_STARTED")
 
   hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
-    if not frame.unit or not frame.isNameplate or frame:IsForbidden() then return end
+    local unit = frame.displayedUnit or frame.unit
+    if not unit or not frame.isNameplate or frame:IsForbidden() then return end
 
     frame.classificationIndicator:SetAlpha(EUIDB.nameplateHideClassificationIcon and 0 or 1)
     frame.selectionHighlight:SetAlpha(0) -- Hide the ugly target background
 
     PartyPointer(frame)
 
-    local isEnemy, isFriend, _, isPlayer = GetUnitCharacteristics(frame.displayedUnit)
-
     local isPersonal = UnitIsUnit(frame.displayedUnit, "player")
-    if isPersonal then
-      if frame.levelText then
-        frame.levelText:SetText('')
-      end
-      return
+
+    local isEnemy, isFriend, _, isPlayer = GetUnitCharacteristics(unit)
+
+    if EUIDB.nameplateHideFriendlyHealthbars and isFriend and not isPersonal then
+      frame.HealthBarsContainer:Hide()
+      frame.HealthBarsContainer:SetAlpha(0)
+    else
+      frame.HealthBarsContainer:Show()
+      frame.HealthBarsContainer:SetAlpha(1)
     end
 
     if EUIDB.arenaNumbers and IsActiveBattlefieldArena() and isPlayer and isEnemy then -- Check to see if unit is a player to avoid needless checks on pets
@@ -241,11 +248,14 @@ OnPlayerLogin(function()
       frame.levelText:SetTextColor( c.r, c.g, c.b )
       frame.levelText:SetText(levelText .. levelSuffix)
       frame.levelText:Show()
-    elseif (not EUIDB.nameplateShowLevel) then
-      if (frame.levelText) then
-        frame.levelText:SetText('')
-        frame.levelText:Hide()
-      end
+    elseif not EUIDB.nameplateShowLevel and frame.levelText then
+      frame.levelText:SetText('')
+      frame.levelText:Hide()
+    end
+
+    if isPersonal and frame.levelText then
+      frame.levelText:SetText('')
+      frame.levelText:Hide()
     end
 
     if not frame.hasArenaNumber and (EUIDB.nameplateHideServerNames or EUIDB.nameplateNameLength > 0) then
