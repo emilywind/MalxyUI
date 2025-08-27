@@ -288,7 +288,19 @@
         "ALL_SPECS",
         "class",
         "LOCALIZED_CLASS_NAMES_MALE",
-        "LOCALIZED_CLASS_NAMES_FEMALE"
+        "LOCALIZED_CLASS_NAMES_FEMALE",
+        "FRIENDS_BUTTON_TYPE_BNET",
+        "FRIENDS_BUTTON_TYPE_WOW",
+        "ChatFrame_AddMessageEventFilter",
+        "ChatEdit_ActivateChat",
+        "ChatEdit_ChooseBoxForSend",
+        "NUM_CHAT_WINDOWS",
+        "CHAT_FRAME_TEXTURES",
+        "FCF_GetCurrentChatFrame",
+        "ChatFrame1",
+        "FCF_GetChatWindowInfo",
+        "FCF_SetChatWindowFontSize",
+        "QuickJoinToastButton"
     ],
     "Lua.diagnostics.disable": [
         "cast-local-type",
