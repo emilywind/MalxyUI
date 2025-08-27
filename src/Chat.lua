@@ -63,46 +63,50 @@ OnPlayerLogin(function()
   -- Set chat style
   local function SetChatStyle(frame)
     local id = frame:GetID()
-    local chat = frame:GetName()
+    local chatName = frame:GetName()
+    local chat = _G[chatName]
 
-    _G[chat]:SetFrameLevel(5)
+    chat:SetFrameLevel(5)
 
     -- Removes crap from the bottom of the chatbox so it can go to the bottom of the screen
-    _G[chat]:SetClampedToScreen(false)
+    chat:SetClampedToScreen(false)
 
     -- Stop the chat chat from fading out
-    _G[chat]:SetFading(true)
+    chat:SetFading(true)
+
+    local editBox = _G[chatName .. "EditBox"]
 
     -- Move the chat edit box
-    _G[chat .. "EditBox"]:ClearAllPoints()
+    editBox:ClearAllPoints()
 
     if (EUIDB.chatTop) then
-      _G[chat .. "EditBox"]:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", -7, 25)
-      _G[chat .. "EditBox"]:SetPoint("BOTTOMRIGHT", ChatFrame1, "TOPRIGHT", 10, 25)
+      editBox:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", -7, 25)
+      editBox:SetPoint("BOTTOMRIGHT", ChatFrame1, "TOPRIGHT", 10, 25)
     else
-      _G[chat .. "EditBox"]:SetPoint("TOPLEFT", ChatFrame1, "BOTTOMLEFT", -7, -5)
-      _G[chat .. "EditBox"]:SetPoint("TOPRIGHT", ChatFrame1, "BOTTOMRIGHT", 10, -5)
+      editBox:SetPoint("TOPLEFT", ChatFrame1, "BOTTOMLEFT", -7, -5)
+      editBox:SetPoint("TOPRIGHT", ChatFrame1, "BOTTOMRIGHT", 10, -5)
     end
 
     -- Hide textures
     for j = 1, #CHAT_FRAME_TEXTURES do
-      if chat .. CHAT_FRAME_TEXTURES[j] ~= chat .. "Background" then
-        _G[chat .. CHAT_FRAME_TEXTURES[j]]:SetTexture(nil)
+      if chatName .. CHAT_FRAME_TEXTURES[j] ~= chatName .. "Background" then
+        _G[chatName .. CHAT_FRAME_TEXTURES[j]]:SetTexture(nil)
       end
     end
 
     -- Removes Default ChatFrame Tabs texture
-    _G[format("ChatFrame%sTab", id)].Left:SetTexture(nil)
-    _G[format("ChatFrame%sTab", id)].Middle:SetTexture(nil)
-    _G[format("ChatFrame%sTab", id)].Right:SetTexture(nil)
+    local chatFrameTab = _G[format("ChatFrame%sTab", id)]
+    chatFrameTab.Left:SetTexture(nil)
+    chatFrameTab.Middle:SetTexture(nil)
+    chatFrameTab.Right:SetTexture(nil)
 
-    _G[format("ChatFrame%sTab", id)].ActiveLeft:SetTexture(nil)
-    _G[format("ChatFrame%sTab", id)].ActiveMiddle:SetTexture(nil)
-    _G[format("ChatFrame%sTab", id)].ActiveRight:SetTexture(nil)
+    chatFrameTab.ActiveLeft:SetTexture(nil)
+    chatFrameTab.ActiveMiddle:SetTexture(nil)
+    chatFrameTab.ActiveRight:SetTexture(nil)
 
-    _G[format("ChatFrame%sTab", id)].HighlightLeft:SetTexture(nil)
-    _G[format("ChatFrame%sTab", id)].HighlightMiddle:SetTexture(nil)
-    _G[format("ChatFrame%sTab", id)].HighlightRight:SetTexture(nil)
+    chatFrameTab.HighlightLeft:SetTexture(nil)
+    chatFrameTab.HighlightMiddle:SetTexture(nil)
+    chatFrameTab.HighlightRight:SetTexture(nil)
 
     -- Hiding off the new chat tab selected feature
     _G[format("ChatFrame%sButtonFrameMinimizeButton", id)]:Hide()
@@ -116,40 +120,42 @@ OnPlayerLogin(function()
     _G[format("ChatFrame%sTabGlow", id)]:Hide()
 
     -- Hide scroll bar
-    _G[format("ChatFrame%s", id)].ScrollBar.Back:Hide()
-    _G[format("ChatFrame%s", id)].ScrollBar.Forward:Hide()
-    _G[format("ChatFrame%s", id)].ScrollBar:Hide()
-    _G[format("ChatFrame%s", id)].ScrollBar.Track:Hide()
-    _G[format("ChatFrame%s", id)].ScrollBar.Track.Begin:Hide()
-    _G[format("ChatFrame%s", id)].ScrollBar.Track.Middle:Hide()
-    _G[format("ChatFrame%s", id)].ScrollBar.Track.End:Hide()
-    _G[format("ChatFrame%s", id)].ScrollBar.Track.Thumb:Hide()
-    _G[format("ChatFrame%s", id)].ScrollBar.Track.Thumb.Begin:Hide()
-    _G[format("ChatFrame%s", id)].ScrollBar.Track.Thumb.Middle:Hide()
-    _G[format("ChatFrame%s", id)].ScrollBar.Track.Thumb.End:Hide()
+    local chatFrame = _G[format("ChatFrame%s", id)]
+    chatFrame.ScrollBar.Back:Hide()
+    chatFrame.ScrollBar.Forward:Hide()
+    chatFrame.ScrollBar:Hide()
+    chatFrame.ScrollBar.Track:Hide()
+    chatFrame.ScrollBar.Track.Begin:Hide()
+    chatFrame.ScrollBar.Track.Middle:Hide()
+    chatFrame.ScrollBar.Track.End:Hide()
+    chatFrame.ScrollBar.Track.Thumb:Hide()
+    chatFrame.ScrollBar.Track.Thumb.Begin:Hide()
+    chatFrame.ScrollBar.Track.Thumb.Middle:Hide()
+    chatFrame.ScrollBar.Track.Thumb.End:Hide()
 
     -- Hide off editbox artwork
-    local a, b, c = select(6, _G[chat .. "EditBox"]:GetRegions())
+    local a, b, c = select(6, editBox:GetRegions())
     if a then a:Hide() end
     if b then b:Hide() end
     if c then c:Hide() end
 
     -- Hide bubble tex/glow
-    if _G[chat .. "Tab"].conversationIcon then _G[chat .. "Tab"].conversationIcon:Hide() end
+    local chatTab = _G[chatName .. "Tab"]
+    if chatTab.conversationIcon then chatTab.conversationIcon:Hide() end
 
     -- Disable alt key usage
-    _G[chat .. "EditBox"]:SetAltArrowKeyMode(false)
+    editBox:SetAltArrowKeyMode(false)
 
     -- Hide editbox on login
-    _G[chat .. "EditBox"]:Hide()
+    editBox:Hide()
 
     -- Script to hide editbox instead of fading editbox to 0.35 alpha via IM Style
-    _G[chat .. "EditBox"]:HookScript("OnEditFocusGained", function(self) self:Show() end)
-    _G[chat .. "EditBox"]:HookScript("OnEditFocusLost",
+    editBox:HookScript("OnEditFocusGained", function(self) self:Show() end)
+    editBox:HookScript("OnEditFocusLost",
       function(self) if self:GetText() == "" then self:Hide() end end)
 
     -- Hide edit box every time we click on a tab
-    _G[chat .. "Tab"]:HookScript("OnClick", function() _G[chat .. "EditBox"]:Hide() end)
+    chatTab:HookScript("OnClick", function() editBox:Hide() end)
 
     frame.skinned = true
   end
@@ -176,7 +182,7 @@ OnPlayerLogin(function()
       end
 
       -- Font and font style for chat
-      chat:SetFont(STANDARD_TEXT_FONT, fontSize, "")
+      chat:SetFont(EUIDB.chatFont, fontSize, "")
     end
   end
 

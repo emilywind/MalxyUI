@@ -86,6 +86,7 @@ EUIDBDefaults = {
   autoSellGrey = true,
 
   chatTop = false, -- Move chat edit box to top of chat frame
+  chatFont = EUI_FONTS.Andika,
 }
 
 local function copyTable(src, dst)
@@ -985,9 +986,21 @@ local function setupEuiOptions()
   )
   chatOnTop:SetPoint("TOPLEFT", autoRepairOptions, "BOTTOMLEFT", 0, -48)
 
+  local chatFont, chatFontDropdown = newDropdown(
+    "Chat Font",
+    LSM_FONTS,
+    EUIDB.chatFont,
+    200,
+    function(value)
+      EUIDB.chatFont = value
+    end,
+    chatOnTop
+  )
+  chatFont:SetPoint("TOPLEFT", chatOnTop, "BOTTOMLEFT", 0, -6)
+
   local partyPointerText = EUI_Misc:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   partyPointerText:SetText("Party Pointers")
-  partyPointerText:SetPoint("TOPLEFT", chatOnTop, "BOTTOMLEFT", 0, -16)
+  partyPointerText:SetPoint("TOPLEFT", chatFont, "BOTTOMLEFT", 0, -48)
 
   local partyPointer = newCheckbox(
     "Enable Party Pointers",
