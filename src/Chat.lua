@@ -1,4 +1,3 @@
--- URL Copy
 OnPlayerLogin(function()
   if C_AddOns.IsAddOnLoaded('Prat-3.0') or C_AddOns.IsAddOnLoaded('BasicChatMods') then return end
 
