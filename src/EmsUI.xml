@@ -39,4 +39,6 @@
   <Include file="OmnibarSkin.lua" />
   <Include file="FasterLoot.lua" />
   <Include file="AutoVendor.lua" />
+  <Include file="FriendsList.lua" />
+  <Include file="Chat.lua" />
 </Ui>

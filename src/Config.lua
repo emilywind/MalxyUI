@@ -84,6 +84,9 @@ EUIDBDefaults = {
   -- Automation
   autoRepair = 'Personal', -- 'Off', 'Guild', or 'Personal'
   autoSellGrey = true,
+
+  lootIcons = true,
+  chatTop = false, -- Move chat edit box to top of chat frame
 }
 
 local function copyTable(src, dst)
@@ -893,9 +896,9 @@ local function setupEuiOptions()
     DisableTooltipSettings()
   end
 
-  ------------
+  ----------
   -- Misc --
-  ------------
+  ----------
   local EUI_Misc = makePanel("EUI_Misc", EUI.panel, "Misc")
 
   local miscSectionText = EUI_Misc:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
@@ -971,9 +974,32 @@ local function setupEuiOptions()
   )
   autoRepairOptions:SetPoint("TOPLEFT", autoSellGrey, "BOTTOMRIGHT", -20, -6)
 
+  local chatOnTop = newCheckbox(
+    "Chat Edit Box on Top",
+    "Moves the chat edit box to the top of the chat frame.",
+    EUIDB.chatTop,
+    function(value)
+      EUIDB.chatTop = value
+    end,
+    autoRepairOptions,
+    EUI_Misc
+  )
+  chatOnTop:SetPoint("TOPLEFT", autoRepairOptions, "BOTTOMLEFT", 0, -48)
+
+  local lootIcons = newCheckbox(
+    "Loot Icons",
+    "Show item icons in loot messages in chat.",
+    EUIDB.lootIcons,
+    function(value)
+      EUIDB.lootIcons = value
+    end,
+    chatOnTop,
+    EUI_Misc
+  )
+
   local partyPointerText = EUI_Misc:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   partyPointerText:SetText("Party Pointers")
-  partyPointerText:SetPoint("TOPLEFT", autoRepairOptions, "BOTTOMLEFT", 0, -48)
+  partyPointerText:SetPoint("TOPLEFT", lootIcons, "BOTTOMLEFT", 0, -16)
 
   local partyPointer = newCheckbox(
     "Enable Party Pointers",
