@@ -1,3 +1,7 @@
+------------------------------
+---Thanks to SUI for module --
+------------------------------
+
 OnPlayerLogin(function()
   function FriendsListByClassColor_Update()
     local Config = {
@@ -514,7 +518,7 @@ OnPlayerLogin(function()
       MAX_PLAYER_LEVEL_TABLE = {};
       MAX_PLAYER_LEVEL_TABLE[8] = 60
       MAX_PLAYER_LEVEL_TABLE[9] = 70
-      maxLevel = MAX_PLAYER_LEVEL_TABLE[GetAccountExpansionLevel()]
+      local maxLevel = MAX_PLAYER_LEVEL_TABLE[GetAccountExpansionLevel()]
 
       isSettingText = true
       if (tonumber(Parse.Format(friendWrapper, Config.level)) == maxLevel) then
