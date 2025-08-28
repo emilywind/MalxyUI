@@ -1,14 +1,9 @@
 local function hideObjectiveTracker()
   local instanceData = GetInstanceData()
-  local numTrackedQuests = C_QuestLog.GetNumQuestWatches()
-  local numTrackedRecipes = #C_TradeSkillUI.GetRecipesTracked(true) + #C_TradeSkillUI.GetRecipesTracked(false)
 
-  if instanceData.isInPvP or numTrackedQuests == 0 and numTrackedRecipes == 0 then
+  if instanceData.isInPvP then
     ObjectiveTrackerFrame:SetAlpha(0)
     RegisterStateDriver(ObjectiveTrackerFrame, 'visibility', 'hide')
-  else
-    ObjectiveTrackerFrame:SetAlpha(1)
-    RegisterStateDriver(ObjectiveTrackerFrame, 'visibility', 'show')
   end
 end
 
@@ -33,8 +28,6 @@ end
 local frame = CreateFrame('Frame')
 frame:RegisterEvent('PLAYER_ENTERING_WORLD')
 frame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-frame:RegisterEvent("QUEST_WATCH_LIST_CHANGED")
-frame:RegisterEvent("TRACKED_RECIPE_UPDATE")
 frame:SetScript('OnEvent', function()
   if EUIDB.hideObjectiveTracker then
     hideObjectiveTracker()
