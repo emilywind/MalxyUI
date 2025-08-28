@@ -1,8 +1,9 @@
 local function hideObjectiveTracker()
   local instanceData = GetInstanceData()
   local numTrackedQuests = C_QuestLog.GetNumQuestWatches()
+  local numTrackedRecipes = #C_TradeSkillUI.GetRecipesTracked(true) + #C_TradeSkillUI.GetRecipesTracked(false)
 
-  if instanceData.isInPvP or numTrackedQuests == 0 then
+  if instanceData.isInPvP or numTrackedQuests == 0 and numTrackedRecipes == 0 then
     ObjectiveTrackerFrame:SetAlpha(0)
     RegisterStateDriver(ObjectiveTrackerFrame, 'visibility', 'hide')
   else
