@@ -115,12 +115,12 @@ OnPlayerLogin(function()
     ModifyFont(frame.name, EUIDB.nameplateFont, EUIDB.nameplateNameFontSize)
 
     local castBar = frame.castBar
-    if (castBar) then
+    if castBar then
       if EUIDB.nameplateHideCastText then
         castBar.Text:Hide()
       end
 
-      if (castBar.euiClean) then return end
+      if castBar.euiClean then return end
 
       ModifyFont(castBar.Text, EUIDB.nameplateFont, EUIDB.nameplateNameFontSize - 1)
 
@@ -129,7 +129,7 @@ OnPlayerLogin(function()
       castBar.euiClean = true
     end
 
-    if (frame.ClassificationFrame) then
+    if frame.ClassificationFrame then
       frame.ClassificationFrame:SetPoint('CENTER', frame.healthBar, 'LEFT', 0, 0)
     end
   end
@@ -203,7 +203,7 @@ OnPlayerLogin(function()
       frame.name:SetTextColor(classColor.r, classColor.g, classColor.b, 1)
     end
 
-    if (EUIDB.nameplateShowLevel) then
+    if EUIDB.nameplateShowLevel then
       if not frame.levelText then
         frame.levelText = frame.healthBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
         frame.levelText:SetPoint("RIGHT", frame.healthBar, "RIGHT", -1, 0)
