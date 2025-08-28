@@ -14,7 +14,6 @@ local function hideObjectiveTracker()
 end
 
 local function skinObjectiveTracker()
-  -- Headers
   for _, objectiveTrackerFrame in pairs({
     AdventureObjectiveTracker,
     MonthlyActivitiesObjectiveTracker,
