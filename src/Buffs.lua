@@ -18,9 +18,7 @@ local function applySkin(aura, isDebuff)
 
   --icon
   local icon = aura.Icon
-  if icon.SetTexCoord then
-    StyleIcon(icon)
-  end
+  StyleIcon(icon)
 
   if not icon.SetTexCoord then return end
 
@@ -49,7 +47,7 @@ local function updateAuras(self, isDebuff)
   local auras = self.auraFrames
 
   for _, aura in pairs(auras) do
-    if not aura then return end
+    if not aura.Icon.SetTexCoord then return end
 
     applySkin(aura, isDebuff)
   end
