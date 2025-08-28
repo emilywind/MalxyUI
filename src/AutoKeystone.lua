@@ -3,8 +3,8 @@
 local InsertKeystone = function()
   for bag = 0, NUM_BAG_SLOTS do
     for bagSlot = 1, GetContainerNumSlots(bag) do
-      local _,_,_,_,_,_,itemName = GetContainerItemInfo(bag, bagSlot)
-      if itemName  ~= nil and string.match(itemName, "Keystone") then
+      local hyperlink = C_Container.GetContainerItemInfo(bag, bagSlot).hyperlink
+      if hyperlink ~= nil and string.match(hyperlink, "Keystone") then
         if (ChallengesKeystoneFrame:IsShown()) then
           PickupContainerItem(bag, bagSlot)
           if (CursorHasItem()) then
