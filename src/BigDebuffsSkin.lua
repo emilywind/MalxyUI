@@ -6,12 +6,11 @@ OnPlayerLogin(function()
     local namePlate = C_NamePlate.GetNamePlateForUnit(unit)
     if not namePlate then return end
 
-    if (namePlate:IsForbidden()) then return end
+    if namePlate:IsForbidden() then return end
 
-    local bdbFrame = namePlate.UnitFrame
-    local bdbNameplate = bdbFrame.BigDebuffs
+    local bdbNameplate = namePlate.UnitFrame.BigDebuffs
 
-    if (bdbNameplate) then
+    if bdbNameplate then
       ApplyEuiBackdrop(bdbNameplate)
     end
   end)
