@@ -2,7 +2,6 @@
 -- Shows dampening display in arena --
 --------------------------------------
 local frame = CreateFrame("Frame", "Dampening_Display", UIParent, "UIWidgetTemplateIconAndText")
-local _
 local dampeningtext = C_Spell.GetSpellInfo(110310).name
 local widgetSetID = C_UIWidgetManager.GetTopCenterWidgetSetID()
 local widgetSetInfo = C_UIWidgetManager.GetWidgetSetInfo(widgetSetID)
@@ -17,7 +16,7 @@ frame:SetWidth(200)
 frame.Text:SetAllPoints()
 frame.Text:SetJustifyH("CENTER")
 
-function frame:UNIT_AURA(unit)
+function frame:UNIT_AURA()
 	local percentage = C_Commentator_GetDampeningPercent()
 	if percentage and percentage > 0 then
 		if not self:IsShown() then
@@ -34,8 +33,8 @@ end
 
 function frame:PLAYER_ENTERING_WORLD()
 	if not EUIDB.dampeningDisplay then return end
-	local _, instanceType = IsInInstance()
-	if instanceType == "arena" then
+	local instanceInfo = GetInstanceData()
+	if instanceInfo.isInArena then
 		self:RegisterUnitEvent("UNIT_AURA", "player")
 	else
 		self:UnregisterEvent("UNIT_AURA")
