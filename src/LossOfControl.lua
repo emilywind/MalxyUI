@@ -1,10 +1,8 @@
 OnPlayerLogin(function()
-   -- Hide red shadow
-  select(2,LossOfControlFrame:GetRegions()):SetAlpha(0)
-  select(3,LossOfControlFrame:GetRegions()):SetAlpha(0)
+  local _, shadow1, shadow2, icon = LossOfControlFrame:GetRegions()
 
-  -- Style the icon
-  local icon = select(4,LossOfControlFrame:GetRegions())
+  shadow1:SetAlpha(0)
+  shadow2:SetAlpha(0)
 
   ApplyEuiBackdrop(icon, LossOfControlFrame)
 end)
