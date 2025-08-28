@@ -3,7 +3,7 @@
 -----------------------------------
 local _, addon = ...
 
-local function init()
+OnPlayerLogin(function()
   local TIMEOUT = 40
 
   if BigWigsLoader then -- If BigWigs is loaded, let's get rid of that ugly LFG status bar it makes
@@ -40,6 +40,4 @@ local function init()
     timerBar:SetMinMaxValues(0, TIMEOUT)
     timeLeft = TIMEOUT
   end)
-end
-
-OnPlayerLogin(init)
+end)
