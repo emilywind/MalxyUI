@@ -1,38 +1,38 @@
 OnPlayerLogin(function()
-	if EUIDB.lootSpecDisplay then
-		local lootSpecId = nil
+	if not EUIDB.lootSpecDisplay then return end
 
-		local PlayerLootSpecFrame = CreateFrame("Frame", nil, PlayerFrame)
+	local lootSpecId = nil
 
-		PlayerLootSpecFrame:SetPoint("BOTTOMRIGHT", PlayerFrame.portrait, "BOTTOMRIGHT", 0, 0)
-		PlayerLootSpecFrame:SetHeight(20)
-		PlayerLootSpecFrame:SetWidth(46)
-		PlayerLootSpecFrame.specname = PlayerLootSpecFrame:CreateFontString(nil)
-		SetDefaultFont(PlayerLootSpecFrame.specname, 11)
-		PlayerLootSpecFrame.specname:SetPoint("LEFT", PlayerLootSpecFrame, "LEFT", 0, 0)
+	local PlayerLootSpecFrame = CreateFrame("Frame", nil, PlayerFrame)
 
-		OnEvents({
-			"PLAYER_ENTERING_WORLD",
-			"PLAYER_LOOT_SPEC_UPDATED",
-			"PLAYER_TALENT_UPDATE"
-		}, function(_, event)
-			local newLootSpecId = GetLootSpecialization()
-			local lootIcon = ''
+	PlayerLootSpecFrame:SetPoint("BOTTOMRIGHT", PlayerFrame.portrait, "BOTTOMRIGHT", 0, 0)
+	PlayerLootSpecFrame:SetHeight(20)
+	PlayerLootSpecFrame:SetWidth(46)
+	PlayerLootSpecFrame.specname = PlayerLootSpecFrame:CreateFontString(nil)
+	SetDefaultFont(PlayerLootSpecFrame.specname, 11)
+	PlayerLootSpecFrame.specname:SetPoint("LEFT", PlayerLootSpecFrame, "LEFT", 0, 0)
 
-			if (lootSpecId ~= newLootSpecId or (not LootSpecId and event == "PLAYER_TALENT_UPDATE")) then
-				lootSpecId = newLootSpecId
+	OnEvents({
+		"PLAYER_ENTERING_WORLD",
+		"PLAYER_LOOT_SPEC_UPDATED",
+		"PLAYER_TALENT_UPDATE"
+	}, function(_, event)
+		local newLootSpecId = GetLootSpecialization()
+		local lootIcon = ''
 
-				if lootSpecId ~= 0 then
-					_,_,_,lootIcon = GetSpecializationInfoByID(lootSpecId)
-				else
-					_,_,_,lootIcon = GetSpecializationInfo(GetSpecialization())
-				end
+		if (lootSpecId ~= newLootSpecId or (not LootSpecId and event == "PLAYER_TALENT_UPDATE")) then
+			lootSpecId = newLootSpecId
 
-				if not lootIcon then return end
-
-				local lootIconText = format('|T%s:16:16:0:0:64:64:4:60:4:60|t', lootIcon)
-				PlayerLootSpecFrame.specname:SetFormattedText("%s", lootIconText)
+			if lootSpecId ~= 0 then
+				_,_,_,lootIcon = GetSpecializationInfoByID(lootSpecId)
+			else
+				_,_,_,lootIcon = GetSpecializationInfo(GetSpecialization())
 			end
-		end)
-	end
+
+			if not lootIcon then return end
+
+			local lootIconText = format('|T%s:16:16:0:0:64:64:4:60:4:60|t', lootIcon)
+			PlayerLootSpecFrame.specname:SetFormattedText("%s", lootIconText)
+		end
+	end)
 end)
