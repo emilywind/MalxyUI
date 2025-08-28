@@ -38,11 +38,7 @@ OnPlayerLogin(function()
   function Module:UpdateButtonStatus()
     local action = self.action
 
-    if action and self:IsVisible() and HasAction(action) then
-      buttonsToUpdate[self] = true
-    else
-      buttonsToUpdate[self] = nil
-    end
+    buttonsToUpdate[self] = (action and self:IsVisible() and HasAction(action)) and true or nil
 
     if next(buttonsToUpdate) then
       updater:Show()
@@ -59,11 +55,7 @@ OnPlayerLogin(function()
 
     if isUsable then
       local inRange = IsActionInRange(action)
-      if inRange == false then
-        Module.SetButtonColor(self, "oor")
-      else
-        Module.SetButtonColor(self, "normal")
-      end
+      Module.SetButtonColor(self, inRange == false and "oor" or "normal")
     elseif notEnoughMana then
       Module.SetButtonColor(self, "oom")
     else
@@ -92,7 +84,7 @@ OnPlayerLogin(function()
     Module.UpdateButtonUsable(button, true)
   end
 
-  function Module:RegisterButtonRange(button)
+  local function registerButtonRange(button)
     if button.Update then
       Module.Register(button)
       hooksecurefunc(button, "Update", Module.UpdateButtonStatus)
@@ -101,13 +93,13 @@ OnPlayerLogin(function()
   end
 
   for i = 1, NUM_ACTIONBAR_BUTTONS do
-    Module:RegisterButtonRange(_G["ActionButton" .. i])
-    Module:RegisterButtonRange(_G["MultiBarBottomLeftButton" .. i])
-    Module:RegisterButtonRange(_G["MultiBarBottomRightButton" .. i])
+    registerButtonRange(_G["ActionButton" .. i])
+    registerButtonRange(_G["MultiBarBottomLeftButton" .. i])
+    registerButtonRange(_G["MultiBarBottomRightButton" .. i])
     for k = 5, 7 do
-      Module:RegisterButtonRange(_G["MultiBar" .. k .. "Button" .. i])
+      registerButtonRange(_G["MultiBar" .. k .. "Button" .. i])
     end
-    Module:RegisterButtonRange(_G["MultiBarRightButton" .. i])
-    Module:RegisterButtonRange(_G["MultiBarLeftButton" .. i])
+    registerButtonRange(_G["MultiBarRightButton" .. i])
+    registerButtonRange(_G["MultiBarLeftButton" .. i])
   end
 end)
