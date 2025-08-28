@@ -12,12 +12,10 @@ local function makePortraitBG(frame)
   frame.portraitBG:SetFrameLevel(frame:GetFrameLevel() - 1)
   frame.portraitBG:SetFrameStrata("background")
   frame.portraitBG:SetAllPoints(frame.portrait)
-  local backLayer = frame.portraitBG:CreateTexture("backLayer", "BACKGROUND", nil, -1) --drawLayer=="OVERLAY" and "ARTWORK" or drawLayer)
-	backLayer:Hide()
+  local backLayer = frame.portraitBG:CreateTexture("backLayer", "BACKGROUND", nil, -1)
 	backLayer:SetTexture(EUI_TEXTURES.circleTexture)
   backLayer:SetVertexColor(0, 0, 0)
   backLayer:SetAllPoints(frame.portraitBG)
-  backLayer:Show()
   frame.portraitBG.backlayer = backLayer
 end
 
@@ -29,11 +27,9 @@ local function make3DPortraitFG(frame)
   frame.portraitFG:SetPoint("TOPLEFT", frame.portrait, "TOPLEFT", 0, -1)
   frame.portraitFG:SetPoint("BOTTOMRIGHT", frame.portrait, "BOTTOMRIGHT", 0, -1)
   local foreground = frame.portraitFG:CreateTexture("foreLayer", "OVERLAY", nil)
-  foreground:Hide()
   foreground:SetTexture(EUI_TEXTURES.portraitModelFront)
   foreground:SetVertexColor(0, 0, 0)
   foreground:SetAllPoints(frame.portraitFG)
-  foreground:Show()
   frame.portraitFG.forelayer = foreground
 end
 
@@ -42,8 +38,8 @@ local function makeEUIPortrait(frame)
 
   local unit = frame.unit
 
-  if ( EUIDB.portraitStyle == "class" ) then -- Flat class icons
-    if ( UnitIsPlayer(unit) ) then
+  if EUIDB.portraitStyle == "class" then -- Flat class icons
+    if UnitIsPlayer(unit) then
       local _, playerClass = UnitClass(unit)
       if playerClass then
         frame.portrait:SetTexture(EUIDB.classPortraitPack)
@@ -53,8 +49,8 @@ local function makeEUIPortrait(frame)
     else
       frame.portrait:SetTexCoord(0.15, 0.85, 0.15, 0.85)
     end
-  elseif (EUIDB.portraitStyle == "3D") then
-    if ( not frame.portraitModel ) then -- Initialize 3D Model Container
+  elseif EUIDB.portraitStyle == "3D" then
+    if not frame.portraitModel then -- Initialize 3D Model Container
       local portrait = frame.portrait
       local portraitModel = CreateFrame("PlayerModel", nil, frame)
       portraitModel:SetScript("OnShow", resetCamera)
@@ -71,7 +67,6 @@ local function makeEUIPortrait(frame)
       portraitModel:SetAllPoints(portrait)
       portraitModel:SetPoint("TOPLEFT", portrait,"TOPLEFT",xoff,-yoff)
       portraitModel:SetPoint("BOTTOMRIGHT",portrait,"BOTTOMRIGHT",-xoff,yoff)
-      portraitModel:Show()
       frame.portrait:Hide()
       frame.portraitModel = portraitModel
 
@@ -86,20 +81,18 @@ local function makeEUIPortrait(frame)
     frame.portraitModel.guid = unitGuid
 
     -- The players not in range so swap to question mark
-    if ( not UnitIsVisible(unit) or not UnitIsConnected(unit) ) then
+    if not UnitIsVisible(unit) or not UnitIsConnected(unit) then
       frame.portraitModel:ClearModel()
       frame.portraitModel:SetModelScale(5.5)
       resetCamera(frame.portraitModel)
       frame.portraitModel:SetModel("Interface\\Buttons\\talktomequestionmark.m2")
-    -- Use animated 3D portrait
-    else
+    else -- Use animated 3D portrait
       frame.portraitModel:ClearModel()
       frame.portraitModel:SetModelScale(1)
       frame.portraitModel:SetUnit(frame.unit)
       resetCamera(frame.portraitModel)
       frame.portraitModel:SetPosition(0, 0, 0)
       frame.portraitModel:SetAnimation(804)
-      frame.portraitModel:Show()
     end
   end
 end
