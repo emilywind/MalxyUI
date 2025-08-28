@@ -148,13 +148,12 @@ OnPlayerLogin(function()
     end
   end
 
-  local instanceInfo = GetInstanceData()
-
   hooksecurefunc(
     NamePlateDriverFrame,
     'GetNamePlateTypeFromUnit',
     function(_, unit)
       local isFriend = select(2, GetUnitCharacteristics(unit))
+      local instanceInfo = GetInstanceData()
       if not isFriend or not instanceInfo.isInPvE then
         setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', false)
       else
