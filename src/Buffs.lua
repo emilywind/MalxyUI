@@ -16,13 +16,11 @@ local function applySkin(aura, isDebuff)
 
   if aura.TempEnchantBorder then aura.TempEnchantBorder:Hide() end
 
-  --icon
   local icon = aura.Icon
   StyleIcon(icon)
 
   if not icon.SetTexCoord then return end
 
-  --border
   local border = ApplyEuiBackdrop(icon, aura)
 
   aura.border = border
@@ -39,7 +37,6 @@ local function applySkin(aura, isDebuff)
     aura.DebuffBorder:SetAlpha(0)
   end
 
-  --set button styled variable
   aura.euiClean = true
 end
 
