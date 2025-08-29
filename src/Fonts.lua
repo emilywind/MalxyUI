@@ -1,6 +1,6 @@
-local function updateFontObject(FontObject, font, forcedFontSize)
-  local _, oldSize, oldStyle = FontObject:GetFont()
-  FontObject:SetFont(font, forcedFontSize or oldSize, oldStyle)
+local function updateFontObject(FontObject, font)
+  local _, size, style = FontObject:GetFont()
+  FontObject:SetFont(font, size, style)
 end
 
 OnEvent("ADDON_LOADED", function()
@@ -14,8 +14,6 @@ OnEvent("ADDON_LOADED", function()
   UNIT_NAME_FONT = EUIDB.font
   NAMEPLATE_FONT = EUIDB.font
   NAMEPLATE_SPELLCAST_FONT = EUIDB.font
-
-  local ForcedFontSize = { 9, 9, 14, 14, 12, 64, 64 }
 
   local FontObjects = {
     SystemFont_NamePlateCastBar,
@@ -129,7 +127,7 @@ OnEvent("ADDON_LOADED", function()
     Game15Font_Shadow
   }
 
-  for i, FontObject in pairs(FontObjects) do
-    updateFontObject(FontObject, EUIDB.font, ForcedFontSize[i])
+  for _, FontObject in pairs(FontObjects) do
+    updateFontObject(FontObject, EUIDB.font)
   end
 end)
