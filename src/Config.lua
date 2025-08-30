@@ -1119,6 +1119,9 @@ local function setupEuiOptions()
     EUIDB.largerNameplates,
     function(value)
       EUIDB.largerNameplates = value
+      if value then
+        SetLargerNameplates()
+      end
     end,
     cUFDisplayPowerBars,
     EUI_CVars

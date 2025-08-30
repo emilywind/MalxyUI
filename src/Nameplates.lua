@@ -1,6 +1,6 @@
 local SetCVar = C_CVar.SetCVar
 
-function SetLargeNameplates()
+function SetLargerNameplates()
   local cVars = {
     nameplateGlobalScale = 1,
     nameplateMinScale = 1,
@@ -22,7 +22,7 @@ OnPlayerLogin(function()
   local powerTex = EUIDB.powerBarTex
 
   if EUIDB.largerNameplates then
-    SetLargeNameplates()
+    SetLargerNameplates()
   end
 
   SetCVar("nameplateResourceOnTarget", EUIDB.nameplateResourceOnTarget and 1 or 0)
