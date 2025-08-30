@@ -8,27 +8,15 @@ OnPlayerLogin(function()
   local function setUnitColour(healthbar)
     local unit = healthbar.unit
     if not unit then return end
-    local _, _, _, isPlayer, reaction = GetUnitCharacteristics(unit)
+    local uc = GetUnitCharacteristics(unit)
     local isConnected = UnitIsConnected(unit)
 
     healthbar:SetStatusBarDesaturated(1)
     local healthColor = GetUnitHealthColor(unit)
-    if isPlayer and isConnected then
+    if isConnected then
       healthbar:SetStatusBarColor(healthColor.r, healthColor.g, healthColor.b)
-    elseif isPlayer and not isConnected then
+    elseif uc.isPlayer and not isConnected then
       healthbar:SetStatusBarColor(0.5, 0.5, 0.5)
-    else
-      if UnitExists(unit) then
-        local unitIsTapDenied = UnitIsTapDenied(unit)
-        if unitIsTapDenied and not UnitPlayerControlled(unit) then
-          healthbar:SetStatusBarColor(0.5, 0.5, 0.5)
-        elseif not unitIsTapDenied then
-          local reactionColor = FACTION_BAR_COLORS[reaction]
-          if reactionColor then
-            healthbar:SetStatusBarColor(reactionColor.r, reactionColor.g, reactionColor.b)
-          end
-        end
-      end
     end
   end
 

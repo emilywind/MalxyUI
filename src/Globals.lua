@@ -274,6 +274,7 @@ function GetUnitCharacteristics(unit)
   local isFriend = false
   local isNeutral = false
   local isPlayer = UnitIsPlayer(unit)
+  local isNpc = not isPlayer
 
   if reaction then
     if reaction < 4 then
@@ -285,7 +286,14 @@ function GetUnitCharacteristics(unit)
     end
   end
 
-  return isEnemy, isFriend, isNeutral, isPlayer, reaction
+  return {
+    isEnemy = isEnemy,
+    isFriend = isFriend,
+    isNeutral = isNeutral,
+    isPlayer = isPlayer,
+    isNpc = isNpc,
+    reaction = reaction
+  }
 end
 
 function GetUnitHealthColor(unit)
