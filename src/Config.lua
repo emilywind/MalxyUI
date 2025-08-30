@@ -50,11 +50,11 @@ EUIDBDefaults = {
   nameplateCastbarColorInterrupt = true,
   nameplateResourceOnTarget = true,
 
-  partyPointer = true,
-  partyPointerScale = 1,
-  partyPointerTexture = 14,
-  partyPointerHealer = true,
-  partyPointerHideRaidmarker = true,
+  partyMarker = true,
+  partyMarkerScale = 1,
+  partyMarkerTexture = 14,
+  partyMarkerHealer = true,
+  partyMarkerHideRaidmarker = true,
 
   portraitStyle = "3D", -- 3D, 2D, or class (for class icons)
   classPortraitPack = EUI_TEXTURES.classCircles,
@@ -1013,29 +1013,29 @@ local function setupEuiOptions()
   chatFontSize:ClearAllPoints()
   chatFontSize:SetPoint("LEFT", chatFontDropdown, "RIGHT", 220, 0)
 
-  local partyPointerText = EUI_Misc:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-  partyPointerText:SetText("Party Pointers")
-  partyPointerText:SetPoint("TOPLEFT", chatFont, "BOTTOMLEFT", 0, -48)
+  local partyMarkerText = EUI_Misc:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+  partyMarkerText:SetText("Party Pointers")
+  partyMarkerText:SetPoint("TOPLEFT", chatFont, "BOTTOMLEFT", 0, -48)
 
-  local partyPointer = newCheckbox(
-    "Enable Party Pointers",
-    "Show a pointer for your party members on their nameplates.",
-    EUIDB.partyPointer,
+  local partyMarker = newCheckbox(
+    "Enable Party Markers",
+    "Show markers for your party members on their nameplates.",
+    EUIDB.partyMarker,
     function(value)
-      EUIDB.partyPointer = value
+      EUIDB.partyMarker = value
     end,
-    partyPointerText,
+    partyMarkerText,
     EUI_Misc
   )
 
-  local partyPointerHealer = newCheckbox(
+  local partyMarkerHealer = newCheckbox(
     "Show Healer Markers",
     "Show a specific marker for healers in your party.",
-    EUIDB.partyPointerHealer,
+    EUIDB.partyMarkerHealer,
     function(value)
-      EUIDB.partyPointerHealer = value
+      EUIDB.partyMarkerHealer = value
     end,
-    partyPointer,
+    partyMarker,
     EUI_Misc
   )
 

@@ -158,7 +158,7 @@ OnPlayerLogin(function()
     frame.classificationIndicator:SetAlpha(EUIDB.nameplateHideClassificationIcon and 0 or 1)
     frame.selectionHighlight:SetAlpha(0) -- Hide the ugly target background
 
-    PartyPointer(frame)
+    PartyMarker(frame)
 
     local isPersonal = UnitIsUnit(frame.displayedUnit, "player")
 
