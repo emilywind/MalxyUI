@@ -8,6 +8,8 @@ EUIDBDefaults = {
   cUFDisplayPowerBars = true,
   cUFPowerBarsHealerOnly = true,
 
+  autoLootDefault = true,
+
   hideHotkeys = false,
   hideMacroText = false,
   arenaNumbers = false,
@@ -1158,6 +1160,20 @@ local function setupEuiOptions()
     nameplateShowFriends,
     EUI_CVars
   )
+
+  local autoLootDefault = newCheckbox(
+    "Auto Loot",
+    "Enable auto-loot by default instead of having to press a key.",
+    EUIDB.autoLootDefault,
+    function(value)
+      EUIDB.autoLootDefault = value
+      C_CVar.SetCVar("autoLootDefault", value and 1 or 0)
+    end,
+    nameplateShowEnemyMinions,
+    EUI_CVars
+  )
+
+  SetCVar("autoLootDefault", EUIDB.autoLootDefault and 1 or 0)
 
   --------------------
   -- Reload Buttons --
