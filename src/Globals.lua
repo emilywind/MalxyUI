@@ -233,7 +233,11 @@ function SetDefaultFont(textObject, size, outlinestyle)
   textObject:SetFont(EUIDB.font, size, outlinestyle)
 end
 
-function ModifyFont(textObject, font, size, flags)
+function ModifyFont(textObject, font, size, flags, colorString)
+  if colorString then
+    local color = CreateColorFromHexString(colorString)
+    textObject:SetTextColor(color.r, color.g, color.b)
+  end
   local fontFile, currSize = textObject:GetFont()
   textObject:SetFont(font or fontFile, size or currSize, flags or "THINOUTLINE")
 end

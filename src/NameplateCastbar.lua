@@ -82,8 +82,8 @@ function SkinCastbar(frame, unitToken)
     ApplyEuiBackdrop(castBar.Icon, castBar)
     castBar.euiClean = true
     if not castBar.timer then
-      local timer = castBar:CreateFontString(nil)
-      timer:SetFont(EUIDB.font, 14, "THINOUTLINE")
+      local timer = castBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+      ModifyFont(timer, EUIDB.font, nil, "THINOUTLINE", 'ffffffff')
       timer:SetPoint("LEFT", castBar, "RIGHT", 5, 0)
       castBar.timer = timer
     end
@@ -148,7 +148,7 @@ function SkinCastbar(frame, unitToken)
             -- Casting: normal direction, from left to right
             sparkPosition = interruptPercent * castBar:GetWidth()
             if empoweredCast then
-                sparkPosition = sparkPosition * 0.7 -- ? idk why but on empowered casts it needs to be roughly 30% to the left compared to cast/channel
+              sparkPosition = sparkPosition * 0.7 -- ? idk why but on empowered casts it needs to be roughly 30% to the left compared to cast/channel
             end
           end
 
@@ -222,7 +222,7 @@ local function updateCastTimer(frame, castBar, unit)
       castBar.timer:SetText("")
     end
   else
-
+    castBar.timer:SetText("")
   end
 end
 
@@ -232,7 +232,7 @@ local function UpdateNameplateTargetText(frame, unit)
     frame.TargetText:SetJustifyH("CENTER")
     frame.TargetText:SetParent(frame.castBar)
     frame.TargetText:SetIgnoreParentScale(true)
-    ModifyFont(frame.TargetText, EUIDB.nameplateFont, 12)
+    ModifyFont(frame.TargetText, EUIDB.nameplateFont)
     -- fix me (make it appear above resource when higher strata resource) bodify
   end
 
