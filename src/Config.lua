@@ -87,6 +87,8 @@ EUIDBDefaults = {
   chatTop = false, -- Move chat edit box to top of chat frame
   chatFont = EUI_FONTS.Andika,
   chatFontSize = 14,
+
+  classColoredUnitFrames = true,
 }
 
 local function copyTable(src, dst)
@@ -308,7 +310,7 @@ local function setupEuiOptions()
 
   local uiModeChooser, uiModeDropdown = newDropdown(
     "UI Mode",
-    { ["blizzard"] = "Blizzard", ["dark"] = "Dark", ["light"] = "Light", ["black"] = "Black", ["class"] = "Class" },
+    { ["blizzard"] = "Blizzard", ["dark"] = "Dark", ["light"] = "Light", ["black"] = "Black" },
     EUIDB.uiMode,
     80,
     function(value)
@@ -316,6 +318,21 @@ local function setupEuiOptions()
     end
   )
   uiModeChooser:SetPoint("TOPLEFT", euiTitle, "BOTTOMLEFT", 0, -16)
+
+  local classColoredUnitFrames = newCheckbox(
+    "Class Colored Unit Frames",
+    "Color unit frames by class where applicable.",
+    EUIDB.classColoredUnitFrames,
+    function(value)
+      EUIDB.classColoredUnitFrames = value
+    end,
+    uiModeDropdown,
+    EUI.panel,
+    "LEFT",
+    "RIGHT",
+    100,
+    0
+  )
 
   local portraitSelect, portraitDropdown = newDropdown(
     "Portrait Style",

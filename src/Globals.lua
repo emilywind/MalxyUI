@@ -122,15 +122,9 @@ for iconStyle, data in next, classInfo.styles do
 end
 
 function GetFrameColour(unit)
-  if EUIDB.uiMode == 'class' then
-    unit = unit or "player"
-
-    if UnitIsPlayer(unit) then
-      local classColor = GetUnitClassColor(unit)
-      return classColor.r, classColor.g, classColor.b
-    else
-      return 0.3, 0.3, 0.3
-    end
+  if EUIDB.classColoredUnitFrames and unit and UnitIsPlayer(unit) then
+    local classColor = GetUnitClassColor(unit)
+    return classColor.r, classColor.g, classColor.b
   elseif EUIDB.uiMode == 'black' then
     return 0.2, 0.2, 0.2
   elseif EUIDB.uiMode == 'dark' then

@@ -10,7 +10,7 @@ function BlackenTexture(texture, unit)
 
   texture:SetDesaturated(true)
 
-  if EUIDB.uiMode == 'class' then
+  if EUIDB.classColoredUnitFrames and unit then
     texture:SetVertexColor(GetFrameColour(unit))
   elseif EUIDB.uiMode == 'black' then
     texture:SetVertexColor(0, 0, 0)
@@ -34,14 +34,14 @@ OnPlayerLogin(function()
       PlayerFrameAlternateManaBarRightBorder,
       PetFrameTexture
   }) do
-      BlackenTexture(v)
+      BlackenTexture(v, "player")
   end
 
   -- Player Frame
   PlayerFrame:HookScript("OnUpdate", function()
-    BlackenTexture(PlayerFrame.PlayerFrameContainer.FrameTexture)
-    BlackenTexture(PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerPortraitCornerIcon)
-    BlackenTexture(PlayerFrame.PlayerFrameContainer.AlternatePowerFrameTexture)
+    BlackenTexture(PlayerFrame.PlayerFrameContainer.FrameTexture, "player")
+    BlackenTexture(PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerPortraitCornerIcon, "player")
+    BlackenTexture(PlayerFrame.PlayerFrameContainer.AlternatePowerFrameTexture, "player")
   end)
 
   -- Pet Frame
