@@ -226,6 +226,38 @@ local function updateCastTimer(frame, castBar, unit)
   end
 end
 
+local function UpdateNameplateTargetText(frame, unit)
+  if not frame.TargetText then
+    frame.TargetText = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    frame.TargetText:SetJustifyH("CENTER")
+    frame.TargetText:SetParent(frame.castBar)
+    frame.TargetText:SetIgnoreParentScale(true)
+    ModifyFont(frame.TargetText, EUIDB.nameplateFont, 12)
+    -- fix me (make it appear above resource when higher strata resource) bodify
+  end
+
+  local isCasting = UnitCastingInfo(unit) or UnitChannelInfo(unit)
+
+  frame.TargetText:SetText("")
+
+  if isCasting and UnitExists(unit.."target") and frame.castBar:IsShown() and not frame.hideCastInfo then
+    local targetOfTarget = unit.."target"
+    local name = UnitName(targetOfTarget)
+    local classColor = GetUnitHealthColor(targetOfTarget)
+
+    frame.TargetText:SetText(name)
+    frame.TargetText:SetTextColor(classColor.r, classColor.g, classColor.b)
+    frame.TargetText:ClearAllPoints()
+    if UnitCanAttack("player", unit) then
+      frame.TargetText:SetPoint("TOPRIGHT", frame.castBar, "BOTTOMRIGHT", -4, 0)  -- Set anchor point for enemy
+    else
+      frame.TargetText:SetPoint("TOP", frame.castBar, "BOTTOM", 0, 0)  -- Set anchor point for friendly
+    end
+  else
+    frame.TargetText:SetText("")
+  end
+end
+
 hooksecurefunc(CastingBarMixin, "OnEvent", function(self, event, ...)
   local unit = self.unit
   if not unit or not unit:find("nameplate") then return end
@@ -245,9 +277,9 @@ hooksecurefunc(CastingBarMixin, "OnEvent", function(self, event, ...)
     updateCastTimer(frame, castBar, unit)
   end
 
-  -- if showNameplateTargetText then
-  --   UpdateNameplateTargetText(frame, self.unit)
-  -- end
+  if EUIDB.nameplateShowTargetText then
+    UpdateNameplateTargetText(frame, self.unit)
+  end
 
   if EUIDB.nameplateCastbarColorInterrupt then
     SkinCastbar(frame, self.unit)
