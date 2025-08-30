@@ -1,3 +1,4 @@
+-- Thanks to NugTotemIcon
 OnPlayerLogin(function()
   if
     C_AddOns.IsAddOnLoaded('BetterBlizzPlates')
@@ -18,7 +19,7 @@ OnPlayerLogin(function()
   local totemStartTimes = setmetatable({}, { __mode = "v" })
 
   local function GetNPCIDByGUID(guid)
-    local _, _, _, _, _, npcID = strsplit("-", guid);
+    local npcID = select(6, strsplit("-", guid))
     return tonumber(npcID)
   end
 
@@ -42,6 +43,10 @@ OnPlayerLogin(function()
     [105427] = { 204330, 15 }, -- Skyfury
     [179867] = { 355580, 6 }, -- Static Field
     [166523] = { 324386, 30 }, -- Vesper Totem (Kyrian)
+    [194117] = { 383017, 15 }, -- Stoneskin Totem
+    [194118] = { 383019, 60 }, -- Tranquil Air Totem
+    [5923] = { 383013, 6 }, -- Poison Cleansing Totem
+    [193620] = { 381930, 120 }, -- Mana Spring Totem
 
     -- Warrior
     [119052] = { 236320, 15 }, -- War Banner
@@ -51,6 +56,8 @@ OnPlayerLogin(function()
 
     --Warlock
     [135002] = { 265187, 15 }, -- Demonic Tyrant
+    [179193] = { 353601, 15 }, -- Fel Obelisk
+    [107100] = { 201996, 20 }, -- Call Observer
   }
 
   local function CreateIcon(nameplate)
