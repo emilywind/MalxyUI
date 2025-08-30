@@ -4,7 +4,6 @@ function PartyMarker(frame)
   local info = GetNameplateUnitInfo(frame)
   if not info then return end
 
-  local markerMode =  EUIDB.partyMarkerTexture
   local partyMarker = frame.partyMarker
 
   if not UnitInParty(frame.displayedUnit) or info.isEnemy or not info.isPlayer or info.isSelf or info.isNpc then
@@ -54,12 +53,6 @@ function PartyMarker(frame)
   end
   partyMarker.icon:SetAtlas(PARTY_MARKER)
   partyMarker:SetAlpha(1)
-
-  if markerMode == 2 or markerMode == 3 then
-    partyMarker.icon:SetRotation(math.rad(90))
-  else
-    partyMarker.icon:SetRotation(0)
-  end
 
   partyMarker:SetScale(EUIDB.partyMarkerScale)
   partyMarker.icon:SetWidth(120)
