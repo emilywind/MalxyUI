@@ -81,6 +81,12 @@ function SkinCastbar(frame, unitToken)
     ModifyFont(castBar.Text, EUIDB.nameplateFont, EUIDB.nameplateNameFontSize - 1)
     ApplyEuiBackdrop(castBar.Icon, castBar)
     castBar.euiClean = true
+    if not castBar.timer then
+      local timer = castBar:CreateFontString(nil)
+      timer:SetFont(EUIDB.font, 14, "THINOUTLINE")
+      timer:SetPoint("LEFT", castBar, "RIGHT", 5, 0)
+      castBar.timer = timer
+    end
   end
 
   local castBarTexture = castBar:GetStatusBarTexture()
@@ -197,24 +203,50 @@ function GetSafeNameplate(unit)
   return nameplate, frame
 end
 
-hooksecurefunc(CastingBarMixin, "OnEvent", function(self, event, ...)
-  if not self.unit or not self.unit:find("nameplate") then return end
+local function updateCastTimer(frame, castBar, unit)
+  local name, _, _, startTime, endTime = UnitCastingInfo(unit)
+  if not name then
+    name, _, _, startTime, endTime = UnitChannelInfo(unit)
+  end
 
-  local frame = select(2, GetSafeNameplate(self.unit))
+  if name and endTime and startTime and frame then
+    local timer = castBar.timer
+    timer.endTime = endTime / 1000
+    local timeLeft = timer.endTime - GetTime()
+    if timeLeft > 0 then
+      castBar.timer:SetText(format("%.1f", max(timeLeft, 0)))
+      C_Timer.After(0.1, function()
+        updateCastTimer(frame, castBar, unit)
+      end)
+    else
+      castBar.timer:SetText("")
+    end
+  else
+
+  end
+end
+
+hooksecurefunc(CastingBarMixin, "OnEvent", function(self, event, ...)
+  local unit = self.unit
+  if not unit or not unit:find("nameplate") then return end
+
+  local frame = select(2, GetSafeNameplate(unit))
   if not frame then return end
-  if self.unit == "player" then return end
+  if unit == "player" then return end
+
+  local castBar = frame.castBar
 
   if frame.hideCastbarOverride then
-    frame.castBar:Hide()
+    castBar:Hide()
     return
   end
 
-  -- if showNameplateCastbarTimer then
-  --   BBP.UpdateCastTimer(frame, self.unit)
-  -- end
+  if castBar.timer then
+    updateCastTimer(frame, castBar, unit)
+  end
 
   -- if showNameplateTargetText then
-  --   BBP.UpdateNameplateTargetText(frame, self.unit)
+  --   UpdateNameplateTargetText(frame, self.unit)
   -- end
 
   if EUIDB.nameplateCastbarColorInterrupt then
