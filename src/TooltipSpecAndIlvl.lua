@@ -34,9 +34,9 @@ local TTT_COLOR = {
 ----------------------------------------------------------------------------------------------------
 
 -- HOOK: GameTooltip's OnTooltipSetUnit -- will schedule a delayed inspect request
-local ttsTipLineIndexTalents, ttsTipLineIndexAILAndGS
+local tsiTipLineIndexTalents, tsiTipLineIndexAILAndGS
 
-local function TTS_OnTooltipSetUnit()
+local function TSI_OnTooltipSetUnit()
   if (
     C_AddOns.IsAddOnLoaded('TinyTooltip')
     or C_AddOns.IsAddOnLoaded('TipTac')
@@ -55,8 +55,8 @@ local function TTS_OnTooltipSetUnit()
   end
 
   -- invalidate line indexes
-  ttsTipLineIndexTalents = nil
-  ttsTipLineIndexAILAndGS = nil
+  tsiTipLineIndexTalents = nil
+  tsiTipLineIndexAILAndGS = nil
 
   -- inspect unit
   local unitCacheRecord = LibFroznFunctions:InspectUnit(unitID, TTT_UpdateTooltip, true)
@@ -135,11 +135,11 @@ function TTT_UpdateTooltip(unitCacheRecord)
         specText = TTT_COLOR.text.spec:WrapTextInColorCode(specText:Concat())
       })
 
-      if (ttsTipLineIndexTalents) then
-        _G["GameTooltipTextLeft" .. ttsTipLineIndexTalents]:SetText(tipLineTextTalents)
+      if (tsiTipLineIndexTalents) then
+        _G["GameTooltipTextLeft" .. tsiTipLineIndexTalents]:SetText(tipLineTextTalents)
       else
         GameTooltip:AddLine(tipLineTextTalents)
-        ttsTipLineIndexTalents = GameTooltip:NumLines()
+        tsiTipLineIndexTalents = GameTooltip:NumLines()
       end
     end
   end
@@ -185,11 +185,11 @@ function TTT_UpdateTooltip(unitCacheRecord)
         averageItemLevelAndGearScore = TTT_COLOR.text.ail:WrapTextInColorCode(ailAndGSText:Concat())
       })
 
-      if (ttsTipLineIndexAILAndGS) then
-        _G["GameTooltipTextLeft" .. ttsTipLineIndexAILAndGS]:SetText(tipLineTextAverageItemLevel)
+      if (tsiTipLineIndexAILAndGS) then
+        _G["GameTooltipTextLeft" .. tsiTipLineIndexAILAndGS]:SetText(tipLineTextAverageItemLevel)
       else
         GameTooltip:AddLine(tipLineTextAverageItemLevel)
-        ttsTipLineIndexAILAndGS = GameTooltip:NumLines()
+        tsiTipLineIndexAILAndGS = GameTooltip:NumLines()
       end
     end
   end
@@ -202,17 +202,17 @@ end
 --                                          Setup Addon                                           --
 ----------------------------------------------------------------------------------------------------
 
-local tts = OnEvent("ADDON_LOADED", function(self, event, ...)
+local tsi = OnEvent("ADDON_LOADED", function(self, event, ...)
   self[event](self, event, ...)
 end)
 
-function tts:ADDON_LOADED(event, addOnName)
+function tsi:ADDON_LOADED(event, addOnName)
   -- not this addon
   if (addOnName ~= MOD_NAME) then
     return
   end
 
-  LibFroznFunctions:HookScriptOnTooltipSetUnit(GameTooltip, TTS_OnTooltipSetUnit)
+  LibFroznFunctions:HookScriptOnTooltipSetUnit(GameTooltip, TSI_OnTooltipSetUnit)
 
   -- remove this event handler as it's not needed anymore
   self:UnregisterEvent(event)
