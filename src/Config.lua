@@ -1049,6 +1049,17 @@ local function setupEuiOptions()
     EUI_Misc
   )
 
+  local partyMarkerHideRaidmarker = newCheckbox(
+    "Hide Party Raid Markers",
+    "Hide the default raid markers above party members' heads.",
+    EUIDB.partyMarkerHideRaidmarker,
+    function(value)
+      EUIDB.partyMarkerHideRaidmarker = value
+    end,
+    partyMarkerHealer,
+    EUI_Misc
+  )
+
   -----------
   -- CVars --
   -----------
