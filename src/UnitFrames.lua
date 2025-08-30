@@ -66,7 +66,7 @@ OnPlayerLogin(function()
     end
 
     if self.TargetFrameContent.TargetFrameContentMain.ReputationColor then
-      DarkenTexture(self.TargetFrameContent.TargetFrameContentMain.ReputationColor)
+      DarkenTexture(self.TargetFrameContent.TargetFrameContentMain.ReputationColor, self.unit)
     end
   end
 
