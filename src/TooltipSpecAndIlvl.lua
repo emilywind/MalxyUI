@@ -10,7 +10,7 @@ local LibFroznFunctions = LibStub:GetLibrary("LibFroznFunctions-1.0")
 ----------------------------------------------------------------------------------------------------
 
 -- text constants
-local TTT_TEXT = {
+local TSI_TEXT = {
   talentsPrefix = (SPECIALIZATION or TALENTS), -- MoP: Could be changed from TALENTS (Talents) to SPECIALIZATION (Specialization)
   ailAndGSPrefix = STAT_AVERAGE_ITEM_LEVEL,
   loading = SEARCH_LOADING_TEXT,
@@ -19,7 +19,7 @@ local TTT_TEXT = {
 }
 
 -- colors
-local TTT_COLOR = {
+local TSI_COLOR = {
   text = {
     default = HIGHLIGHT_FONT_COLOR, -- white
     spec = HIGHLIGHT_FONT_COLOR,  -- white
@@ -36,41 +36,11 @@ local TTT_COLOR = {
 -- HOOK: GameTooltip's OnTooltipSetUnit -- will schedule a delayed inspect request
 local tsiTipLineIndexTalents, tsiTipLineIndexAILAndGS
 
-local function TSI_OnTooltipSetUnit()
-  if (
-    C_AddOns.IsAddOnLoaded('TinyTooltip')
-    or C_AddOns.IsAddOnLoaded('TipTac')
-    or not EUIDB.enhanceTooltips
-    or not EUIDB.tooltipSpecAndIlvl
-  ) then
-    return
-  end
-
-  -- get the unit id -- check the UnitFrame unit if this tip is from a concated unit, such as "targettarget".
-  local unitID = GetTooltipUnit()
-
-  -- no unit id
-  if (not unitID) then
-    return
-  end
-
-  -- invalidate line indexes
-  tsiTipLineIndexTalents = nil
-  tsiTipLineIndexAILAndGS = nil
-
-  -- inspect unit
-  local unitCacheRecord = LibFroznFunctions:InspectUnit(unitID, TTT_UpdateTooltip, true)
-
-  if (unitCacheRecord) then
-    TTT_UpdateTooltip(unitCacheRecord)
-  end
-end
-
 ----------------------------------------------------------------------------------------------------
 --                                         Main Functions                                         --
 ----------------------------------------------------------------------------------------------------
 
-function TTT_UpdateTooltip(unitCacheRecord)
+local function TSI_UpdateTooltip(unitCacheRecord)
   if not EUIDB.tooltipSpecAndIlvl then return end
 
   -- exit if unit from unit cache record doesn't match the current displaying unit
@@ -91,10 +61,10 @@ function TTT_UpdateTooltip(unitCacheRecord)
     -- talents available but no inspect data
     if unitCacheRecord.talents == LFF_TALENTS.available then
       if unitCacheRecord.canInspect then
-        specText:Push(TTT_TEXT.loading)
+        specText:Push(TSI_TEXT.loading)
       else
         -- check if talents/AIL for people out of range shouldn't be shown
-        specText:Push(TTT_TEXT.outOfRange)
+        specText:Push(TSI_TEXT.outOfRange)
       end
 
       -- no talents available
@@ -103,7 +73,7 @@ function TTT_UpdateTooltip(unitCacheRecord)
 
       -- no talents found
     elseif unitCacheRecord.talents == LFF_TALENTS.none then
-      specText:Push(TTT_TEXT.none)
+      specText:Push(TSI_TEXT.none)
 
       -- talents found
     else
@@ -131,8 +101,8 @@ function TTT_UpdateTooltip(unitCacheRecord)
     -- show spec text
     if (specText:GetCount() > 0) then
       local tipLineTextTalents = LibFroznFunctions:FormatText("{prefix}: {specText}", {
-        prefix = TTT_TEXT.talentsPrefix,
-        specText = TTT_COLOR.text.spec:WrapTextInColorCode(specText:Concat())
+        prefix = TSI_TEXT.talentsPrefix,
+        specText = TSI_COLOR.text.spec:WrapTextInColorCode(specText:Concat())
       })
 
       if (tsiTipLineIndexTalents) then
@@ -151,10 +121,10 @@ function TTT_UpdateTooltip(unitCacheRecord)
     -- average item level available or no item data
     if (unitCacheRecord.averageItemLevel == LFF_AVERAGE_ITEM_LEVEL.available) then
       if (unitCacheRecord.canInspect) then
-        ailAndGSText:Push(TTT_TEXT.loading)
+        ailAndGSText:Push(TSI_TEXT.loading)
       else
         -- check if talents/AIL for people out of range shouldn't be shown
-        ailAndGSText:Push(TTT_TEXT.outOfRange)
+        ailAndGSText:Push(TSI_TEXT.outOfRange)
       end
 
       -- no average item level available
@@ -163,7 +133,7 @@ function TTT_UpdateTooltip(unitCacheRecord)
 
       -- no average item level found
     elseif (unitCacheRecord.averageItemLevel == LFF_AVERAGE_ITEM_LEVEL.none) then
-      ailAndGSText:Push(TTT_TEXT.none)
+      ailAndGSText:Push(TSI_TEXT.none)
 
       -- average item level found
     elseif (unitCacheRecord.averageItemLevel) then
@@ -181,8 +151,8 @@ function TTT_UpdateTooltip(unitCacheRecord)
     -- show ail and GS text
     if (ailAndGSText:GetCount() > 0) then
       local tipLineTextAverageItemLevel = LibFroznFunctions:FormatText("{prefix}: {averageItemLevelAndGearScore}", {
-        prefix = TTT_TEXT.ailAndGSPrefix,
-        averageItemLevelAndGearScore = TTT_COLOR.text.ail:WrapTextInColorCode(ailAndGSText:Concat())
+        prefix = TSI_TEXT.ailAndGSPrefix,
+        averageItemLevelAndGearScore = TSI_COLOR.text.ail:WrapTextInColorCode(ailAndGSText:Concat())
       })
 
       if (tsiTipLineIndexAILAndGS) then
@@ -196,6 +166,36 @@ function TTT_UpdateTooltip(unitCacheRecord)
 
   -- recalculate size of tip to ensure that it has the correct dimensions
   LibFroznFunctions:RecalculateSizeOfGameTooltip(GameTooltip)
+end
+
+local function TSI_OnTooltipSetUnit()
+  if (
+        C_AddOns.IsAddOnLoaded('TinyTooltip')
+        or C_AddOns.IsAddOnLoaded('TipTac')
+        or not EUIDB.enhanceTooltips
+        or not EUIDB.tooltipSpecAndIlvl
+      ) then
+    return
+  end
+
+  -- get the unit id -- check the UnitFrame unit if this tip is from a concated unit, such as "targettarget".
+  local unitID = GetTooltipUnit()
+
+  -- no unit id
+  if (not unitID) then
+    return
+  end
+
+  -- invalidate line indexes
+  tsiTipLineIndexTalents = nil
+  tsiTipLineIndexAILAndGS = nil
+
+  -- inspect unit
+  local unitCacheRecord = LibFroznFunctions:InspectUnit(unitID, TSI_UpdateTooltip, true)
+
+  if (unitCacheRecord) then
+    TSI_UpdateTooltip(unitCacheRecord)
+  end
 end
 
 ----------------------------------------------------------------------------------------------------
