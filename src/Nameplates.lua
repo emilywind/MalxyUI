@@ -76,8 +76,6 @@ OnPlayerLogin(function()
           healthBar:SetStatusBarColor(1, 0, 0)
         end
       end
-    else
-      healthBar:SetStatusBarColor(healthColor.r, healthColor.g, healthColor.b, 1)
     end
 
     local hPercFrame = frame.healthPercentage
@@ -166,13 +164,13 @@ OnPlayerLogin(function()
     frame.classificationIndicator:SetAlpha(EUIDB.nameplateHideClassificationIcon and 0 or 1)
     frame.selectionHighlight:SetAlpha(0) -- Hide the ugly target background
 
-    PartyMarker(frame)
+    local instanceData = GetInstanceData()
 
-    local isPersonal = UnitIsUnit(frame.displayedUnit, "player")
+    PartyMarker(frame)
 
     local ur = GetUnitRecord(unit)
 
-    if EUIDB.nameplateHideFriendlyHealthbars and ur.isFriend and not isPersonal then
+    if EUIDB.nameplateHideFriendlyHealthbars and ur.isFriend and not ur.isSelf then
       frame.HealthBarsContainer:Hide()
       frame.HealthBarsContainer:SetAlpha(0)
     else
@@ -180,7 +178,7 @@ OnPlayerLogin(function()
       frame.HealthBarsContainer:SetAlpha(1)
     end
 
-    if EUIDB.arenaNumbers and IsActiveBattlefieldArena() and ur.isPlayer and ur.isEnemy then -- Check to see if unit is a player to avoid needless checks on pets
+    if EUIDB.arenaNumbers and instanceData.isInArena and ur.isPlayer and ur.isEnemy then -- Check to see if unit is a player to avoid needless checks on pets
       for i = 1, 5 do
         if UnitIsUnit(frame.unit, "arena" .. i) then
           frame.name:SetText(i)
@@ -191,7 +189,9 @@ OnPlayerLogin(function()
     end
 
     local healthColor = GetUnitHealthColor(frame.displayedUnit)
-    frame.name:SetTextColor(healthColor.r, healthColor.g, healthColor.b, 1)
+    if EUIDB.nameplateFriendlyNamesClassColor and ur.isFriend then
+      frame.name:SetTextColor(healthColor.r, healthColor.g, healthColor.b, 1)
+    end
 
     if EUIDB.nameplateShowLevel then
       if not frame.levelText then
@@ -199,10 +199,9 @@ OnPlayerLogin(function()
         frame.levelText:SetPoint("RIGHT", frame.healthBar, "RIGHT", -1, 0)
         ModifyFont(frame.levelText, EUIDB.nameplateFont)
       end
-      frame.unitLevel = UnitEffectiveLevel(frame.unit)
+      frame.unitLevel = ur.level
       local c = GetCreatureDifficultyColor(frame.unitLevel)
-      local unitClassification = UnitClassification(frame.unit)
-      if unitClassification == 'rare' or unitClassification == 'rareelite' then
+      if ur.classification == 'rare' or ur.classification == 'rareelite' then
         c = {
           r = 0.8,
           g = 0.8,
@@ -215,15 +214,15 @@ OnPlayerLogin(function()
       if (levelText < 0) then
         levelText = '|TInterface\\TargetingFrame\\UI-TargetingFrame-Skull:12|t'
       else
-        if (unitClassification == 'elite') then
+        if (ur.classification == 'elite') then
           levelSuffix = '+'
-        elseif (unitClassification == 'rareelite') then
+        elseif (ur.classification == 'rareelite') then
           levelSuffix = '*+'
-        elseif (unitClassification == 'worldboss') then
+        elseif (ur.classification == 'worldboss') then
           levelSuffix = '++'
-        elseif (unitClassification == 'rare') then
+        elseif (ur.classification == 'rare') then
           levelSuffix = '*'
-        elseif (unitClassification == 'minus') then
+        elseif (ur.classification == 'minus') then
           levelSuffix = '-'
         end
       end
@@ -235,7 +234,7 @@ OnPlayerLogin(function()
       frame.levelText:Hide()
     end
 
-    if isPersonal and frame.levelText then
+    if ur.isSelf and frame.levelText then
       frame.levelText:SetText('')
       frame.levelText:Hide()
     end
