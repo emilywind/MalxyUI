@@ -319,8 +319,8 @@ local function setupEuiOptions()
   uiModeChooser:SetPoint("TOPLEFT", euiTitle, "BOTTOMLEFT", 0, -16)
 
   local classColoredUnitFrames = newCheckbox(
-    "Class Colored Unit Frames",
-    "Color unit frames by class where applicable.",
+    "Class Colored Unit Frame Borders",
+    "Color unit frame borders by class when units are players.",
     EUIDB.classColoredUnitFrames,
     function(value)
       EUIDB.classColoredUnitFrames = value
