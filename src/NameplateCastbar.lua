@@ -83,7 +83,7 @@ function SkinCastbar(frame, unitToken)
     castBar.euiClean = true
     if not castBar.timer then
       local timer = castBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-      ModifyFont(timer, EUIDB.font, nil, "THINOUTLINE", 'ffffffff')
+      ModifyFont(timer, EUIDB.font, 11, "THINOUTLINE", 'ffffffff')
       timer:SetPoint("LEFT", castBar, "RIGHT", 5, 0)
       castBar.timer = timer
     end
