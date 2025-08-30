@@ -78,12 +78,12 @@ function SkinCastbar(frame, unitToken)
   end
 
   if not castBar.timer then
-    ModifyFont(castBar.Text, EUIDB.nameplateFont, EUIDB.nameplateNameFontSize - 1)
+    ModifyFont(castBar.Text, EUIDB.nameplateFont)
     ApplyEuiBackdrop(castBar.Icon, castBar)
 
     local timer = castBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
     ModifyFont(timer, EUIDB.font, 11, "THINOUTLINE", 'ffffffff')
-    timer:SetPoint("LEFT", castBar, "RIGHT", 5, 0)
+    timer:SetPoint("LEFT", castBar, "RIGHT", 4, 0)
     castBar.timer = timer
   end
 
