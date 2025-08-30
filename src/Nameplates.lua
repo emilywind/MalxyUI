@@ -85,23 +85,25 @@ OnPlayerLogin(function()
       colorPersonalNameplate(frame)
     end
 
-    if not frame.healthPercentage then
-      frame.healthPercentage = frame.healthBar:CreateFontString(frame.healthPercentage, "OVERLAY", "GameFontNormalSmall")
-      ModifyFont(frame.healthPercentage, EUIDB.nameplateFont)
-      frame.healthPercentage:SetTextColor( 1, 1, 1 )
-      frame.healthPercentage:SetPoint("CENTER", frame.healthBar, "CENTER", 0, 0)
+    local hPercFrame = frame.healthPercentage
+    if not hPercFrame then
+      hPercFrame = frame.healthBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+      ModifyFont(hPercFrame, EUIDB.nameplateFont)
+      hPercFrame:SetTextColor( 1, 1, 1 )
+      hPercFrame:SetPoint("CENTER", frame.healthBar, "CENTER", 0, 0)
+      frame.healthPercentage = hPercFrame
     end
 
     if EUIDB.nameplateHealthPercent and healthPercentage ~= 100 then
-      frame.healthPercentage:SetText(healthPercentage .. '%')
+      hPercFrame:SetText(healthPercentage .. '%')
     else
-      frame.healthPercentage:SetText('')
+      hPercFrame:SetText('')
     end
   end)
 
   local function abbrev(str, length)
-    if ( not str ) then
-        return UNKNOWN
+    if not str then
+      return UNKNOWN
     end
 
     length = length or 20
