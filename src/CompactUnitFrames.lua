@@ -66,11 +66,15 @@ hooksecurefunc("CompactUnitFrame_UtilSetBuff", skinAura)
 hooksecurefunc("CompactUnitFrame_UtilSetDebuff", skinAura)
 
 OnPlayerLogin(function()
-  SetCVar("raidFramesDisplayClassColor", 1)
-  SetCVar("raidFramesDisplayPowerBars", 1)
-  SetCVar("raidFramesDisplayOnlyHealerPowerBars", 1)
+  local classColor = EUIDB.cUFClassColoredHealth and 1 or 0
+  local powerBars = EUIDB.cUFDisplayPowerBars and 1 or 0
+  local healerPowerBars = EUIDB.cUFPowerBarsHealerOnly and 1 or 0
 
-  SetCVar("pvpFramesDisplayClassColor", 1)
-  SetCVar("pvpFramesDisplayPowerBars", 1)
-  SetCVar("pvpFramesDisplayOnlyHealerPowerBars", 1)
+  SetCVar("raidFramesDisplayClassColor", classColor)
+  SetCVar("raidFramesDisplayPowerBars", powerBars)
+  SetCVar("raidFramesDisplayOnlyHealerPowerBars", healerPowerBars)
+
+  SetCVar("pvpFramesDisplayClassColor", classColor)
+  SetCVar("pvpFramesDisplayPowerBars", powerBars)
+  SetCVar("pvpFramesDisplayOnlyHealerPowerBars", healerPowerBars)
 end)

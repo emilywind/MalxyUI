@@ -1,11 +1,6 @@
 local SetCVar = C_CVar.SetCVar
 
-OnPlayerLogin(function()
-  if not EUIDB.skinNameplates or C_AddOns.IsAddOnLoaded('BetterBlizzPlates') then return end
-
-  local healthTex = EUIDB.healthBarTex
-  local powerTex = EUIDB.powerBarTex
-
+function SetLargeNameplates()
   local cVars = {
     nameplateGlobalScale = 1,
     nameplateMinScale = 1,
@@ -18,11 +13,22 @@ OnPlayerLogin(function()
   for cVar, value in pairs(cVars) do
     SetCVar(cVar, value)
   end
+end
+
+OnPlayerLogin(function()
+  if not EUIDB.skinNameplates or C_AddOns.IsAddOnLoaded('BetterBlizzPlates') then return end
+
+  local healthTex = EUIDB.healthBarTex
+  local powerTex = EUIDB.powerBarTex
+
+  if EUIDB.largerNameplates then
+    SetLargeNameplates()
+  end
 
   SetCVar("nameplateResourceOnTarget", EUIDB.nameplateResourceOnTarget and 1 or 0)
-  SetCVar("nameplateShowAll", 1)
-  SetCVar("nameplateShowFriends", 1)
-  SetCVar("nameplateShowEnemyMinions", 1)
+  SetCVar("nameplateShowAll", EUIDB.showAllNameplates and 1 or 0)
+  SetCVar("nameplateShowFriends", EUIDB.nameplateShowFriends and 1 or 0)
+  SetCVar("nameplateShowEnemyMinions", EUIDB.nameplateShowEnemyMinions and 1 or 0)
 
   -- Keep nameplates on screen
   SetCVar("nameplateOtherBottomInset", 0.1)

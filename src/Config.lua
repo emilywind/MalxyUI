@@ -4,6 +4,9 @@ local name, EUI = ...
 EUIDBDefaults = {
   uiMode = 'dark', -- 'dark', 'light', 'black', or 'blizzard'
   classColoredUnitFrames = false,
+  cUFClassColoredHealth = true,
+  cUFDisplayPowerBars = true,
+  cUFPowerBarsHealerOnly = true,
 
   hideHotkeys = false,
   hideMacroText = false,
@@ -50,6 +53,10 @@ EUIDBDefaults = {
   nameplateFriendlyClickthrough = true,
   nameplateCastbarColorInterrupt = true,
   nameplateResourceOnTarget = true,
+  largerNameplates = true,
+  showAllNameplates = true,
+  nameplateShowFriends = true,
+  nameplateShowEnemyMinions = true,
 
   partyMarker = true,
   partyMarkerScale = 1,
@@ -730,18 +737,6 @@ local function setupEuiOptions()
     EUI_Nameplates
   )
 
-  local nameplateResourceOnTarget = newCheckbox(
-    "Show Resource on Target Nameplate",
-    "Show the resource (mana, energy, rage, etc) on the nameplate of your current target.",
-    EUIDB.nameplateResourceOnTarget,
-    function(value)
-      EUIDB.nameplateResourceOnTarget = value
-      C_CVar.SetCVar("nameplateResourceOnTarget", EUIDB.nameplateResourceOnTarget and 1 or 0)
-    end,
-    nameplateColorInterrupt,
-    EUI_Nameplates
-  )
-
   function DisableNameplateSettings()
     nameplateFontDropdown:Disable()
     nameplateFontSlider:Disable()
@@ -758,7 +753,6 @@ local function setupEuiOptions()
     nameplateHideClassificationIcon:Disable()
     nameplateFriendlyClickthrough:Disable()
     nameplateColorInterrupt:Disable()
-    nameplateResourceOnTarget:Disable()
   end
 
   function EnableNameplateSettings()
@@ -777,7 +771,6 @@ local function setupEuiOptions()
     nameplateHideClassificationIcon:Enable()
     nameplateFriendlyClickthrough:Enable()
     nameplateColorInterrupt:Enable()
-    nameplateResourceOnTarget:Enable()
   end
 
   if C_AddOns.IsAddOnLoaded('BetterBlizzPlates') then
@@ -1054,6 +1047,118 @@ local function setupEuiOptions()
     EUI_Misc
   )
 
+  -----------
+  -- CVars --
+  -----------
+  local EUI_CVars = makePanel("EUI_CVars", EUI.panel, "CVars")
+
+  local cVarsSectionText = EUI_CVars:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+  cVarsSectionText:SetText("CVars")
+  cVarsSectionText:SetPoint("TOPLEFT", 16, -16)
+
+  local classColor = newCheckbox(
+    "Class Color in Raid and Arena Frames",
+    "Enable class coloring in raid frames, raid-style party frames, and arena frames.",
+    EUIDB.cUFClassColoredHealth,
+    function(value)
+      EUIDB.cUFClassColoredHealth = value
+    end,
+    cVarsSectionText,
+    EUI_CVars
+  )
+
+  local cUFDisplayPowerBars = newCheckbox(
+    "Display Power Bars",
+    "Enable power bars in raid and arena frames.",
+    EUIDB.cUFDisplayPowerBars,
+    function(value)
+      EUIDB.cUFDisplayPowerBars = value
+      if not value then
+        CUFPowerBarsHealerOnly:Disable()
+      else
+        CUFPowerBarsHealerOnly:Enable()
+      end
+    end,
+    classColor,
+    EUI_CVars
+  )
+
+  CUFPowerBarsHealerOnly = newCheckbox(
+    "Healer Power Bars Only",
+    "Only show power bars for healers in raid and arena frames.",
+    EUIDB.cUFPowerBarsHealerOnly,
+    function(value)
+      EUIDB.cUFPowerBarsHealerOnly = value
+    end,
+    cUFDisplayPowerBars,
+    EUI_CVars
+  )
+  CUFPowerBarsHealerOnly:ClearAllPoints()
+  CUFPowerBarsHealerOnly:SetPoint("LEFT", cUFDisplayPowerBars, "RIGHT", 130, 0)
+
+  if not EUIDB.cUFDisplayPowerBars then
+    CUFPowerBarsHealerOnly:Disable()
+  end
+
+  local largerNameplates = newCheckbox(
+    "Larger Nameplates",
+    "Enable larger nameplates for better visibility.",
+    EUIDB.largerNameplates,
+    function(value)
+      EUIDB.largerNameplates = value
+    end,
+    cUFDisplayPowerBars,
+    EUI_CVars
+  )
+
+  local showAllNameplates = newCheckbox(
+    "Always Show Nameplates",
+    "Show nameplates for all units, not just ones in combat.",
+    EUIDB.showAllNameplates,
+    function(value)
+      EUIDB.showAllNameplates = value
+      C_CVar.SetCVar("nameplateShowAll", value and 1 or 0)
+    end,
+    largerNameplates,
+    EUI_CVars
+  )
+
+  local nameplateResourceOnTarget = newCheckbox(
+    "Show Resource on Target Nameplate",
+    "Show the resource (mana, energy, rage, etc) on the nameplate of your current target.",
+    EUIDB.nameplateResourceOnTarget,
+    function(value)
+      EUIDB.nameplateResourceOnTarget = value
+      C_CVar.SetCVar("nameplateResourceOnTarget", value and 1 or 0)
+    end,
+    showAllNameplates,
+    EUI_CVars
+  )
+
+  local nameplateShowFriends = newCheckbox(
+    "Show Friendly Nameplates",
+    "Show Nameplates for Friendly Units.",
+    EUIDB.nameplateShowFriends,
+    function(value)
+      EUIDB.nameplateShowFriends = value
+      C_CVar.SetCVar("nameplateShowFriends", value and 1 or 0)
+    end,
+    nameplateResourceOnTarget,
+    EUI_CVars
+  )
+
+  local nameplateShowEnemyMinions = newCheckbox(
+    "Show Enemy Minions",
+    "Show Nameplates for Enemy Minions (pets, guardians, and totems).",
+    EUIDB.nameplateShowEnemyMinions,
+    function(value)
+      EUIDB.nameplateShowEnemyMinions = value
+      C_CVar.SetCVar("nameplateShowEnemyMinions", value and 1 or 0)
+    end,
+    nameplateShowFriends,
+    EUI_CVars
+  )
+
   --------------------
   -- Reload Buttons --
   --------------------
@@ -1067,9 +1172,10 @@ local function setupEuiOptions()
   end)
 
   addReloadButton(EUI.panel)
-  addReloadButton(EUI_Misc)
   addReloadButton(EUI_Nameplates)
   addReloadButton(EUI_Tooltips)
+  addReloadButton(EUI_Misc)
+  addReloadButton(EUI_CVars)
 
   -------------------
   -- Slash Command --
