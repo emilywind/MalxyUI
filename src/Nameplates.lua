@@ -47,20 +47,6 @@ OnPlayerLogin(function()
   end
   SetFriendlyNameplateSize()
 
-  local function colorPersonalNameplate(frame)
-    local healthBar = frame.healthBar
-    local healthPercentage = ceil((UnitHealth(frame.displayedUnit) / UnitHealthMax(frame.displayedUnit) * 100))
-    local healthColor = GetUnitHealthColor("player")
-
-    if frame.optionTable.colorNameBySelection then
-      if healthPercentage <= 100 and healthPercentage >= 30 then
-        healthBar:SetStatusBarColor(healthColor.r, healthColor.g, healthColor.b, 1)
-      elseif healthPercentage < 30 then
-        healthBar:SetStatusBarColor(1, 0, 0)
-      end
-    end
-  end
-
   -------------------------------------------------------
   -- Red color when below 30% on Personal Resource Bar --
   -------------------------------------------------------
@@ -72,17 +58,23 @@ OnPlayerLogin(function()
     local isPersonal = C_NamePlate.GetNamePlateForUnit(frame.unit) == C_NamePlate.GetNamePlateForUnit("player")
 
     if isPersonal then
-      if not frame.emsUISkinned then
-        healthBar:SetStatusBarTexture(healthTex)
-        ClassNameplateManaBarFrame:SetStatusBarTexture(powerTex)
-        ClassNameplateManaBarFrame.FeedbackFrame.BarTexture:SetTexture(powerTex)
-        ClassNameplateManaBarFrame.FeedbackFrame.LossGlowTexture:SetTexture(powerTex)
-        if healthBar.myHealPrediction then
-          healthBar.myHealPrediction:SetTexture(healthTex)
-        end
-        frame.emsUISkinned = true
+      healthBar:SetStatusBarTexture(healthTex)
+      ClassNameplateManaBarFrame:SetStatusBarTexture(powerTex)
+      ClassNameplateManaBarFrame.FeedbackFrame.BarTexture:SetTexture(powerTex)
+      ClassNameplateManaBarFrame.FeedbackFrame.LossGlowTexture:SetTexture(powerTex)
+      if healthBar.myHealPrediction then
+        healthBar.myHealPrediction:SetTexture(healthTex)
       end
-      colorPersonalNameplate(frame)
+
+      local healthColor = GetUnitHealthColor("player")
+
+      if frame.optionTable.colorNameBySelection then
+        if healthPercentage <= 100 and healthPercentage >= 30 then
+          healthBar:SetStatusBarColor(healthColor.r, healthColor.g, healthColor.b, 1)
+        elseif healthPercentage < 30 then
+          healthBar:SetStatusBarColor(1, 0, 0)
+        end
+      end
     end
 
     local hPercFrame = frame.healthPercentage
