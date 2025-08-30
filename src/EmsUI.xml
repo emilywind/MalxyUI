@@ -21,7 +21,7 @@
   <Include file="HideMicroMenuAndBagBar.lua" />
   <Include file="UIMode.lua" />
   <Include file="Portrait.lua" />
-  <Include file="RaidFrames.lua" />
+  <Include file="CompactUnitFrames.lua" />
   <Include file="EasyDelete.lua" />
   <Include file="LFGTimer.lua" />
   <Include file="AutoKeystone.lua" />
