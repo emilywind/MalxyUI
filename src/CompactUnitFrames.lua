@@ -9,19 +9,11 @@ local function updateTextures(self)
       local healthTex = EUIDB.healthBarTex
       local powerTex = EUIDB.powerBarTex
 
-      local unit = self.unit
-      local classColor = GetUnitClassColor(unit)
-
       local healthbar = self.healthBar
       healthbar:SetStatusBarTexture(healthTex)
       healthbar:GetStatusBarTexture():SetDrawLayer("BORDER")
       self.myHealPrediction:SetTexture(healthTex)
       self.otherHealPrediction:SetTexture(healthTex)
-      if classColor then
-        healthbar:GetStatusBarTexture():SetVertexColor(classColor.r, classColor.g, classColor.b)
-        self.myHealPrediction:SetVertexColor(classColor.r, classColor.g, classColor.b)
-        self.otherHealPrediction:SetVertexColor(classColor.r, classColor.g, classColor.b)
-      end
 
       local powerBar = self.powerBar
       powerBar:SetStatusBarTexture(powerTex)
@@ -70,3 +62,9 @@ end
 
 hooksecurefunc("CompactUnitFrame_UtilSetBuff", skinAura)
 hooksecurefunc("CompactUnitFrame_UtilSetDebuff", skinAura)
+
+OnPlayerLogin(function()
+  SetCVar("raidFramesDisplayClassColor", 1)
+  SetCVar("raidFramesDisplayPowerBars", 1)
+  SetCVar("raidFramesDisplayOnlyHealerPowerBars", 1)
+end)
