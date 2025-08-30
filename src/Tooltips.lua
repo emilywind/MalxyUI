@@ -101,11 +101,7 @@ local function cleanupTooltip(tip)
 					(hideCreatureTypeIfNoCreatureFamily) and (gttLineText == creatureType) or
 					(hideSpecializationAndClassText) and ((gttLineText == unitRecord.className) or isSpecLine) then
 
-				if isSpecLine then
-					tip.spec = gttLineText
-				else
 					gttLine:SetText(nil)
-				end
 
 				if (isGttLineTextUnitPopupRightClick) and (i > 1) then
 					_G["GameTooltipTextLeft" .. (i - 1)]:SetText(nil)
