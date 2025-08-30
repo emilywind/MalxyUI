@@ -269,31 +269,24 @@ function SkinStatusBar(bar)
 end
 
 function GetUnitCharacteristics(unit)
-  local reaction = UnitReaction(unit, "player")
-  local isEnemy = false
-  local isFriend = false
-  local isNeutral = false
-  local isPlayer = UnitIsPlayer(unit)
-  local isNpc = not isPlayer
+  local info = {}
 
-  if reaction then
-    if reaction < 4 then
-      isEnemy = true
-    elseif reaction == 4 then
-      isNeutral = true
-    else
-      isFriend = true
-    end
-  end
+  info.name = UnitName(unit)
+  info.isSelf = UnitIsUnit("player", unit)
+  info.isTarget = UnitIsUnit("target", unit)
+  info.isFocus = UnitIsUnit("focus", unit)
+  info.isPet = UnitIsUnit("pet", unit)
+  info.isPlayer = UnitIsPlayer(unit)
+  info.isNpc = not info.isPlayer
+  info.unitGUID = UnitGUID(unit)
+  info.class = info.isPlayer and UnitClassBase(unit) or nil
+  info.reaction = UnitReaction(unit, "player")
+  info.isEnemy = (info.reaction and info.reaction < 4) and not info.isSelf
+  info.isNeutral = (info.reaction and info.reaction == 4) and not info.isSelf
+  info.isFriend = (info.reaction and info.reaction >= 5) and not info.isSelf
+  info.playerClass = select(2, UnitClass("player"))
 
-  return {
-    isEnemy = isEnemy,
-    isFriend = isFriend,
-    isNeutral = isNeutral,
-    isPlayer = isPlayer,
-    isNpc = isNpc,
-    reaction = reaction
-  }
+  return info
 end
 
 function GetUnitHealthColor(unit)
@@ -331,24 +324,7 @@ function GetNameplateUnitInfo(frame, unit)
   unit = unit or frame.unit or frame.displayedUnit
   if not unit then return end
 
-  local info = {}
-
-  info.name = UnitName(unit)
-  info.isSelf = UnitIsUnit("player", unit)
-  info.isTarget = UnitIsUnit("target", unit)
-  info.isFocus = UnitIsUnit("focus", unit)
-  info.isPet = UnitIsUnit("pet", unit)
-  info.isPlayer = UnitIsPlayer(unit)
-  info.isNpc = not info.isPlayer
-  info.unitGUID = UnitGUID(unit)
-  info.class = info.isPlayer and UnitClassBase(unit) or nil
-  info.reaction = UnitReaction(unit, "player")
-  info.isEnemy = (info.reaction and info.reaction < 4) and not info.isSelf
-  info.isNeutral = (info.reaction and info.reaction == 4) and not info.isSelf
-  info.isFriend = (info.reaction and info.reaction >= 5) and not info.isSelf
-  info.playerClass = select(2, UnitClass("player"))
-
-  return info
+  return GetUnitCharacteristics(unit)
 end
 
 local function GetLocalizedSpecs()
