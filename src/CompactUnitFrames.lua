@@ -1,4 +1,6 @@
 -- Raid Frames, Raid-style Party Frames, Arena Frames --
+local SetCVar = C_CVar.SetCVar
+
 local function updateTextures(self)
   if self:IsForbidden() then return end
   if self and self:GetName() then
@@ -67,4 +69,8 @@ OnPlayerLogin(function()
   SetCVar("raidFramesDisplayClassColor", 1)
   SetCVar("raidFramesDisplayPowerBars", 1)
   SetCVar("raidFramesDisplayOnlyHealerPowerBars", 1)
+
+  SetCVar("pvpFramesDisplayClassColor", 1)
+  SetCVar("pvpFramesDisplayPowerBars", 1)
+  SetCVar("pvpFramesDisplayOnlyHealerPowerBars", 1)
 end)
