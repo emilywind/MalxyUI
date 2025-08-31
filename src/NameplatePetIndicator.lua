@@ -124,7 +124,7 @@ function PetIndicator(frame)
       else
         frame.petIndicator:Hide()
       end
-      if EUIDB.nameplateFadeSecondaryPets and info.isEnemy then
+      if EUIDB.nameplateFadeSecondaryPets then
         FadeNameplate(frame)
       end
     else
@@ -148,7 +148,7 @@ function PetIndicator(frame)
       else
         frame.petIndicator:Hide()
       end
-      if EUIDB.nameplateFadeSecondaryPets and info.isEnemy then
+      if EUIDB.nameplateFadeSecondaryPets then
         FadeNameplate(frame)
         return
       end
