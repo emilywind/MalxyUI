@@ -7,10 +7,10 @@ function CombatIndicator(frame)
   if not frame.combatIndicator then
     frame.combatIndicator = frame.healthBar:CreateTexture(nil, "OVERLAY")
     if EUIDB.nameplateCombatIndicator == 'food' then
-      frame.combatIndicator:SetSize(18, 18)
+      frame.combatIndicator:SetSize(14, 14)
       frame.combatIndicator:SetAtlas("food")
     elseif EUIDB.nameplateCombatIndicator == 'sap' then
-      frame.combatIndicator:SetSize(18, 16)
+      frame.combatIndicator:SetSize(12, 12)
       frame.combatIndicator:SetTexture("Interface\\Icons\\Ability_Sap")
       StyleIcon(frame.combatIndicator)
     end
