@@ -105,7 +105,7 @@ function PetIndicator(frame)
   end
 
   -- Set position and scale dynamically
-  frame.petIndicator:SetPoint("CENTER", frame.healthBar, "CENTER", 0, 0)
+  frame.petIndicator:SetPoint("LEFT", frame.healthBar, "LEFT", 2, 0)
 
   local npcID = GetNPCIDFromGUID(info.guid)
 
