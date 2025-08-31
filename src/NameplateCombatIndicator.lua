@@ -5,7 +5,7 @@ local function CombatIndicator(frame)
 
   -- Create food texture
   if not frame.combatIndicator then
-    frame.combatIndicator = frame:CreateTexture(nil, "OVERLAY")
+    frame.combatIndicator = frame.healthBar:CreateTexture(nil, "OVERLAY")
     if EUIDB.combatIndicator == 'food' then
       frame.combatIndicator:SetSize(18, 18)
       frame.combatIndicator:SetAtlas("food")

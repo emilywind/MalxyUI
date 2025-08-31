@@ -1,3 +1,20 @@
+-- Main pet buff spell id's
+local petValidSpellIDs = {
+  [264662] = true,
+  [264656] = true,
+  [264663] = true,
+  [284301] = true,
+}
+
+local mainPets = {
+  [26125] = true,    -- DK Pet
+  [17252] = true,    -- Felguard Lock
+  [417] = true,      -- Felhunter Lock
+  [416] = true,      -- Imp Lock
+  [1860] = true,     -- VoidWalker Lock
+  [1863] = true,     -- Sayaad/Succubus Lock
+}
+
 local secondaryPets = {
   -- Death Knight
   [221633] = true,   -- High Inquisitor Whitemane
@@ -59,6 +76,7 @@ function PetIndicator(frame)
   local unit = frame.displayedUnit or frame.unit
   if not unit then return end
   local info = GetUnitInfo(unit)
+  local instanceData = GetInstanceData()
 
   if not EUIDB.nameplatePetIndicator then
     if frame.petIndicator then
@@ -81,7 +99,7 @@ function PetIndicator(frame)
 
   -- Initialize
   if not frame.petIndicator then
-    frame.petIndicator = frame:CreateTexture(nil, "OVERLAY")
+    frame.petIndicator = frame.healthBar:CreateTexture(nil, "OVERLAY")
     frame.petIndicator:SetAtlas("newplayerchat-chaticon-newcomer")
     frame.petIndicator:SetSize(12, 12)
   end
@@ -93,48 +111,75 @@ function PetIndicator(frame)
 
   -- Demo lock pet
   if npcID == 17252 then
-    local isRealPet = UnitIsUnit(frame.unit, "pet")
-    for i = 1, 3 do
-      if UnitIsUnit(frame.unit, "arenapet" .. i) or UnitIsUnit(frame.unit, "partypet" .. i) then
-        isRealPet = true
-        break
+    if instanceData.isInArena then
+      local isRealPet = UnitIsUnit(frame.unit, "pet")
+      for i = 1, 3 do
+        if UnitIsUnit(frame.unit, "arenapet" .. i) or UnitIsUnit(frame.unit, "partypet" .. i) then
+          isRealPet = true
+          break
+        end
       end
-    end
-    if isRealPet then
-      frame.petIndicator:Show()
-      return
+      if isRealPet then
+        frame.petIndicator:Show()
+      else
+        frame.petIndicator:Hide()
+      end
+      if EUIDB.nameplateFadeSecondaryPets and info.isEnemy then
+        FadeNameplate(frame)
+      end
     else
-      frame.petIndicator:Hide()
+      frame.petIndicator:Show()
     end
-    if EUIDB.nameplateFadeSecondaryPets then
-      FadeNameplate(frame)
-      return
-    end
+    return
   end
   -- All hunter pets have same NPC id, check for it.
   if npcID == 165189 then
-    local isRealPet = UnitIsUnit(frame.unit, "pet")
-    for i = 1, 3 do
-      if UnitIsUnit(frame.unit, "arenapet" .. i) or UnitIsUnit(frame.unit, "partypet" .. i) then
-        isRealPet = true
-        break
+    if instanceData.isInArena then
+      local isRealPet = UnitIsUnit(frame.unit, "pet")
+      for i = 1, 3 do
+        if UnitIsUnit(frame.unit, "arenapet" .. i) or UnitIsUnit(frame.unit, "partypet" .. i) then
+          isRealPet = true
+          break
+        end
       end
-    end
-    if isRealPet then
-      frame.petIndicator:Show()
-      return
+      if isRealPet then
+        frame.petIndicator:Show()
+        return
+      else
+        frame.petIndicator:Hide()
+      end
+      if EUIDB.nameplateFadeSecondaryPets and info.isEnemy then
+        FadeNameplate(frame)
+        return
+      end
     else
-      frame.petIndicator:Hide()
-    end
-    if EUIDB.nameplateFadeSecondaryPets then
-      FadeNameplate(frame)
-      return
+      local isValidPet = false
+      for i = 1, 6 do -- Only loop through the first 5 buffs
+        local aura = C_UnitAuras.GetAuraDataByIndex(frame.displayedUnit, i, "HELPFUL")
+        if aura and petValidSpellIDs[aura.spellId] then
+          isValidPet = true
+          break
+        end
+      end
+      if isValidPet then
+        frame.petIndicator:Show()
+        return
+      elseif EUIDB.nameplateFadeSecondaryPets then
+       FadeNameplate(frame)
+       return
+      end
     end
   end
 
-  if EUIDB.nameplateFadeSecondaryPets and secondaryPets[npcID] and info.isEnemy then
+  if EUIDB.nameplateFadeSecondaryPets and secondaryPets[npcID] then
     FadeNameplate(frame)
     return
+  end
+
+  if mainPets[npcID] then
+    frame.petIndicator:Show()
+  else
+    frame.petIndicator:Hide()
   end
 
   if frame.fadedNPC then -- Unfade any faded NPCs not re-caught above
