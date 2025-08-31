@@ -19,15 +19,9 @@ function CombatIndicator(frame)
   -- Conditon check: Only show on enemy players
   local shouldShow = not info.inCombat and info.isEnemy and info.isPlayer
 
-  -- Add some offset if both Pet Indicator and Combat Indicator has the same anchor and shows at the same time
-  local petOffset = 2
-  if frame.petIndicator and frame.petIndicator:IsShown() then
-    petOffset = petOffset + 5
-  end
-
   -- Tiny adjustment to position depending on texture
   local yPosAdjustment = EUIDB.nameplateCombatIndicator == 'sap' and 0 or 1
-  frame.combatIndicator:SetPoint("LEFT", frame.healthBar, "LEFT", petOffset, yPosAdjustment)
+  frame.combatIndicator:SetPoint("LEFT", frame.healthBar, "LEFT", 2, yPosAdjustment)
 
   -- Target is not in combat so return
   if shouldShow then
