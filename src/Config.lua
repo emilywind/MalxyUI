@@ -547,7 +547,16 @@ local function setupEuiOptions()
   ----------------
   local EUI_Nameplates = makePanel("EUI_Nameplates", EUI.panel, "Nameplates")
 
-  local nameplateText = EUI_Nameplates:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+  -- Create a ScrollFrame and a child frame to hold your content
+  local scrollFrame = CreateFrame("ScrollFrame", "MyConfigScrollFrame", EUI_Nameplates, "UIPanelScrollFrameTemplate")
+  scrollFrame:SetSize(600, 600)
+  scrollFrame:SetPoint("TOPLEFT", EUI_Nameplates, "TOPLEFT", 0, 0)
+
+  local Nameplate_Content = CreateFrame("Frame", nil, scrollFrame)
+  Nameplate_Content:SetSize(600, 740) -- Height should fit all your content
+  scrollFrame:SetScrollChild(Nameplate_Content)
+
+  local nameplateText = Nameplate_Content:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   nameplateText:SetText("Nameplates")
   nameplateText:SetPoint("TOPLEFT", 16, -16)
 
@@ -564,7 +573,7 @@ local function setupEuiOptions()
       end
     end,
     nameplateText,
-    EUI_Nameplates
+    Nameplate_Content
   )
 
   local nameplateFont, nameplateFontDropdown = newDropdown(
@@ -575,7 +584,7 @@ local function setupEuiOptions()
     function(value)
       EUIDB.nameplateFont = value
     end,
-    EUI_Nameplates
+    Nameplate_Content
   )
   nameplateFont:SetPoint("TOPLEFT", skinNameplates, "BOTTOMLEFT", 0, -4)
 
@@ -588,7 +597,7 @@ local function setupEuiOptions()
     1,
     "Font size for Nameplates",
     nameplateFontDropdown,
-    EUI_Nameplates
+    Nameplate_Content
   )
   nameplateFontSlider:ClearAllPoints()
   nameplateFontSlider:SetPoint("LEFT", nameplateFontDropdown, "RIGHT", 220, 0)
@@ -605,7 +614,7 @@ local function setupEuiOptions()
       end
     end,
     nameplateFont,
-    EUI_Nameplates
+    Nameplate_Content
   )
   nameplateNameLength:SetPoint("TOPLEFT", nameplateFont, "BOTTOMLEFT", 0, -50)
 
@@ -617,7 +626,7 @@ local function setupEuiOptions()
       EUIDB.nameplateHideServerNames = value
     end,
     nameplateNameLength,
-    EUI_Nameplates
+    Nameplate_Content
   )
 
   local nameplateFriendlyNamesClassColor = newCheckbox(
@@ -628,7 +637,7 @@ local function setupEuiOptions()
       EUIDB.nameplateFriendlyNamesClassColor = value
     end,
     nameplateHideServerNames,
-    EUI_Nameplates
+    Nameplate_Content
   )
 
   local nameplateFriendlySmall = newCheckbox(
@@ -640,7 +649,7 @@ local function setupEuiOptions()
       SetFriendlyNameplateSize()
     end,
     nameplateFriendlyNamesClassColor,
-    EUI_Nameplates
+    Nameplate_Content
   )
 
   local nameplateShowLevel = newCheckbox(
@@ -651,7 +660,7 @@ local function setupEuiOptions()
       EUIDB.nameplateShowLevel = value
     end,
     nameplateFriendlySmall,
-    EUI_Nameplates
+    Nameplate_Content
   )
 
   local nameplateShowHealth = newCheckbox(
@@ -662,7 +671,7 @@ local function setupEuiOptions()
       EUIDB.nameplateHealthPercent = value
     end,
     nameplateShowLevel,
-    EUI_Nameplates
+    Nameplate_Content
   )
 
   local nameplateTotems = newCheckbox(
@@ -673,7 +682,7 @@ local function setupEuiOptions()
       EUIDB.nameplateTotems = value
     end,
     nameplateShowHealth,
-    EUI_Nameplates
+    Nameplate_Content
   )
 
   local arenaNumbers = newCheckbox(
@@ -684,7 +693,7 @@ local function setupEuiOptions()
       EUIDB.arenaNumbers = value
     end,
     nameplateTotems,
-    EUI_Nameplates
+    Nameplate_Content
   )
 
   local nameplateHideCastText = newCheckbox(
@@ -695,7 +704,7 @@ local function setupEuiOptions()
       EUIDB.nameplateHideCastText = value
     end,
     arenaNumbers,
-    EUI_Nameplates
+    Nameplate_Content
   )
 
   local nameplateHideFriendlyHealthbars = newCheckbox(
@@ -706,7 +715,7 @@ local function setupEuiOptions()
       EUIDB.nameplateHideFriendlyHealthbars = value
     end,
     nameplateHideCastText,
-    EUI_Nameplates
+    Nameplate_Content
   )
 
   local nameplateHideClassificationIcon = newCheckbox(
@@ -717,7 +726,7 @@ local function setupEuiOptions()
       EUIDB.nameplateHideClassificationIcon = value
     end,
     nameplateHideFriendlyHealthbars,
-    EUI_Nameplates
+    Nameplate_Content
   )
 
   local nameplateFriendlyClickthrough = newCheckbox(
@@ -729,7 +738,7 @@ local function setupEuiOptions()
       C_NamePlate.SetNamePlateFriendlyClickThrough(value)
     end,
     nameplateHideClassificationIcon,
-    EUI_Nameplates
+    Nameplate_Content
   )
 
   local nameplateColorInterrupt = newCheckbox(
@@ -740,7 +749,7 @@ local function setupEuiOptions()
       EUIDB.nameplateCastbarColorInterrupt = value
     end,
     nameplateFriendlyClickthrough,
-    EUI_Nameplates
+    Nameplate_Content
   )
 
   local nameplateShowTargetText = newCheckbox(
@@ -751,8 +760,42 @@ local function setupEuiOptions()
       EUIDB.nameplateShowTargetText = value
     end,
     nameplateColorInterrupt,
-    EUI_Nameplates
+    Nameplate_Content
   )
+
+  local nameplatePetIndicator = newCheckbox(
+    "Show Pet Indicator on Nameplates",
+    "Show an icon on nameplates to indicate pets.",
+    EUIDB.nameplatePetIndicator,
+    function(value)
+      EUIDB.nameplatePetIndicator = value
+    end,
+    nameplateShowTargetText,
+    Nameplate_Content
+  )
+
+  local nameplateFadeSecondaryPets = newCheckbox(
+    "Fade Secondary Pets",
+    "Fade the nameplates of secondary pets (e.g., second BM Hunter pet, Warlock minions).",
+    EUIDB.nameplateFadeSecondaryPets,
+    function(value)
+      EUIDB.nameplateFadeSecondaryPets = value
+    end,
+    nameplatePetIndicator,
+    Nameplate_Content
+  )
+
+  local nameplateCombatIndicator, nameplateCombatIndicatorDropdown = newDropdown(
+    "Nameplate Combat Indicator",
+    { ["none"] = "None", ["food"] = "Food", ["sap"] = "Sap" },
+    EUIDB.nameplateCombatIndicator,
+    80,
+    function(value)
+      EUIDB.nameplateCombatIndicator = value
+    end,
+    Nameplate_Content
+  )
+  nameplateCombatIndicator:SetPoint("TOPLEFT", nameplateFadeSecondaryPets, "BOTTOMLEFT", 0, -4)
 
   function DisableNameplateSettings()
     nameplateFontDropdown:Disable()
@@ -770,6 +813,10 @@ local function setupEuiOptions()
     nameplateHideClassificationIcon:Disable()
     nameplateFriendlyClickthrough:Disable()
     nameplateColorInterrupt:Disable()
+    nameplateShowTargetText:Disable()
+    nameplatePetIndicator:Disable()
+    nameplateFadeSecondaryPets:Disable()
+    nameplateCombatIndicatorDropdown:Disable()
   end
 
   function EnableNameplateSettings()
@@ -788,6 +835,10 @@ local function setupEuiOptions()
     nameplateHideClassificationIcon:Enable()
     nameplateFriendlyClickthrough:Enable()
     nameplateColorInterrupt:Enable()
+    nameplateShowTargetText:Enable()
+    nameplatePetIndicator:Enable()
+    nameplateFadeSecondaryPets:Enable()
+    nameplateCombatIndicatorDropdown:Enable()
   end
 
   if C_AddOns.IsAddOnLoaded('BetterBlizzPlates') then
@@ -1203,7 +1254,7 @@ local function setupEuiOptions()
   end)
 
   addReloadButton(EUI.panel)
-  addReloadButton(EUI_Nameplates)
+  addReloadButton(Nameplate_Content)
   addReloadButton(EUI_Tooltips)
   addReloadButton(EUI_Misc)
   addReloadButton(EUI_CVars)

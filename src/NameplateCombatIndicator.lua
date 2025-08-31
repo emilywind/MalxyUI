@@ -6,10 +6,10 @@ local function CombatIndicator(frame)
   -- Create food texture
   if not frame.combatIndicator then
     frame.combatIndicator = frame.healthBar:CreateTexture(nil, "OVERLAY")
-    if EUIDB.combatIndicator == 'food' then
+    if EUIDB.nameplateCombatIndicator == 'food' then
       frame.combatIndicator:SetSize(18, 18)
       frame.combatIndicator:SetAtlas("food")
-    elseif EUIDB.combatIndicator == 'sap' then
+    elseif EUIDB.nameplateCombatIndicator == 'sap' then
       frame.combatIndicator:SetSize(18, 16)
       frame.combatIndicator:SetTexture("Interface\\AddOns\\BetterBlizzPlates\\media\\ABILITY_SAP")
     end
@@ -27,7 +27,7 @@ local function CombatIndicator(frame)
   end
 
   -- Tiny adjustment to position depending on texture
-  local yPosAdjustment = EUIDB.combatIndicator == 'sap' and 0 or 1
+  local yPosAdjustment = EUIDB.nameplateCombatIndicator == 'sap' and 0 or 1
   frame.combatIndicator:SetPoint("CENTER", frame.healthBar, "CENTER", petOffset, yPosAdjustment)
 
   -- Target is not in combat so return
@@ -43,7 +43,7 @@ end
 
 -- Event Listener for Combat Indicator
 OnEvent("UNIT_FLAGS", function(self, event, unit)
-  if EUIDB.combatIndicator == 'none' then
+  if EUIDB.nameplateCombatIndicator == 'none' then
     self:UnregisterEvent("UNIT_FLAGS")
     return
   end
