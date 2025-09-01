@@ -549,11 +549,11 @@ local function setupEuiOptions()
 
   -- Create a ScrollFrame and a child frame to hold your content
   local scrollFrame = CreateFrame("ScrollFrame", "MyConfigScrollFrame", EUI_Nameplates, "UIPanelScrollFrameTemplate")
-  scrollFrame:SetSize(600, 600)
+  scrollFrame:SetSize(640, 600)
   scrollFrame:SetPoint("TOPLEFT", EUI_Nameplates, "TOPLEFT", 0, 0)
 
   local Nameplate_Content = CreateFrame("Frame", nil, scrollFrame)
-  Nameplate_Content:SetSize(600, 740) -- Height should fit all your content
+  Nameplate_Content:SetSize(640, 740) -- Height should fit all your content
   scrollFrame:SetScrollChild(Nameplate_Content)
 
   local nameplateText = Nameplate_Content:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
