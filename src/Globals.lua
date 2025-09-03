@@ -139,6 +139,8 @@ local function GetUnitClassColor(unit)
   local class = select(2, UnitClass(unit))
 
   local color = RAID_CLASS_COLORS[class]
+  if not color then return end
+
   return CreateColorFromHexString(color.colorStr)
 end
 
