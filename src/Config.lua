@@ -9,6 +9,7 @@ EUIDBDefaults = {
   cUFPowerBarsHealerOnly = true,
 
   autoLootDefault = true,
+  fasterLoot = true,
 
   hideHotkeys = false,
   hideMacroText = false,
@@ -1089,9 +1090,22 @@ local function setupEuiOptions()
   chatFontSize:ClearAllPoints()
   chatFontSize:SetPoint("LEFT", chatFontDropdown, "RIGHT", 220, 0)
 
+  local fasterLoot = newCheckbox(
+    "Enable Faster Loot",
+    "Enable faster looting of items. May cause the loot window not to appear.",
+    EUIDB.fasterLoot,
+    function(value)
+      EUIDB.fasterLoot = value
+    end,
+    chatFont,
+    EUI_Misc
+  )
+  fasterLoot:ClearAllPoints()
+  fasterLoot:SetPoint("TOPLEFT", chatFont, "BOTTOMLEFT", 0, -48)
+
   local partyMarkerText = EUI_Misc:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   partyMarkerText:SetText("Party Markers")
-  partyMarkerText:SetPoint("TOPLEFT", chatFont, "BOTTOMLEFT", 0, -48)
+  partyMarkerText:SetPoint("TOPLEFT", fasterLoot, "BOTTOMLEFT", 0, -16)
 
   local partyMarker = newCheckbox(
     "Show Party Markers",

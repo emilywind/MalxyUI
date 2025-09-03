@@ -1,6 +1,8 @@
 local tDelay = 0
 
 local function FastLoot()
+  if not EUIDB.fasterLoot then return end
+
   if GetTime() - tDelay >= 0.3 then
     tDelay = GetTime()
     if GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") then
