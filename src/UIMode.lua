@@ -79,7 +79,7 @@ OnPlayerLogin(function()
     local frame = _G["PartyFrame"]["MemberFrame" .. i]
     if frame then
       hooksecurefunc(frame, "UpdateMember", function(self)
-        DarkenTexture(self.Texture, self.unit)
+        BlackenTexture(self.Texture, self.unit)
       end)
     end
   end
