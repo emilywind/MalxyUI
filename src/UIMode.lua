@@ -75,6 +75,15 @@ OnPlayerLogin(function()
     end)
   end
 
+  for i = 1, MAX_PARTY_MEMBERS do
+    local frame = _G["PartyFrame"]["MemberFrame" .. i]
+    if frame then
+      hooksecurefunc(frame, "UpdateMember", function(self)
+        DarkenTexture(self.Texture, self.unit)
+      end)
+    end
+  end
+
   -- Class Resource Bars
   local _, playerClass = UnitClass("player")
 

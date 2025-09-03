@@ -13,6 +13,7 @@ OnPlayerLogin(function()
 
     healthbar:SetStatusBarDesaturated(1)
     local healthColor = GetUnitHealthColor(unit)
+
     if unitInfo.isPlayer and not isConnected then
       healthbar:SetStatusBarColor(0.5, 0.5, 0.5)
     else

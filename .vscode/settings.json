@@ -300,7 +300,8 @@
         "ChatFrame1",
         "FCF_GetChatWindowInfo",
         "FCF_SetChatWindowFontSize",
-        "QuickJoinToastButton"
+        "QuickJoinToastButton",
+        "MAX_PARTY_MEMBERS"
     ],
     "Lua.diagnostics.disable": [
         "cast-local-type",
