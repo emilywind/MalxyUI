@@ -12,8 +12,8 @@ PlayerCastingBarFrame:HookScript("OnEvent", function()
   castBar.Text:SetPoint("CENTER", castBar, "CENTER")
   castBar.Text:SetFont(EUIDB.font, 12, "OUTLINE")
 
-  DarkenTexture(castBar.Border)
-  DarkenTexture(castBar.Background)
+  ApplyUIMode(castBar.Border)
+  ApplyUIMode(castBar.Background)
 
   castBar.Icon:Show()
   castBar.Icon:SetSize(20, 20)
@@ -45,8 +45,8 @@ local function skinCastBar(self, setScale)
     self:SetScale(EUIDB.castBarScale, EUIDB.castBarScale)
   end
 
-  DarkenTexture(self.Border)
-  DarkenTexture(self.Background)
+  ApplyUIMode(self.Border)
+  ApplyUIMode(self.Background)
 
   local castText = self.Text:GetText()
   if castText ~= nil then

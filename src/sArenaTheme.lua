@@ -216,11 +216,11 @@ function layout:Initialize(frame)
 
   if not frame.hooked then
     frame:HookScript("OnUpdate", function()
-      BlackenTexture(trinketBorder, unit)
-      BlackenTexture(racialBorder, unit)
-      BlackenTexture(specBorder, unit)
-      BlackenTexture(castBarBorder, unit)
-      BlackenTexture(frameTexture, unit)
+      ApplyUIMode(trinketBorder, unit)
+      ApplyUIMode(racialBorder, unit)
+      ApplyUIMode(specBorder, unit)
+      ApplyUIMode(castBarBorder, unit)
+      ApplyUIMode(frameTexture, unit)
     end)
 
     frame.hooked = true

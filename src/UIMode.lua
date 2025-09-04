@@ -1,29 +1,12 @@
-function DarkenTexture(texture, unit)
-  if EUIDB.uiMode == 'blizzard' then return end
-
-  texture:SetDesaturated(true)
+function ApplyUIMode(texture, unit)
+  texture:SetDesaturated(EUIDB.uiMode ~= 'blizzard')
   local fc = GetFrameColor(unit)
   texture:SetVertexColor(fc.r, fc.g, fc.b)
 end
 
-function BlackenTexture(texture, unit)
-  if EUIDB.uiMode == 'blizzard' then return end
-
-  texture:SetDesaturated(true)
-
-  if EUIDB.uiMode == 'black' then
-    texture:SetVertexColor(BLACK_FRAME_COLOR.r, BLACK_FRAME_COLOR.g, BLACK_FRAME_COLOR.b)
-  else
-    local fc = GetFrameColor(unit)
-    texture:SetVertexColor(fc.r, fc.g, fc.b)
-  end
-end
-
 OnPlayerLogin(function()
-  if EUIDB.uiMode == 'blizzard' then return end
-
   -- Minimap
-  DarkenTexture(MinimapCompassTexture)
+  ApplyUIMode(MinimapCompassTexture)
 
   -- Alternate Power Bar
   for _, v in ipairs({
@@ -32,44 +15,44 @@ OnPlayerLogin(function()
       PlayerFrameAlternateManaBarRightBorder,
       PetFrameTexture
   }) do
-      BlackenTexture(v, "player")
+      ApplyUIMode(v, "player")
   end
 
   -- Player Frame
   PlayerFrame:HookScript("OnUpdate", function()
-    BlackenTexture(PlayerFrame.PlayerFrameContainer.FrameTexture, "player")
-    BlackenTexture(PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerPortraitCornerIcon, "player")
-    BlackenTexture(PlayerFrame.PlayerFrameContainer.AlternatePowerFrameTexture, "player")
+    ApplyUIMode(PlayerFrame.PlayerFrameContainer.FrameTexture, "player")
+    ApplyUIMode(PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual.PlayerPortraitCornerIcon, "player")
+    ApplyUIMode(PlayerFrame.PlayerFrameContainer.AlternatePowerFrameTexture, "player")
   end)
 
   -- Pet Frame
   PetFrame:HookScript("OnUpdate", function()
-    BlackenTexture(PetFrameTexture, "pet")
+    ApplyUIMode(PetFrameTexture, "pet")
   end)
 
   -- Target Frame
   TargetFrame:HookScript("OnUpdate", function()
-    BlackenTexture(TargetFrame.TargetFrameContainer.FrameTexture, "target")
-    BlackenTexture(TargetFrameToT.FrameTexture, "targettarget")
+    ApplyUIMode(TargetFrame.TargetFrameContainer.FrameTexture, "target")
+    ApplyUIMode(TargetFrameToT.FrameTexture, "targettarget")
   end)
 
   -- Focus Frame
   FocusFrame:HookScript("OnUpdate", function()
-    BlackenTexture(FocusFrame.TargetFrameContainer.FrameTexture, "focus")
-    BlackenTexture(FocusFrameToT.FrameTexture, "focustarget")
+    ApplyUIMode(FocusFrame.TargetFrameContainer.FrameTexture, "focus")
+    ApplyUIMode(FocusFrameToT.FrameTexture, "focustarget")
   end)
 
   -- Totem Bar
   TotemFrame:HookScript("OnEvent", function(self)
     for totem, _ in self.totemPool:EnumerateActive() do
-      BlackenTexture(totem.Border)
+      ApplyUIMode(totem.Border)
     end
   end)
 
   for i = 1, 5 do
     local bossFrame = _G['Boss'..i..'TargetFrame']
     bossFrame:HookScript('OnEvent', function()
-      BlackenTexture(bossFrame.TargetFrameContainer.FrameTexture, bossFrame.unit)
+      ApplyUIMode(bossFrame.TargetFrameContainer.FrameTexture, bossFrame.unit)
     end)
   end
 
@@ -77,7 +60,7 @@ OnPlayerLogin(function()
     local frame = _G["PartyFrame"]["MemberFrame" .. i]
     if frame then
       hooksecurefunc(frame, "UpdateMember", function(self)
-        BlackenTexture(self.Texture, self.unit)
+        ApplyUIMode(self.Texture, self.unit)
       end)
     end
   end
@@ -89,20 +72,20 @@ OnPlayerLogin(function()
     -- Rogue
     hooksecurefunc(RogueComboPointBarFrame, "UpdatePower", function()
       for bar, _ in RogueComboPointBarFrame.classResourceButtonPool:EnumerateActive() do
-        BlackenTexture(bar.BGActive)
-        BlackenTexture(bar.BGInactive)
-        BlackenTexture(bar.BGShadow)
+        ApplyUIMode(bar.BGActive)
+        ApplyUIMode(bar.BGInactive)
+        ApplyUIMode(bar.BGShadow)
         if (bar.isCharged) then
-          BlackenTexture(bar.ChargedFrameActive)
+          ApplyUIMode(bar.ChargedFrameActive)
         end
       end
 
       for bar, _ in ClassNameplateBarRogueFrame.classResourceButtonPool:EnumerateActive() do
-        BlackenTexture(bar.BGActive)
-        BlackenTexture(bar.BGInactive)
-        BlackenTexture(bar.BGShadow)
+        ApplyUIMode(bar.BGActive)
+        ApplyUIMode(bar.BGInactive)
+        ApplyUIMode(bar.BGShadow)
         if (bar.isCharged) then
-          BlackenTexture(bar.ChargedFrameActive)
+          ApplyUIMode(bar.ChargedFrameActive)
         end
       end
     end)
@@ -110,52 +93,52 @@ OnPlayerLogin(function()
     -- Mage
     hooksecurefunc(MagePowerBar, "UpdatePower", function()
       for bar, _ in MageArcaneChargesFrame.classResourceButtonPool:EnumerateActive() do
-        BlackenTexture(bar.ArcaneBG)
-        BlackenTexture(bar.ArcaneBGShadow)
+        ApplyUIMode(bar.ArcaneBG)
+        ApplyUIMode(bar.ArcaneBGShadow)
       end
 
       for bar, _ in ClassNameplateBarMageFrame.classResourceButtonPool:EnumerateActive() do
-        BlackenTexture(bar.ArcaneBG)
-        BlackenTexture(bar.ArcaneBGShadow)
+        ApplyUIMode(bar.ArcaneBG)
+        ApplyUIMode(bar.ArcaneBGShadow)
       end
     end)
   elseif (playerClass == 'WARLOCK') then
     -- Warlock
     hooksecurefunc(WarlockPowerFrame, "UpdatePower", function()
       for bar, _ in WarlockPowerFrame.classResourceButtonPool:EnumerateActive() do
-        BlackenTexture(bar.Background)
+        ApplyUIMode(bar.Background)
       end
 
       for bar, _ in ClassNameplateBarWarlockFrame.classResourceButtonPool:EnumerateActive() do
-        BlackenTexture(bar.Background)
+        ApplyUIMode(bar.Background)
       end
     end)
   elseif (playerClass == 'DRUID') then
     -- Druid
     hooksecurefunc(DruidComboPointBarFrame, "UpdatePower", function()
       for bar, _ in DruidComboPointBarFrame.classResourceButtonPool:EnumerateActive() do
-        BlackenTexture(bar.BG_Active)
-        BlackenTexture(bar.BG_Inactive)
-        BlackenTexture(bar.BG_Shadow)
+        ApplyUIMode(bar.BG_Active)
+        ApplyUIMode(bar.BG_Inactive)
+        ApplyUIMode(bar.BG_Shadow)
       end
 
       for bar, _ in ClassNameplateBarFeralDruidFrame.classResourceButtonPool:EnumerateActive() do
-        BlackenTexture(bar.BG_Active)
-        BlackenTexture(bar.BG_Inactive)
-        BlackenTexture(bar.BG_Shadow)
+        ApplyUIMode(bar.BG_Active)
+        ApplyUIMode(bar.BG_Inactive)
+        ApplyUIMode(bar.BG_Shadow)
       end
     end)
   elseif (playerClass == 'MONK') then
     -- Monk
     hooksecurefunc(MonkHarmonyBarFrame, "UpdatePower", function()
       for bar, _ in MonkHarmonyBarFrame.classResourceButtonPool:EnumerateActive() do
-        BlackenTexture(bar.Chi_BG)
-        BlackenTexture(bar.Chi_BG_Active)
+        ApplyUIMode(bar.Chi_BG)
+        ApplyUIMode(bar.Chi_BG_Active)
       end
 
       for bar, _ in ClassNameplateBarWindwalkerMonkFrame.classResourceButtonPool:EnumerateActive() do
-        BlackenTexture(bar.Chi_BG)
-        BlackenTexture(bar.Chi_BG_Active)
+        ApplyUIMode(bar.Chi_BG)
+        ApplyUIMode(bar.Chi_BG_Active)
       end
     end)
   elseif (playerClass == 'DEATHKNIGHT') then
@@ -199,28 +182,28 @@ OnPlayerLogin(function()
         DeathKnightResourceOverlayFrame.Rune6.BG_Inactive,
         DeathKnightResourceOverlayFrame.Rune6.BG_Shadow
       }) do
-        BlackenTexture(bar)
+        ApplyUIMode(bar)
       end
     end)
   elseif (playerClass == 'EVOKER') then
     -- Evoker
     hooksecurefunc(EssencePlayerFrame, "UpdatePower", function()
       for bar, _ in EssencePlayerFrame.classResourceButtonPool:EnumerateActive() do
-        BlackenTexture(bar.EssenceFillDone.CircBG)
-        BlackenTexture(bar.EssenceFillDone.CircBGActive)
+        ApplyUIMode(bar.EssenceFillDone.CircBG)
+        ApplyUIMode(bar.EssenceFillDone.CircBGActive)
       end
 
       for bar, _ in ClassNameplateBarDracthyrFrame.classResourceButtonPool:EnumerateActive() do
-        BlackenTexture(bar.EssenceFillDone.CircBG)
-        BlackenTexture(bar.EssenceFillDone.CircBGActive)
+        ApplyUIMode(bar.EssenceFillDone.CircBG)
+        ApplyUIMode(bar.EssenceFillDone.CircBGActive)
       end
     end)
   elseif (playerClass == 'PALADIN') then
     -- Paladin
     hooksecurefunc(PaladinPowerBar, "UpdatePower", function()
-      BlackenTexture(PaladinPowerBarFrame.Background)
+      ApplyUIMode(PaladinPowerBarFrame.Background)
       PaladinPowerBarFrame.ActiveTexture:Hide()
-      BlackenTexture(ClassNameplateBarPaladinFrame.Background)
+      ApplyUIMode(ClassNameplateBarPaladinFrame.Background)
       ClassNameplateBarPaladinFrame.ActiveTexture:Hide()
     end)
   end

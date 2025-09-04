@@ -8,7 +8,7 @@ local function applyEuiButtonSkin(bu)
 
   if not nt then return end
 
-  BlackenTexture(nt)
+  ApplyUIMode(nt)
 
   bu.euiClean = true
 end
@@ -129,7 +129,7 @@ local function init()
       SpellFlyout.Background.HorizontalMiddle,
       SpellFlyout.Background.End,
     }) do
-      DarkenTexture(texture)
+      ApplyUIMode(texture)
     end
 
     -- Button borders.
@@ -141,7 +141,7 @@ local function init()
         break
       end
 
-      DarkenTexture(btnTexture)
+      ApplyUIMode(btnTexture)
 
       i = i + 1
     end

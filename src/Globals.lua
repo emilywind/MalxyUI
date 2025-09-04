@@ -7,7 +7,7 @@ TextureDir = MediaDir.."\\textures"
 
 DARK_FRAME_COLOR = CreateColor(0.3, 0.3, 0.3)
 BLACK_FRAME_COLOR = CreateColor(0, 0, 0)
-BLACK_FRAME_HIGHLIGHT = CreateColor(0.2, 0.2, 0.2)
+WHITE_FRAME_COLOR = CreateColor(1, 1, 1)
 LIGHT_FRAME_COLOR = CreateColor(0.8, 0.8, 0.8)
 
 EUI_TEXTURES = {
@@ -150,9 +150,11 @@ function GetFrameColor(unit)
   if EUIDB.classColoredUnitFrames and classColor then
     return classColor
   elseif EUIDB.uiMode == 'black' then
-    return BLACK_FRAME_HIGHLIGHT
+    return BLACK_FRAME_COLOR
   elseif EUIDB.uiMode == 'dark' then
     return DARK_FRAME_COLOR
+  elseif EUIDB.uiMode == 'blizzard' then
+    return WHITE_FRAME_COLOR
   else
     return LIGHT_FRAME_COLOR
   end
@@ -264,7 +266,7 @@ function SkinStatusBar(bar)
   back:SetAtlas('ui-castingbar-background')
   back:SetPoint("TOPLEFT", bar, "TOPLEFT", -2, 2)
   back:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 2, -2)
-  DarkenTexture(back)
+  ApplyUIMode(back)
 
   bar.back = back
 

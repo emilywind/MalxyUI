@@ -24,7 +24,7 @@ local function skinObjectiveTracker()
     CampaignQuestObjectiveTracker,
     ProfessionsRecipeTracker,
   }) do
-    DarkenTexture(objectiveTrackerFrame.Header.Background)
+    ApplyUIMode(objectiveTrackerFrame.Header.Background)
   end
 end
 
