@@ -24,7 +24,7 @@ EUI_TEXTURES = {
   healthBar = TextureDir.."\\blizz-inspired.tga",
   powerBar = TextureDir.."\\blizz-inspired.tga",
 
-  classCircles = TextureDir.."\\class\\fabled",
+  classCircles = TextureDir.."\\class\\fabledrealm",
 
   circleTexture = TextureDir.."\\Portrait-ModelBack.tga",
   portraitModelFront = TextureDir.."\\portrait-modelfront.tga",
