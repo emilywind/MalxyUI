@@ -216,11 +216,6 @@ function ApplyEuiBackdrop(b, frame)
 end
 
 function SetEuiBorderColor(border, r, g, b)
-  if not r or not g or not b then
-    local color = GetFrameColor()
-    r, g, b = color.r, color.g, color.b
-  end
-
   if border.SetVertexColor then
     border:SetVertexColor(r, g, b)
   else
