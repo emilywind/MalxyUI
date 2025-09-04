@@ -21,8 +21,6 @@ EUIDBDefaults = {
   healthBarTex = EUI_TEXTURES.healthBar,
   powerBarTex = EUI_TEXTURES.powerBar,
 
-  frameColor = DEFAULT_FRAME_COLOUR,
-
   lootSpecDisplay = true, -- Display loot spec icon in the player frame
 
   enableFont = true,       -- Update all fonts to something cooler

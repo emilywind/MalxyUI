@@ -1,14 +1,14 @@
 SQUARE_TEXTURE = "Interface\\BUTTONS\\WHITE8X8"
-DEFAULT_FRAME_COLOUR = {
-  0.3,
-  0.3,
-  0.3,
-}
 
 AddonDir = "Interface\\AddOns\\EmsUI"
 MediaDir = AddonDir.."\\media"
 FontsDir = MediaDir.."\\fonts"
 TextureDir = MediaDir.."\\textures"
+
+DARK_FRAME_COLOR = CreateColor(0.3, 0.3, 0.3)
+BLACK_FRAME_COLOR = CreateColor(0, 0, 0)
+BLACK_FRAME_HIGHLIGHT = CreateColor(0.2, 0.2, 0.2)
+LIGHT_FRAME_COLOR = CreateColor(0.8, 0.8, 0.8)
 
 EUI_TEXTURES = {
   buttons = {
@@ -144,16 +144,17 @@ local function GetUnitClassColor(unit)
   return CreateColorFromHexString(color.colorStr)
 end
 
-function GetFrameColour(unit)
-  local classColor = GetUnitClassColor(unit)
+function GetFrameColor(unit)
+  local classColor = unit and GetUnitClassColor(unit)
+
   if EUIDB.classColoredUnitFrames and classColor then
-    return classColor.r, classColor.g, classColor.b
+    return classColor
   elseif EUIDB.uiMode == 'black' then
-    return 0.2, 0.2, 0.2
+    return BLACK_FRAME_HIGHLIGHT
   elseif EUIDB.uiMode == 'dark' then
-    return 0.3, 0.3, 0.3
+    return DARK_FRAME_COLOR
   else
-    return 0.8, 0.8, 0.8
+    return LIGHT_FRAME_COLOR
   end
 end
 
@@ -216,7 +217,8 @@ end
 
 function SetEuiBorderColor(border, r, g, b)
   if not r or not g or not b then
-    r, g, b = GetFrameColour()
+    local color = GetFrameColor()
+    r, g, b = color.r, color.g, color.b
   end
 
   if border.SetVertexColor then

@@ -2,7 +2,8 @@ function DarkenTexture(texture, unit)
   if EUIDB.uiMode == 'blizzard' then return end
 
   texture:SetDesaturated(true)
-  texture:SetVertexColor(GetFrameColour(unit))
+  local fc = GetFrameColor(unit)
+  texture:SetVertexColor(fc.r, fc.g, fc.b)
 end
 
 function BlackenTexture(texture, unit)
@@ -10,14 +11,11 @@ function BlackenTexture(texture, unit)
 
   texture:SetDesaturated(true)
 
-  if EUIDB.classColoredUnitFrames and unit then
-    texture:SetVertexColor(GetFrameColour(unit))
-  elseif EUIDB.uiMode == 'black' then
-    texture:SetVertexColor(0, 0, 0)
-  elseif EUIDB.uiMode == 'dark' then
-    texture:SetVertexColor(0.3, 0.3, 0.3)
+  if EUIDB.uiMode == 'black' then
+    texture:SetVertexColor(BLACK_FRAME_COLOR.r, BLACK_FRAME_COLOR.g, BLACK_FRAME_COLOR.b)
   else
-    texture:SetVertexColor(0.8, 0.8, 0.8)
+    local fc = GetFrameColor(unit)
+    texture:SetVertexColor(fc.r, fc.g, fc.b)
   end
 end
 
