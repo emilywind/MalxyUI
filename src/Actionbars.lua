@@ -1,6 +1,4 @@
 local function applyEuiButtonSkin(bu)
-  if EUIDB.uiMode == 'blizzard' then return end
-
   if not bu then return end
   if bu.euiClean then return bu.border end
 

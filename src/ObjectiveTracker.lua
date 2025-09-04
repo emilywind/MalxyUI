@@ -36,7 +36,5 @@ OnEvents({
     hideObjectiveTracker()
   end
 
-  if EUIDB.uiMode ~= 'blizzard' then
-    skinObjectiveTracker()
-  end
+  skinObjectiveTracker()
 end)

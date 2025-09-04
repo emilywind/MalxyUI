@@ -21,12 +21,7 @@ end
 OnEvents({
   "PLAYER_MOUNT_DISPLAY_CHANGED",
   "PLAYER_ENTERING_WORLD"
-}, function(self)
-  if EUIDB.uiMode == 'blizzard' then
-    self:UnregisterAllEvents()
-    return
-  end
-
+}, function()
   C_Timer.After(0.1, function() -- Delay to ensure UIWidgetPowerBarContainerFrame is fully loaded
     for _, child in ipairs({ UIWidgetPowerBarContainerFrame:GetChildren() }) do
       if child.DecorLeft and child.DecorLeft.GetAtlas then
