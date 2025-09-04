@@ -10,7 +10,7 @@ function GetTooltipUnit()
 	if not unit then
 		unit = "mouseover"
 		local focus = GetMouseFoci()
-		if (focus and focus.unit) then
+		if focus and focus.unit then
 			unit = focus.unit
 		end
 	end
@@ -170,9 +170,9 @@ local function addMythicPlusScore(unitRecord)
 	end
 end
 
-local colors = {
-	guildName = CreateColorFromHexString('fff232e7'),
-	guildRank = CreateColorFromHexString('ffbd8cf2'),
+local guildColors = {
+	name = CreateColorFromHexString('fff232e7'),
+	rank = CreateColorFromHexString('ffbd8cf2'),
 }
 
 OnPlayerLogin(function()
@@ -247,7 +247,8 @@ OnPlayerLogin(function()
 			if (guildName and guildName == playerGuildName and realm == playerRealm) then
         playerInfoLine = GameTooltipTextLeft3
 				local guildLine = GameTooltipTextLeft2
-				guildLine:SetText(colors.guildName:WrapTextInColorCode(trimmedGuild) .. colors.guildRank:WrapTextInColorCode(' (' .. trimmedRank .. ')'))
+				guildLine:SetText(guildColors.name:WrapTextInColorCode(trimmedGuild) ..
+				guildColors.rank:WrapTextInColorCode(' (' .. trimmedRank .. ')'))
 			elseif guildName then
 				playerInfoLine = GameTooltipTextLeft3
 				local guildLine = GameTooltipTextLeft2
