@@ -274,7 +274,11 @@ function SkinStatusBar(bar)
 end
 
 function GetUnitInfo(unit)
-  local info = {}
+  local info = {
+    exists = false,
+  }
+
+  if not unit then return info end
 
   local className, classFileName, classID = UnitClass(unit)
 
