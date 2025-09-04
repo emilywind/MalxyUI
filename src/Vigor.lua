@@ -3,12 +3,12 @@ local function skinVigorBar(frame)
     frame:SetDesaturated(true)
 
     if frame.SetVertexColor then
-      ApplyUIMode(frame, "mount")
+      ApplyUIMode(frame)
       if not frame.euiHooked then
         hooksecurefunc(frame, "SetVertexColor", function(self)
           if self.changing or self:IsProtected() then return end
           self.changing = true
-          ApplyUIMode(self, "mount")
+          ApplyUIMode(self)
           self.changing = false
         end)
 
