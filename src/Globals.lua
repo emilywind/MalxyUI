@@ -275,14 +275,14 @@ end
 
 function GetUnitInfo(unit)
   local info = {
-    exists = false,
+    id = unit,
+    exists = unit and UnitExists(unit),
   }
 
-  if not unit then return info end
+  if not info.exists then return info end
 
   local className, classFileName, classID = UnitClass(unit)
 
-  info.id = unit
   info.guid = UnitGUID(unit)
   info.name = UnitName(unit)
   info.level = UnitEffectiveLevel(unit)
@@ -302,7 +302,6 @@ function GetUnitInfo(unit)
   info.isFriend = (info.reaction and info.reaction >= 5) and not info.isSelf
   info.playerClass = select(2, UnitClass("player"))
   info.sex = UnitSex(unit)
-  info.exists = UnitExists(unit)
   info.tapDenied = UnitIsTapDenied(unit)
   info.playerControlled = UnitPlayerControlled(unit)
   info.classification = UnitClassification(unit) -- elite, rare, rareelite, worldboss
