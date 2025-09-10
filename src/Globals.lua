@@ -306,6 +306,8 @@ function GetUnitInfo(unit)
   info.playerControlled = UnitPlayerControlled(unit)
   info.classification = UnitClassification(unit) -- elite, rare, rareelite, worldboss
   info.inCombat = UnitAffectingCombat(unit)
+  info.race = UnitRace(unit)
+  info.family = UnitCreatureFamily(unit)
 
   return info
 end

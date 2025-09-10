@@ -232,8 +232,8 @@ OnPlayerLogin(function()
 
 		local unitClassColor = GetUnitHealthColor(unit)
 
-		if UnitIsPlayer(unit) then
-			local race = UnitRace(unit)
+		if unitInfo.isPlayer then
+			local race = unitInfo.race
 
       -- Class coloured name
 			if (EUIDB.tooltipClassColoredName) then
@@ -249,8 +249,7 @@ OnPlayerLogin(function()
 			if (guildName and guildName == playerGuildName and realm == playerRealm) then
         playerInfoLine = GameTooltipTextLeft3
 				local guildLine = GameTooltipTextLeft2
-				guildLine:SetText(guildColors.name:WrapTextInColorCode(trimmedGuild) ..
-				guildColors.rank:WrapTextInColorCode(' (' .. trimmedRank .. ')'))
+				guildLine:SetText(guildColors.name:WrapTextInColorCode(trimmedGuild) .. guildColors.rank:WrapTextInColorCode(' (' .. trimmedRank .. ')'))
 			elseif guildName then
 				playerInfoLine = GameTooltipTextLeft3
 				local guildLine = GameTooltipTextLeft2
@@ -272,9 +271,8 @@ OnPlayerLogin(function()
 			LibFroznFunctions:RecalculateSizeOfGameTooltip(GameTooltip)
 		end
 
-		local family = UnitCreatureFamily(unit)
-		if (family) then
-			GameTooltipTextLeft2:SetText(level .. " " .. family)
+		if unitInfo.family then
+			GameTooltipTextLeft2:SetText(level .. " " .. unitInfo.family)
 		end
 
     -- Add room for the health bar
