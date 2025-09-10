@@ -58,11 +58,9 @@ OnPlayerLogin(function()
     end
   end
 
-  -- Class Resource Bars
   local playerClass = select(2, UnitClass("player"))
 
   if (playerClass == 'ROGUE') then
-    -- Rogue
     hooksecurefunc(RogueComboPointBarFrame, "UpdatePower", function()
       for bar, _ in RogueComboPointBarFrame.classResourceButtonPool:EnumerateActive() do
         ApplyUIMode(bar.BGActive)
@@ -83,7 +81,6 @@ OnPlayerLogin(function()
       end
     end)
   elseif (playerClass == 'MAGE') then
-    -- Mage
     hooksecurefunc(MagePowerBar, "UpdatePower", function()
       for bar, _ in MageArcaneChargesFrame.classResourceButtonPool:EnumerateActive() do
         ApplyUIMode(bar.ArcaneBG)
@@ -96,7 +93,6 @@ OnPlayerLogin(function()
       end
     end)
   elseif (playerClass == 'WARLOCK') then
-    -- Warlock
     hooksecurefunc(WarlockPowerFrame, "UpdatePower", function()
       for bar, _ in WarlockPowerFrame.classResourceButtonPool:EnumerateActive() do
         ApplyUIMode(bar.Background)
@@ -107,7 +103,6 @@ OnPlayerLogin(function()
       end
     end)
   elseif (playerClass == 'DRUID') then
-    -- Druid
     hooksecurefunc(DruidComboPointBarFrame, "UpdatePower", function()
       for bar, _ in DruidComboPointBarFrame.classResourceButtonPool:EnumerateActive() do
         ApplyUIMode(bar.BG_Active)
@@ -122,7 +117,6 @@ OnPlayerLogin(function()
       end
     end)
   elseif (playerClass == 'MONK') then
-    -- Monk
     hooksecurefunc(MonkHarmonyBarFrame, "UpdatePower", function()
       for bar, _ in MonkHarmonyBarFrame.classResourceButtonPool:EnumerateActive() do
         ApplyUIMode(bar.Chi_BG)
@@ -135,7 +129,6 @@ OnPlayerLogin(function()
       end
     end)
   elseif (playerClass == 'DEATHKNIGHT') then
-    -- Death Knight
     hooksecurefunc(RuneFrame, "UpdateRunes", function()
       for _, bar in ipairs({
         RuneFrame.Rune1.BG_Active,
@@ -179,7 +172,6 @@ OnPlayerLogin(function()
       end
     end)
   elseif (playerClass == 'EVOKER') then
-    -- Evoker
     hooksecurefunc(EssencePlayerFrame, "UpdatePower", function()
       for bar, _ in EssencePlayerFrame.classResourceButtonPool:EnumerateActive() do
         ApplyUIMode(bar.EssenceFillDone.CircBG)
@@ -192,7 +184,6 @@ OnPlayerLogin(function()
       end
     end)
   elseif (playerClass == 'PALADIN') then
-    -- Paladin
     hooksecurefunc(PaladinPowerBar, "UpdatePower", function()
       ApplyUIMode(PaladinPowerBarFrame.Background)
       PaladinPowerBarFrame.ActiveTexture:Hide()
