@@ -6,7 +6,7 @@ function PartyMarker(frame)
 
   local partyMarker = frame.partyMarker
 
-  if not UnitInParty(frame.displayedUnit) or info.isEnemy or not info.isPlayer or info.isSelf or info.isNpc then
+  if not info.isInParty or info.isEnemy or not info.isPlayer or info.isSelf or info.isNpc then
     if EUIDB.partyMarkerHideRaidmarker then
       frame.RaidTargetFrame.RaidTargetIcon:SetAlpha(1)
     end

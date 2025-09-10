@@ -310,6 +310,7 @@ function GetUnitInfo(unit)
   info.type = UnitCreatureType(unit)
   info.isConnected = UnitIsConnected(unit)
   info.isVisible = UnitIsVisible(unit)
+  info.isInParty = UnitInParty(unit)
 
   return info
 end
