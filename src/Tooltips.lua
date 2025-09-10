@@ -54,12 +54,11 @@ end
 local function cleanupTooltip(tip)
 	local unit = GetTooltipUnit()
 	local unitInfo = GetUnitInfo(unit)
-	if not unitInfo.exists then return end
-	local creatureFamily = UnitCreatureFamily(unitInfo.id)
-	local creatureType = UnitCreatureType(unitInfo.id)
 
-	local hideCreatureTypeIfNoCreatureFamily = ((not unitInfo.isPlayer) or (unitInfo.isWildBattlePet)) and (not creatureFamily) and (creatureType)
-	local hideSpecializationAndClassText = (unitInfo.isPlayer) and (LibFroznFunctions.hasWoWFlavor.specializationAndClassTextInPlayerUnitTip) and (unitInfo.className)
+	if not unitInfo.exists then return end
+
+	local hideCreatureTypeIfNoCreatureFamily = (not unitInfo.isPlayer or unitInfo.isWildBattlePet) and not unitInfo.family and unitInfo.type
+	local hideSpecializationAndClassText = unitInfo.isPlayer and LibFroznFunctions.hasWoWFlavor.specializationAndClassTextInPlayerUnitTip and unitInfo.className
 
 	local specNames = LibFroznFunctions:CreatePushArray()
 
@@ -81,11 +80,11 @@ local function cleanupTooltip(tip)
 			local isGttLineTextUnitPopupRightClick = (gttLineText == UNIT_POPUP_RIGHT_CLICK)
 			local isSpecLine = unitInfo.className and (specNames:Contains(gttLineText:match("^(.+) " .. unitInfo.className .. "$")))
 
-			if (isGttLineTextUnitPopupRightClick) or
-					((gttLineText == FACTION_ALLIANCE) or (gttLineText == FACTION_HORDE) or (gttLineText == FACTION_NEUTRAL)) or
+			if isGttLineTextUnitPopupRightClick or
+					(gttLineText == FACTION_ALLIANCE or gttLineText == FACTION_HORDE or gttLineText == FACTION_NEUTRAL) or
 					(gttLineText == PVP_ENABLED) or
-					(hideCreatureTypeIfNoCreatureFamily) and (gttLineText == creatureType) or
-					(hideSpecializationAndClassText) and ((gttLineText == unitInfo.className) or isSpecLine) then
+					(hideCreatureTypeIfNoCreatureFamily and gttLineText == unitInfo.type) or
+					(hideSpecializationAndClassText and (gttLineText == unitInfo.className or isSpecLine)) then
 
 					gttLine:SetText(nil)
 

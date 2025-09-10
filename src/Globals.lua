@@ -308,6 +308,7 @@ function GetUnitInfo(unit)
   info.inCombat = UnitAffectingCombat(unit)
   info.race = UnitRace(unit)
   info.family = UnitCreatureFamily(unit)
+  info.type = UnitCreatureType(unit)
 
   return info
 end
