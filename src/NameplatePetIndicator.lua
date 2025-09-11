@@ -11,6 +11,7 @@ local mainPets = {
   [17252] = true,    -- Felguard Lock
   [103673] = true,   -- Darkglare
   [135002] = true,   -- Demonic Tyrant
+  [47319] = true,    -- Infernal
   [417] = true,      -- Felhunter Lock
   [416] = true,      -- Imp Lock
   [1860] = true,     -- VoidWalker Lock
@@ -109,10 +110,8 @@ function PetIndicator(frame)
   -- Set position and scale dynamically
   frame.petIndicator:SetPoint("LEFT", frame.healthBar, "LEFT", 2, 0)
 
-  local npcID = GetNPCIDFromGUID(info.guid)
-
   -- Demo lock pet
-  if npcID == 17252 then
+  if info.npcID == 17252 then
     if instanceData.isInArena then
       local isRealPet = UnitIsUnit(frame.unit, "pet")
       for i = 1, 3 do
@@ -135,7 +134,7 @@ function PetIndicator(frame)
     return
   end
   -- All hunter pets have same NPC id, check for it.
-  if npcID == 165189 then
+  if info.npcID == 165189 then
     if instanceData.isInArena then
       local isRealPet = UnitIsUnit(frame.unit, "pet")
       for i = 1, 3 do
@@ -173,11 +172,11 @@ function PetIndicator(frame)
     return
   end
 
-  if mainPets[npcID] then
+  if mainPets[info.npcID] then
     ShowIndicator(frame)
   else
     HideIndicator(frame)
-    if EUIDB.nameplateFadeSecondaryPets and secondaryPets[npcID] then
+    if EUIDB.nameplateFadeSecondaryPets and secondaryPets[info.npcID] then
       FadeNameplate(frame)
     end
   end

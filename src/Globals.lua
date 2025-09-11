@@ -273,6 +273,10 @@ function SkinStatusBar(bar)
   bar.euiClean = true
 end
 
+local function GetNPCIDFromGUID(guid)
+  return tonumber(guid:match("%-([0-9]+)%-%x+$"))
+end
+
 function GetUnitInfo(unit)
   local info = {
     id = unit,
@@ -293,6 +297,7 @@ function GetUnitInfo(unit)
   info.isPet = UnitIsUnit("pet", unit)
   info.isPlayer = UnitIsPlayer(unit)
   info.isNpc = not info.isPlayer
+  info.npcID = info.isNpc and GetNPCIDFromGUID(info.guid) or nil
   info.className = info.isPlayer and className or nil
   info.classFileName = info.isPlayer and classFileName or nil
   info.classID = info.isPlayer and classID or nil
@@ -428,8 +433,4 @@ function Trim(s)
   if not s then return '' end
 
   return s:gsub("^%s*(.-)%s*$", "%1")
-end
-
-function GetNPCIDFromGUID(guid)
-  return tonumber(guid:match("%-([0-9]+)%-%x+$"))
 end
