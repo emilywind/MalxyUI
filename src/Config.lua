@@ -552,7 +552,7 @@ local function setupEuiOptions()
   scrollFrame:SetPoint("TOPLEFT", EUI_Nameplates, "TOPLEFT", 0, 0)
 
   local Nameplate_Content = CreateFrame("Frame", nil, scrollFrame)
-  Nameplate_Content:SetSize(640, 740) -- Height should fit all your content
+  Nameplate_Content:SetSize(640, 860) -- Height should fit all your content
   scrollFrame:SetScrollChild(Nameplate_Content)
 
   local nameplateText = Nameplate_Content:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
@@ -796,6 +796,43 @@ local function setupEuiOptions()
   )
   nameplateCombatIndicator:SetPoint("TOPLEFT", nameplateFadeSecondaryPets, "BOTTOMLEFT", 0, -4)
 
+  local partyMarkerText = Nameplate_Content:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+  partyMarkerText:SetText("Party Markers")
+  partyMarkerText:SetPoint("TOPLEFT", nameplateCombatIndicator, "BOTTOMLEFT", 0, -48)
+
+  local partyMarker = newCheckbox(
+    "Show Party Markers",
+    "Show markers for your party members on their nameplates.",
+    EUIDB.partyMarker,
+    function(value)
+      EUIDB.partyMarker = value
+    end,
+    partyMarkerText,
+    Nameplate_Content
+  )
+
+  local partyMarkerHealer = newCheckbox(
+    "Show Healer Markers",
+    "Show a specific marker for healers in your party.",
+    EUIDB.partyMarkerHealer,
+    function(value)
+      EUIDB.partyMarkerHealer = value
+    end,
+    partyMarker,
+    Nameplate_Content
+  )
+
+  local partyMarkerHideRaidmarker = newCheckbox(
+    "Hide Party Raid Markers",
+    "Hide the default raid markers above party members' heads.",
+    EUIDB.partyMarkerHideRaidmarker,
+    function(value)
+      EUIDB.partyMarkerHideRaidmarker = value
+    end,
+    partyMarkerHealer,
+    Nameplate_Content
+  )
+
   function DisableNameplateSettings()
     nameplateFontDropdown:Disable()
     nameplateFontSlider:Disable()
@@ -816,6 +853,9 @@ local function setupEuiOptions()
     nameplatePetIndicator:Disable()
     nameplateFadeSecondaryPets:Disable()
     nameplateCombatIndicatorDropdown:Disable()
+    partyMarker:Disable()
+    partyMarkerHealer:Disable()
+    partyMarkerHideRaidmarker:Disable()
   end
 
   function EnableNameplateSettings()
@@ -838,6 +878,9 @@ local function setupEuiOptions()
     nameplatePetIndicator:Enable()
     nameplateFadeSecondaryPets:Enable()
     nameplateCombatIndicatorDropdown:Enable()
+    partyMarker:Enable()
+    partyMarkerHealer:Enable()
+    partyMarkerHideRaidmarker:Enable()
   end
 
   if C_AddOns.IsAddOnLoaded('BetterBlizzPlates') then
@@ -1089,8 +1132,8 @@ local function setupEuiOptions()
   chatFontSize:SetPoint("LEFT", chatFontDropdown, "RIGHT", 220, 0)
 
   local fasterLoot = newCheckbox(
-    "Enable Faster Loot",
-    "Enable faster looting of items. May cause the loot window not to appear.",
+    "Enable Faster Autoloot",
+    "Enable faster autolooting of items. May cause the loot window not to appear.",
     EUIDB.fasterLoot,
     function(value)
       EUIDB.fasterLoot = value
@@ -1100,43 +1143,6 @@ local function setupEuiOptions()
   )
   fasterLoot:ClearAllPoints()
   fasterLoot:SetPoint("TOPLEFT", chatFont, "BOTTOMLEFT", 0, -48)
-
-  local partyMarkerText = EUI_Misc:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-  partyMarkerText:SetText("Party Markers")
-  partyMarkerText:SetPoint("TOPLEFT", fasterLoot, "BOTTOMLEFT", 0, -16)
-
-  local partyMarker = newCheckbox(
-    "Show Party Markers",
-    "Show markers for your party members on their nameplates.",
-    EUIDB.partyMarker,
-    function(value)
-      EUIDB.partyMarker = value
-    end,
-    partyMarkerText,
-    EUI_Misc
-  )
-
-  local partyMarkerHealer = newCheckbox(
-    "Show Healer Markers",
-    "Show a specific marker for healers in your party.",
-    EUIDB.partyMarkerHealer,
-    function(value)
-      EUIDB.partyMarkerHealer = value
-    end,
-    partyMarker,
-    EUI_Misc
-  )
-
-  local partyMarkerHideRaidmarker = newCheckbox(
-    "Hide Party Raid Markers",
-    "Hide the default raid markers above party members' heads.",
-    EUIDB.partyMarkerHideRaidmarker,
-    function(value)
-      EUIDB.partyMarkerHideRaidmarker = value
-    end,
-    partyMarkerHealer,
-    EUI_Misc
-  )
 
   -----------
   -- CVars --
