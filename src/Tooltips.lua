@@ -223,7 +223,7 @@ OnPlayerLogin(function()
 			end
 			if id then
 				self:AddLine(" ")
-				self:AddLine("ID: " .. id)
+				self:AddLine("Spell ID: " .. id)
 			end
 			self:Show()
 		end
@@ -290,16 +290,21 @@ OnPlayerLogin(function()
 			end
 
 			-- recalculate size of tip to ensure that it has the correct dimensions
-			LibFroznFunctions:RecalculateSizeOfGameTooltip(GameTooltip)
+			LibFroznFunctions:RecalculateSizeOfGameTooltip(self)
 		end
 
-		if unitInfo.family then
+		if unitInfo.family then -- Add pet family to assist hunters
 			GameTooltipTextLeft2:SetText(level .. " " .. unitInfo.family)
+		end
+
+		if EUIDB.tooltipShowNpcID and unitInfo.npcID then
+			self:AddLine(" ")
+			self:AddLine("NPC ID: " .. unitInfo.npcID)
 		end
 
     -- Add room for the health bar
 		if not EUIDB.tooltipHideHealthBar then
-			GameTooltip:AddLine(' ')
+			self:AddLine(' ')
 		end
 	end
 

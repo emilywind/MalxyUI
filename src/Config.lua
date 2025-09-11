@@ -37,6 +37,7 @@ EUIDBDefaults = {
   tooltipShowMythicPlus = true, -- Show Mythic+ information in tooltips
   tooltipHideHealthBar = false, -- Hide the health bar in tooltips
   tooltipShowSpellIds = false, -- Show spell IDs in spell tooltips
+  tooltipShowNpcID = false, -- Show NPC ID in unit tooltips
 
   -- Nameplate Settings
   skinNameplates = true,
@@ -998,6 +999,17 @@ local function setupEuiOptions()
     EUI_Tooltips
   )
 
+  local tooltipShowNpcID = newCheckbox(
+    "Show NPC ID",
+    "Show NPC ID in tooltips.",
+    EUIDB.tooltipShowNpcID,
+    function(value)
+      EUIDB.tooltipShowNpcID = value
+    end,
+    tooltipShowSpellIds,
+    EUI_Tooltips
+  )
+
   function DisableTooltipSettings()
     tooltipAnchorDropdown:Disable()
     tooltipSpecAndIlvl:Disable()
@@ -1006,6 +1018,7 @@ local function setupEuiOptions()
     showMythicPlus:Disable()
     tooltipHideHealthBar:Disable()
     tooltipShowSpellIds:Disable()
+    tooltipShowNpcID:Disable()
   end
 
   function EnableTooltipSettings()
@@ -1016,6 +1029,7 @@ local function setupEuiOptions()
     showMythicPlus:Enable()
     tooltipHideHealthBar:Enable()
     tooltipShowSpellIds:Enable()
+    tooltipShowNpcID:Enable()
   end
 
   if
