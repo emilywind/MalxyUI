@@ -55,6 +55,7 @@ OnPlayerLogin(function()
     [101398] = { 211522, 12 }, -- Psyfiend
 
     --Warlock
+    [89] = { 1122, 30 },       -- Infernal
     [135002] = { 265187, 15 }, -- Demonic Tyrant
     [179193] = { 353601, 15 }, -- Fel Obelisk
     [107100] = { 201996, 20 }, -- Call Observer
