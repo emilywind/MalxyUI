@@ -176,6 +176,8 @@ OnPlayerLogin(function()
 
     local unitInfo = GetUnitInfo(unit)
 
+    if not unitInfo.exists then return end
+
     if EUIDB.nameplateHideFriendlyHealthbars and unitInfo.isFriend and not unitInfo.isSelf then
       frame.HealthBarsContainer:Hide()
       frame.HealthBarsContainer:SetAlpha(0)
