@@ -1,7 +1,7 @@
 local SetCVar = C_CVar.SetCVar
 
 OnPlayerLogin(function()
-  if not EUIDB.skinNameplates or C_AddOns.IsAddOnLoaded('BetterBlizzPlates') then return end
+  if not EUIDB.skinNameplates then return end
 
   local healthTex = EUIDB.healthBarTex
   local powerTex = EUIDB.powerBarTex

@@ -885,11 +885,7 @@ local function setupEuiOptions()
     partyMarkerHideRaidmarker:Enable()
   end
 
-  if C_AddOns.IsAddOnLoaded('BetterBlizzPlates') then
-    DisableNameplateSettings()
-    skinNameplates.tooltip = "Disabled due to addon BetterBlizzPlates"
-    skinNameplates:Disable()
-  elseif not EUIDB.skinNameplates then
+  if not EUIDB.skinNameplates then
     DisableNameplateSettings()
   else
     EnableNameplateSettings()
