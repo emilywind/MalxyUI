@@ -349,9 +349,8 @@ end
 
 function GetSafeNameplate(unit)
   local nameplate = C_NamePlate.GetNamePlateForUnit(unit, issecure())
-  if not nameplate then return nil end
 
-  return nameplate.UnitFrame
+  return (nameplate and nameplate.UnitFrame) or nil
 end
 
 local function GetLocalizedSpecs()
