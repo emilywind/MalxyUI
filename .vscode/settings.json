@@ -159,7 +159,6 @@
         "GetContainerNumSlots",
         "PickupContainerItem",
         "GetContainerItemInfo",
-        "LootSpecId",
         "SystemFont_Shadow_Outline_Huge2",
         "STAT_AVERAGE_ITEM_LEVEL",
         "SEARCH_LOADING_TEXT",

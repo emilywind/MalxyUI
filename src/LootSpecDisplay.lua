@@ -20,14 +20,14 @@ OnPlayerLogin(function()
 		local newLootSpecId = GetLootSpecialization()
 		local lootIcon = ''
 
-		if (lootSpecId ~= newLootSpecId or (not LootSpecId and event == "PLAYER_TALENT_UPDATE")) then
+		if (lootSpecId ~= newLootSpecId or (lootSpecId == 0 and event == "PLAYER_TALENT_UPDATE")) then
 			lootSpecId = newLootSpecId
 
-			if lootSpecId == 0 then
-				lootSpecId = GetSpecialization()
+			if lootSpecId ~= 0 then
+				lootIcon = select(4, GetSpecializationInfoByID(lootSpecId))
+			else
+				lootIcon = select(4, GetSpecializationInfo(GetSpecialization()))
 			end
-
-			lootIcon = select(4, GetSpecializationInfoByID(lootSpecId))
 
 			if not lootIcon then return end
 
