@@ -349,12 +349,9 @@ end
 
 function GetSafeNameplate(unit)
   local nameplate = C_NamePlate.GetNamePlateForUnit(unit, issecure())
-  -- If there's no nameplate or the nameplate doesn't have a UnitFrame, return nils.
-  if not nameplate or not nameplate.UnitFrame then return nil, nil end
+  if not nameplate then return nil end
 
-  local frame = nameplate.UnitFrame
-  -- If none of the above conditions are met, return both the nameplate and the frame.
-  return nameplate, frame
+  return nameplate.UnitFrame
 end
 
 local function GetLocalizedSpecs()

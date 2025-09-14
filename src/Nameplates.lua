@@ -154,7 +154,7 @@ OnPlayerLogin(function()
   OnEvents({
     "NAME_PLATE_UNIT_ADDED",
     "NAME_PLATE_UNIT_REMOVED",
-  }, function(self, event, unit)
+  }, function(_, _, unit)
     local frame = GetSafeNameplate(unit)
     if not frame then return end
 

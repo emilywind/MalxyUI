@@ -250,7 +250,7 @@ hooksecurefunc(CastingBarMixin, "OnEvent", function(self, event, ...)
   local unit = self.unit
   if not unit or not unit:find("nameplate") then return end
 
-  local frame = select(2, GetSafeNameplate(unit))
+  local frame = GetSafeNameplate(unit)
   if not frame then return end
   if unit == "player" then return end
 
@@ -274,7 +274,7 @@ hooksecurefunc(CastingBarMixin, "OnEvent", function(self, event, ...)
 
     if not UnitTargetCastbarUpdate then
       UnitTargetCastbarUpdate = OnEvent("UNIT_TARGET", function(_, _, unit)
-        local npFrame = select(2, GetSafeNameplate(unit))
+        local npFrame = GetSafeNameplate(unit)
         if npFrame and not UnitIsPlayer(unit) then
           SkinCastbar(npFrame, unit)
         end

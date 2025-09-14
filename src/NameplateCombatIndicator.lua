@@ -42,6 +42,6 @@ OnEvent("UNIT_FLAGS", function(self, event, unit)
     return
   end
 
-  local frame = select(2, GetSafeNameplate(unit))
+  local frame = GetSafeNameplate(unit)
   if frame then CombatIndicator(frame) end
 end)
