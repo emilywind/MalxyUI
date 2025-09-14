@@ -42,23 +42,4 @@ OnPlayerLogin(function()
       PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.StatusTexture:Hide()
     end
   end)
-
-  -----------------
-  -- Boss Frames --
-  -----------------
-  local function skinBossFrames(self)
-    if not self then return end
-
-    if self.healthbar then
-      self.healthbar:SetStatusBarTexture(EUIDB.healthBarTex)
-    end
-
-    if self.TargetFrameContent.TargetFrameContentMain.ReputationColor then
-      ApplyUIMode(self.TargetFrameContent.TargetFrameContentMain.ReputationColor, self.unit)
-    end
-  end
-
-  for i = 1, 5 do
-    _G['Boss'..i..'TargetFrame']:HookScript('OnEvent', skinBossFrames)
-  end
 end)
