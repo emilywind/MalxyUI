@@ -3,7 +3,7 @@ local function updateFontObject(FontObject, font)
   FontObject:SetFont(font, size, style)
 end
 
-OnEvent("ADDON_LOADED", function()
+function UpdateFonts()
   if EUIDB.enableDamageFont then
     DAMAGE_TEXT_FONT = EUIDB.damageFont
   end
@@ -130,4 +130,6 @@ OnEvent("ADDON_LOADED", function()
   for _, FontObject in pairs(FontObjects) do
     updateFontObject(FontObject, EUIDB.font)
   end
-end)
+end
+
+OnEvent("ADDON_LOADED", UpdateFonts)

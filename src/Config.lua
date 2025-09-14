@@ -401,6 +401,7 @@ local function setupEuiOptions()
     200,
     function(value)
       EUIDB.font = value
+      UpdateFonts()
     end
   )
   fontChooser:SetPoint("LEFT", lootSpecDisplay, "RIGHT", 300, 0)
@@ -422,7 +423,7 @@ local function setupEuiOptions()
   )
 
   local damageFontChooser, damageFontDropdown = newDropdown(
-    "Damage Font",
+    "Damage Font (Change requires relog)",
     LSM_FONTS,
     EUIDB.damageFont,
     200,
