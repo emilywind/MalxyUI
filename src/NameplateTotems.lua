@@ -17,11 +17,6 @@ OnPlayerLogin(function()
 
   local totemStartTimes = setmetatable({}, { __mode = "v" })
 
-  local function GetNPCIDByGUID(guid)
-    local npcID = select(6, strsplit("-", guid))
-    return tonumber(npcID)
-  end
-
   local importantTotemNpcIDs = {
     -- [npcID] = { spellID, duration }
     [5913] = { 8143, 10 },     -- Tremor
@@ -92,7 +87,7 @@ OnPlayerLogin(function()
 
     if not np or not guid then return end
 
-    local npcID = GetNPCIDByGUID(guid)
+    local npcID = GetNPCIDFromGUID(guid)
 
     if npcID and totemNpcIDs[npcID] then
       if not np.totemIcon then
@@ -132,7 +127,7 @@ OnPlayerLogin(function()
     dstGUID, dstName, dstFlags, dstFlags2 = CombatLogGetCurrentEventInfo()
 
     if eventType == "SPELL_SUMMON" then
-      local npcID = GetNPCIDByGUID(dstGUID)
+      local npcID = GetNPCIDFromGUID(dstGUID)
       if npcID and totemNpcIDs[npcID] then
         totemStartTimes[dstGUID] = GetTime()
       end

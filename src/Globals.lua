@@ -273,7 +273,7 @@ function SkinStatusBar(bar)
   bar.euiClean = true
 end
 
-local function GetNPCIDFromGUID(guid)
+function GetNPCIDFromGUID(guid)
   return tonumber(guid:match("%-([0-9]+)%-%x+$"))
 end
 
