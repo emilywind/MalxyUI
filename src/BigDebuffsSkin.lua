@@ -4,9 +4,7 @@ OnPlayerLogin(function()
   -- Nameplates
   hooksecurefunc(BigDebuffs, 'NAME_PLATE_UNIT_ADDED', function(self, _, unit)
     local namePlate = GetSafeNameplate(unit)
-    if not namePlate then return end
-
-    if namePlate:IsForbidden() then return end
+    if not namePlate or namePlate:IsForbidden() then return end
 
     local bdbNameplate = namePlate.BigDebuffs
 
