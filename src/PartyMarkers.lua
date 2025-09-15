@@ -1,5 +1,5 @@
 function PartyMarker(frame)
-  if (not EUIDB.partyMarker and not EUIDB.partyMarkerHealer) or frame:IsForbidden() then return end
+  if frame:IsForbidden() then return end
 
   local info = GetNameplateUnitInfo(frame)
   if not info then return end
@@ -75,29 +75,24 @@ function PartyMarker(frame)
     end
   end
 
-  if EUIDB.partyMarkerHealer then
-    local specID = GetSpecID(frame)
-    if specID then
-      if HEALER_SPECS[specID] then
-        partyMarker.healerIcon:Show()
-        partyMarker.healerIcon:ClearAllPoints()
-        partyMarker.healerIcon:SetPoint("CENTER", partyMarker.icon, "CENTER", 0, 0)
-        partyMarker.icon:Hide()
-      else
-        partyMarker.healerIcon:Hide()
-        if EUIDB.partyMarker then
-          partyMarker.icon:Show()
-        else
-          partyMarker.icon:Hide()
-        end
-      end
-    end
-  else
+  local specID = GetSpecID(frame)
+  if EUIDB.partyMarkerHealer and specID and HEALER_SPECS[specID] then
+    partyMarker.healerIcon:Show()
+    partyMarker.healerIcon:ClearAllPoints()
+    partyMarker.healerIcon:SetPoint("CENTER", partyMarker.icon, "CENTER", 0, 0)
+    partyMarker.icon:Hide()
+  elseif EUIDB.partyMarker then
     partyMarker.healerIcon:Hide()
     partyMarker:Show()
-    if EUIDB.partyMarkerHideRaidmarker then
-      frame.RaidTargetFrame.RaidTargetIcon:SetAlpha(0)
-    end
+  else
+    partyMarker.healerIcon:Hide()
+    partyMarker:Hide()
+  end
+
+  if EUIDB.partyMarkerHideRaidmarker then
+    frame.RaidTargetFrame.RaidTargetIcon:SetAlpha(0)
+  else
+    frame.RaidTargetFrame.RaidTargetIcon:SetAlpha(1)
   end
 end
 
