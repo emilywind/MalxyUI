@@ -18,10 +18,10 @@ OnPlayerLogin(function()
     SetCVar(cVar, value)
   end
 
-  EUISetCVar("nameplateResourceOnTarget", "nameplateResourceOnTarget")
-  EUISetCVar("nameplateShowAll", "showAllNameplates")
-  EUISetCVar("nameplateShowFriends", "nameplateShowFriends")
-  EUISetCVar("nameplateShowEnemyMinions", "nameplateShowEnemyMinions")
+  EUISetCVar("nameplateResourceOnTarget")
+  EUISetCVar("nameplateShowAll", nil, "showAllNameplates")
+  EUISetCVar("nameplateShowFriends")
+  EUISetCVar("nameplateShowEnemyMinions")
 
   -- Keep nameplates on screen
   SetCVar("nameplateOtherBottomInset", 0.1)

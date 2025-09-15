@@ -1249,8 +1249,7 @@ local function setupEuiOptions()
     "Show nameplates for all units, not just ones in combat.",
     EUIDB.showAllNameplates,
     function(value)
-      EUIDB.showAllNameplates = value
-      C_CVar.SetCVar("nameplateShowAll", value and 1 or 0)
+      EUISetCVar("nameplateShowAll", value, "showAllNameplates")
     end,
     cUFDisplayPowerBars,
     EUI_CVars
@@ -1261,8 +1260,7 @@ local function setupEuiOptions()
     "Show the special resource (holy power, combo points, chi, etc) on the nameplate of your current target.",
     EUIDB.nameplateResourceOnTarget,
     function(value)
-      EUIDB.nameplateResourceOnTarget = value
-      C_CVar.SetCVar("nameplateResourceOnTarget", value and 1 or 0)
+      EUISetCVar("nameplateResourceOnTarget", value)
     end,
     showAllNameplates,
     EUI_CVars
@@ -1273,8 +1271,7 @@ local function setupEuiOptions()
     "Show Nameplates for Friendly Units.",
     EUIDB.nameplateShowFriends,
     function(value)
-      EUIDB.nameplateShowFriends = value
-      C_CVar.SetCVar("nameplateShowFriends", value and 1 or 0)
+      EUISetCVar("nameplateShowFriends", value)
     end,
     nameplateResourceOnTarget,
     EUI_CVars
@@ -1285,8 +1282,7 @@ local function setupEuiOptions()
     "Show Nameplates for Enemy Minions (pets, guardians, and totems).",
     EUIDB.nameplateShowEnemyMinions,
     function(value)
-      EUIDB.nameplateShowEnemyMinions = value
-      C_CVar.SetCVar("nameplateShowEnemyMinions", value and 1 or 0)
+      EUISetCVar("nameplateShowEnemyMinions", value)
     end,
     nameplateShowFriends,
     EUI_CVars
@@ -1297,14 +1293,13 @@ local function setupEuiOptions()
     "Enable auto loot by default instead of having to press a key.",
     EUIDB.autoLootDefault,
     function(value)
-      EUIDB.autoLootDefault = value
-      C_CVar.SetCVar("autoLootDefault", value and 1 or 0)
+      EUISetCVar("autoLootDefault", value)
     end,
     nameplateShowEnemyMinions,
     EUI_CVars
   )
 
-  SetCVar("autoLootDefault", EUIDB.autoLootDefault and 1 or 0)
+  EUISetCVar("autoLootDefault")
 
   --------------------
   -- Reload Buttons --
