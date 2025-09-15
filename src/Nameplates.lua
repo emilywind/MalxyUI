@@ -14,8 +14,6 @@ end
 OnPlayerLogin(function()
   if not EUIDB.skinNameplates then return end
 
-  local statusTex = EUIDB.statusBarTex
-
   local cVars = {
     nameplateGlobalScale = 1,
     nameplateMinScale = 1,
@@ -65,12 +63,12 @@ OnPlayerLogin(function()
     local healthColor = GetUnitHealthColor(unit)
 
     if isPersonal then
-      healthBar:SetStatusBarTexture(statusTex)
-      ClassNameplateManaBarFrame:SetStatusBarTexture(statusTex)
-      ClassNameplateManaBarFrame.FeedbackFrame.BarTexture:SetTexture(statusTex)
-      ClassNameplateManaBarFrame.FeedbackFrame.LossGlowTexture:SetTexture(statusTex)
+      healthBar:SetStatusBarTexture(EUIDB.statusBarTex)
+      ClassNameplateManaBarFrame:SetStatusBarTexture(EUIDB.statusBarTex)
+      ClassNameplateManaBarFrame.FeedbackFrame.BarTexture:SetTexture(EUIDB.statusBarTex)
+      ClassNameplateManaBarFrame.FeedbackFrame.LossGlowTexture:SetTexture(EUIDB.statusBarTex)
       if healthBar.myHealPrediction then
-        healthBar.myHealPrediction:SetTexture(statusTex)
+        healthBar.myHealPrediction:SetTexture(EUIDB.statusBarTex)
       end
 
       if frame.optionTable.colorNameBySelection then
@@ -109,8 +107,8 @@ OnPlayerLogin(function()
     if frame:IsForbidden() or not frame.isNameplate then return end
 
     local healthBar = frame.healthBar
-    healthBar:SetStatusBarTexture(statusTex)
-    healthBar.myHealPrediction:SetTexture(statusTex)
+    healthBar:SetStatusBarTexture(EUIDB.statusBarTex)
+    healthBar.myHealPrediction:SetTexture(EUIDB.statusBarTex)
 
     ModifyFont(frame.name, EUIDB.nameplateFont, EUIDB.nameplateNameFontSize)
 

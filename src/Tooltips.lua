@@ -49,6 +49,28 @@ local function skinGameTooltip()
 		border:SetBackdropBorderColor(0.08, 0.08, 0.08, 0.8)
 		GameTooltip.border = border
 	end
+
+	local bar = GameTooltipStatusBar
+	if not bar.bg then
+		bar.bg = bar:CreateTexture('GameTooltipStatusBarBackground', "BACKGROUND")
+		bar.bg:SetAllPoints(bar)
+		bar.bg:SetTexture(SQUARE_TEXTURE)
+		bar.bg:SetVertexColor(0.2, 0.2, 0.2)
+	end
+
+	if not bar.TextString then
+		bar.TextString = bar:CreateFontString('GameToolTipTextStatus', "OVERLAY")
+		bar.TextString:SetPoint("CENTER")
+		SetDefaultFont(bar.TextString, 11)
+	end
+
+	-- Gametooltip statusbar
+	bar:SetStatusBarTexture(EUIDB.statusBarTex)
+	bar:ClearAllPoints()
+	bar:SetPoint("LEFT", 7, 0)
+	bar:SetPoint("RIGHT", -7, 0)
+	bar:SetPoint("BOTTOM", 0, 7)
+	bar:SetHeight(10)
 end
 
 local function cleanupTooltip(tip)
@@ -191,24 +213,6 @@ OnPlayerLogin(function()
 			self:SetOwner(parent, EUIDB.tooltipAnchor)
 		end
 	end)
-
-	local bar = GameTooltipStatusBar
-	bar.bg = bar:CreateTexture('GameTooltipStatusBarBackground', "BACKGROUND")
-	bar.bg:SetAllPoints(bar)
-	bar.bg:SetTexture(SQUARE_TEXTURE)
-	bar.bg:SetVertexColor(0.2, 0.2, 0.2)
-
-	bar.TextString = bar:CreateFontString('GameToolTipTextStatus', "OVERLAY")
-	bar.TextString:SetPoint("CENTER")
-	SetDefaultFont(bar.TextString, 11)
-
-	-- Gametooltip statusbar
-  bar:SetStatusBarTexture(EUIDB.statusBarTex)
-	bar:ClearAllPoints()
-	bar:SetPoint("LEFT", 7, 0)
-	bar:SetPoint("RIGHT", -7, 0)
-	bar:SetPoint("BOTTOM", 0, 7)
-	bar:SetHeight(10)
 
   skinGameTooltip()
 
