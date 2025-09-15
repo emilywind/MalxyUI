@@ -267,6 +267,7 @@ OnPlayerLogin(function()
       PartyMarker(frame)
       updateName(frame)
       updateHealth(frame)
+      modifyNamePlates(frame)
     end
   end
 
