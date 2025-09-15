@@ -1,6 +1,4 @@
 OnPlayerLogin(function()
-  if not EUIDB.enableStatsFrame then return end
-
   StatsFrame = CreateFrame("Frame", "StatsFrame", UIParent)
   StatsFrame:ClearAllPoints()
   StatsFrame:SetPoint(EUIDB.statsframe.point, UIParent, EUIDB.statsframe.point, EUIDB.statsframe.x, EUIDB.statsframe.y)
@@ -48,12 +46,19 @@ OnPlayerLogin(function()
   local lastUpdate = 0
 
   local function update(self, elapsed)
+    if not EUIDB.enableStatsFrame then
+      if self:IsShown() then
+        self:Hide()
+      end
+      return
+    end
+
     lastUpdate = lastUpdate + elapsed
     if lastUpdate > 0.2 then
       lastUpdate = 0
-      StatsFrame.text:SetText(status())
-      self:SetWidth(StatsFrame.text:GetStringWidth())
-      self:SetHeight(StatsFrame.text:GetStringHeight())
+      self.text:SetText(status())
+      self:SetWidth(self.text:GetStringWidth())
+      self:SetHeight(self.text:GetStringHeight())
     end
   end
 

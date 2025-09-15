@@ -520,6 +520,11 @@ local function setupEuiOptions()
     function(value)
       EUIDB.enableStatsFrame = value
       UpdateStatsSpeed()
+      if value then
+        StatsFrame:Show()
+      else
+        StatsFrame:Hide()
+      end
     end,
     castBarScale
   )
