@@ -315,6 +315,7 @@ function GetUnitInfo(unit)
   info.isConnected = UnitIsConnected(unit)
   info.isVisible = UnitIsVisible(unit)
   info.isInParty = UnitInParty(unit)
+  info.canAttack = UnitCanAttack("player", unit)
 
   return info
 end
