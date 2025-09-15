@@ -52,9 +52,11 @@ end
 
 local function updateHotkey(self)
   local ho = _G[self:GetName() .. "HotKey"]
-  if EUIDB.hideHotkeys and ho and ho:IsShown() then
+  if not ho then return end
+
+  if EUIDB.hideHotkeys and ho:IsShown() then
     ho:Hide()
-  elseif not EUIDB.hideHotkeys and ho and not ho:IsShown() then
+  elseif not EUIDB.hideHotkeys and not ho:IsShown() then
     ho:Show()
   end
 end
