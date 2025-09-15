@@ -3,8 +3,7 @@ local SetCVar = C_CVar.SetCVar
 OnPlayerLogin(function()
   if not EUIDB.skinNameplates then return end
 
-  local healthTex = EUIDB.healthBarTex
-  local powerTex = EUIDB.powerBarTex
+  local statusTex = EUIDB.statusBarTex
 
   local cVars = {
     nameplateGlobalScale = 1,
@@ -19,10 +18,10 @@ OnPlayerLogin(function()
     SetCVar(cVar, value)
   end
 
-  SetCVar("nameplateResourceOnTarget", EUIDB.nameplateResourceOnTarget and 1 or 0)
-  SetCVar("nameplateShowAll", EUIDB.showAllNameplates and 1 or 0)
-  SetCVar("nameplateShowFriends", EUIDB.nameplateShowFriends and 1 or 0)
-  SetCVar("nameplateShowEnemyMinions", EUIDB.nameplateShowEnemyMinions and 1 or 0)
+  EUISetCVar("nameplateResourceOnTarget", "nameplateResourceOnTarget")
+  EUISetCVar("nameplateShowAll", "showAllNameplates")
+  EUISetCVar("nameplateShowFriends", "nameplateShowFriends")
+  EUISetCVar("nameplateShowEnemyMinions", "nameplateShowEnemyMinions")
 
   -- Keep nameplates on screen
   SetCVar("nameplateOtherBottomInset", 0.1)
@@ -55,12 +54,12 @@ OnPlayerLogin(function()
     local healthColor = GetUnitHealthColor(unit)
 
     if isPersonal then
-      healthBar:SetStatusBarTexture(healthTex)
-      ClassNameplateManaBarFrame:SetStatusBarTexture(powerTex)
-      ClassNameplateManaBarFrame.FeedbackFrame.BarTexture:SetTexture(powerTex)
-      ClassNameplateManaBarFrame.FeedbackFrame.LossGlowTexture:SetTexture(powerTex)
+      healthBar:SetStatusBarTexture(statusTex)
+      ClassNameplateManaBarFrame:SetStatusBarTexture(statusTex)
+      ClassNameplateManaBarFrame.FeedbackFrame.BarTexture:SetTexture(statusTex)
+      ClassNameplateManaBarFrame.FeedbackFrame.LossGlowTexture:SetTexture(statusTex)
       if healthBar.myHealPrediction then
-        healthBar.myHealPrediction:SetTexture(healthTex)
+        healthBar.myHealPrediction:SetTexture(statusTex)
       end
 
       if frame.optionTable.colorNameBySelection then
@@ -109,8 +108,8 @@ OnPlayerLogin(function()
     if frame:IsForbidden() or not frame.isNameplate then return end
 
     local healthBar = frame.healthBar
-    healthBar:SetStatusBarTexture(healthTex)
-    healthBar.myHealPrediction:SetTexture(healthTex)
+    healthBar:SetStatusBarTexture(statusTex)
+    healthBar.myHealPrediction:SetTexture(statusTex)
 
     ModifyFont(frame.name, EUIDB.nameplateFont, EUIDB.nameplateNameFontSize)
 

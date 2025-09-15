@@ -18,8 +18,7 @@ EUIDBDefaults = {
   hideBagBar = false,
   hideArenaFrames = false,
 
-  healthBarTex = EUI_TEXTURES.healthBar,
-  powerBarTex = EUI_TEXTURES.powerBar,
+  statusBarTex = EUI_TEXTURES.statusBar,
 
   lootSpecDisplay = true, -- Display loot spec icon in the player frame
 
@@ -458,11 +457,10 @@ local function setupEuiOptions()
   local statusBarChooser = newDropdown(
     "Status Bar Texture (Raid Frames and Nameplates)",
     LSM_STATUSBAR,
-    EUIDB.healthBarTex,
+    EUIDB.statusBarTex,
     200,
     function(value)
-      EUIDB.healthBarTex = value
-      EUIDB.powerBarTex = value -- Sync power bar texture with health bar texture
+      EUIDB.statusBarTex = value
     end
   )
   statusBarChooser:SetPoint("LEFT", dampeningDisplay, "RIGHT", 300, 0)

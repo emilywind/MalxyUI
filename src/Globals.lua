@@ -21,8 +21,7 @@ EUI_TEXTURES = {
 
   roundedBorder = TextureDir.."\\rounded-border.tga",
 
-  healthBar = TextureDir.."\\blizz-inspired.tga",
-  powerBar = TextureDir.."\\blizz-inspired.tga",
+  statusBar = TextureDir.."\\blizz-inspired.tga",
 
   classCircles = TextureDir.."\\class\\fabledrealm",
 
@@ -429,4 +428,14 @@ function Trim(s)
   if not s then return '' end
 
   return s:gsub("^%s*(.-)%s*$", "%1")
+end
+
+function EUISetCVar(cvarName, euiVarName, value)
+  if value == nil then
+    value = EUIDB[euiVarName]
+  else
+    EUIDB[euiVarName] = value
+  end
+
+  C_CVar.SetCVar(cvarName, value and 1 or 0)
 end
