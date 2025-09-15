@@ -108,9 +108,7 @@ end
 local function applyHooks()
   OnEvent("UPDATE_BINDINGS", toggleHotKeys)
 
-  SpellFlyout:HookScript("OnSizeChanged", function()
-    skinSpellFlyout()
-  end)
+  SpellFlyout:HookScript("OnSizeChanged", skinSpellFlyout)
 end
 
 function StyleActionBars()
