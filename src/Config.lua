@@ -420,7 +420,7 @@ local function setupEuiOptions()
 
   local enableDamageFont = newCheckbox(
     "Use Custom Damage Font**",
-    "Use a custom font for damage numbers. Can be set in the dropdown to the right. **Requires relogging or restarting the game.",
+    "Use a custom font for damage numbers. Can be set in the dropdown to the right. **Requires relogging.",
     EUIDB.enableDamageFont,
     function(value)
       EUIDB.enableDamageFont = value
