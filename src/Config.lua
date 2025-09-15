@@ -396,6 +396,7 @@ local function setupEuiOptions()
     function(value)
       EUIDB.enableFont = value
       UpdateFontChooser()
+      Main_Reload:Show()
     end,
     lootSpecDisplay
   )
@@ -418,8 +419,8 @@ local function setupEuiOptions()
   UpdateFontChooser()
 
   local enableDamageFont = newCheckbox(
-    "Use Custom Damage Font",
-    "Use a custom font for damage numbers. Can be set in the dropdown to the right. Requires relogging.",
+    "Use Custom Damage Font**",
+    "Use a custom font for damage numbers. Can be set in the dropdown to the right. **Requires relogging or restarting the game.",
     EUIDB.enableDamageFont,
     function(value)
       EUIDB.enableDamageFont = value
@@ -1342,6 +1343,7 @@ local function setupEuiOptions()
     ReloadUI()
   end)
 
+  Main_Reload = addReloadButton(EUI.panel)
   Nameplate_Reload = addReloadButton(Nameplate_Content)
   Tooltips_Reload = addReloadButton(EUI_Tooltips)
 
