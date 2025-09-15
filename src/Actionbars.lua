@@ -86,15 +86,17 @@ local function skinSpellFlyout()
 end
 
 local function toggleHotKeys()
-  for i = 1, 12 do
+  for i = 1, NUM_ACTIONBAR_BUTTONS do
     updateHotkey(_G["ActionButton" .. i])
     updateHotkey(_G["MultiBarBottomLeftButton" .. i])
     updateHotkey(_G["MultiBarBottomRightButton" .. i])
     updateHotkey(_G["MultiBarLeftButton" .. i])
     updateHotkey(_G["MultiBarRightButton" .. i])
   end
-  for i = 1, 10 do
+  for i = 1, StanceBar.numButtons do
     updateHotkey(_G["StanceButton" .. i])
+  end
+  for i = 1, NUM_PET_ACTION_SLOTS do
     updateHotkey(_G["PetActionButton" .. i])
   end
   updateHotkey(ExtraActionButton1)
