@@ -437,5 +437,5 @@ function EUISetCVar(cvarName, euiVarName, value)
     EUIDB[euiVarName] = value
   end
 
-  C_CVar.SetCVar(cvarName, value and 1 or 0)
+  C_CVar.SetCVar(cvarName, value == true and 1 or value == false and 0 or value)
 end
