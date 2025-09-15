@@ -197,13 +197,7 @@ local guildColors = {
 }
 
 OnPlayerLogin(function()
-	if
-		C_AddOns.IsAddOnLoaded('TinyTooltip')
-		or C_AddOns.IsAddOnLoaded('TipTac')
-		or not EUIDB.enhanceTooltips
-	then
-		return
-	end
+	if not EUIDB.enhanceTooltips then return end
 
 	-- Tooltips anchored on mouse
 	hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)
