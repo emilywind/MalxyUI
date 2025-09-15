@@ -111,6 +111,8 @@ OnPlayerLogin(function()
       if startTime then
         iconFrame.cooldown:SetCooldown(startTime, duration)
         iconFrame.cooldown:Show()
+      else
+        iconFrame.cooldown:Hide()
       end
     end
   end
