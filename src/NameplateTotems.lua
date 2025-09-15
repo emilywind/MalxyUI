@@ -53,7 +53,7 @@ OnPlayerLogin(function()
 
   local totemNpcIDs = {}
 
-  function UpdateTotemSetting()
+  function UpdateTotemIndicatorSetting()
     totemNpcIDs = CopyTable(importantTotemNpcIDs)
 
     if EUIDB.nameplateTotemIndicators == "all" then
@@ -62,7 +62,7 @@ OnPlayerLogin(function()
       end
     end
   end
-  UpdateTotemSetting()
+  UpdateTotemIndicatorSetting()
 
   local function CreateIcon(nameplate)
     local frame = CreateFrame("Frame", nil, nameplate)
