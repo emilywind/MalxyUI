@@ -1,5 +1,16 @@
 local SetCVar = C_CVar.SetCVar
 
+local function abbrev(str, length)
+  if not str then
+    return UNKNOWN
+  end
+
+  length = length or 20
+
+  str = (string.len(str) > length) and string.gsub(str, "%s?(.[\128-\191]*)%S+%s", "%1. ") or str
+  return str
+end
+
 OnPlayerLogin(function()
   if not EUIDB.skinNameplates then return end
 
@@ -43,7 +54,7 @@ OnPlayerLogin(function()
   -------------------------------------------------------
   -- Red color when below 30% on Personal Resource Bar --
   -------------------------------------------------------
-  hooksecurefunc("CompactUnitFrame_UpdateHealth", function(frame)
+  local function updateHealth(frame)
     if frame:IsForbidden() or not frame.isNameplate then return end
 
     local unit = frame.displayedUnit or frame.unit
@@ -85,18 +96,8 @@ OnPlayerLogin(function()
     else
       hPercFrame:SetText('')
     end
-  end)
-
-  local function abbrev(str, length)
-    if not str then
-      return UNKNOWN
-    end
-
-    length = length or 20
-
-    str = (string.len(str) > length) and string.gsub(str, "%s?(.[\128-\191]*)%S+%s", "%1. ") or str
-    return str
   end
+  hooksecurefunc("CompactUnitFrame_UpdateHealth", updateHealth)
 
   hooksecurefunc(NamePlateDriverFrame, "AcquireUnitFrame", function(_, nameplate)
     if (nameplate.UnitFrame) then
@@ -160,7 +161,7 @@ OnPlayerLogin(function()
     PetIndicator(frame)
   end)
 
-  hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
+  local function updateName(frame)
     local unit = frame.displayedUnit or frame.unit
     if not unit or not frame.isNameplate or frame:IsForbidden() then return end
 
@@ -259,5 +260,15 @@ OnPlayerLogin(function()
 
       frame.name:SetText(name)
     end
-  end)
+  end
+
+  function RefreshNameplates()
+    for _, frame in pairs(C_NamePlate.GetNamePlates()) do
+      PartyMarker(frame)
+      updateName(frame)
+      updateHealth(frame)
+    end
+  end
+
+  hooksecurefunc("CompactUnitFrame_UpdateName", updateName)
 end)

@@ -465,6 +465,7 @@ local function setupEuiOptions()
     200,
     function(value)
       EUIDB.statusBarTex = value
+      RefreshNameplates()
     end
   )
   statusBarChooser:SetPoint("LEFT", dampeningDisplay, "RIGHT", 300, 0)
