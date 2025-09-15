@@ -441,3 +441,13 @@ function EUISetCVar(cvarName, value, euiVarName, settingNil)
 
   C_CVar.SetCVar(cvarName, value == true and 1 or value == false and 0 or value)
 end
+
+function GetAllNameplates()
+  local allNameplates = {}
+  for _, frame in pairs(C_NamePlate.GetNamePlates()) do
+    if frame.UnitFrame then
+      table.insert(allNameplates, frame.UnitFrame)
+    end
+  end
+  return allNameplates
+end

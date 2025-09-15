@@ -261,11 +261,12 @@ OnPlayerLogin(function()
   end
 
   function RefreshNameplates()
-    for _, frame in pairs(C_NamePlate.GetNamePlates()) do
-      PartyMarker(frame)
-      updateName(frame)
-      updateHealth(frame)
-      modifyNamePlates(frame)
+    for _, nameplate in pairs(GetAllNameplates()) do
+      PartyMarker(nameplate)
+      updateName(nameplate)
+      updateHealth(nameplate)
+      modifyNamePlates(nameplate)
+      print('updating nameplate for', nameplate.displayedUnit)
     end
   end
 

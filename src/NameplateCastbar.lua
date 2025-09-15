@@ -59,19 +59,20 @@ local interruptSpellUpdate = OnEvents({
   if EUIDB.skinNameplates and EUIDB.nameplateCastbarColorInterrupt then
     C_Timer.After(0.1, function()
       GetInterruptSpell()
-      for _, namePlate in pairs(C_NamePlate.GetNamePlates()) do
-        local frame = namePlate.UnitFrame
-        SkinCastbar(frame, frame.unit)
+      for _, nameplate in pairs(GetAllNameplates()) do
+        SkinCastbar(nameplate)
       end
     end)
   end
 end)
 interruptSpellUpdate:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
 
-function SkinCastbar(frame, unitToken)
+function SkinCastbar(frame)
   local castBar = frame.castBar
   if not castBar then return end
   if castBar:IsForbidden() then return end
+
+  local unitToken = frame.displayedUnit or frame.unit
 
   if not castBar.timer then
     ModifyFont(castBar.Text, EUIDB.nameplateFont)
@@ -272,13 +273,13 @@ hooksecurefunc(CastingBarMixin, "OnEvent", function(self)
   end
 
   if EUIDB.nameplateCastbarColorInterrupt then
-    SkinCastbar(frame, self.unit)
+    SkinCastbar(frame)
 
     if not UnitTargetCastbarUpdate then
       UnitTargetCastbarUpdate = OnEvent("UNIT_TARGET", function(_, _, unit)
         local npFrame = GetSafeNameplate(unit)
         if npFrame and not UnitIsPlayer(unit) then
-          SkinCastbar(npFrame, unit)
+          SkinCastbar(npFrame)
         end
       end)
     end

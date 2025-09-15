@@ -102,8 +102,8 @@ function PartyMarker(frame)
 end
 
 local function RefreshAllNameplates()
-  for _, frame in pairs(C_NamePlate.GetNamePlates()) do
-    PartyMarker(frame)
+  for _, nameplate in pairs(GetAllNameplates()) do
+    PartyMarker(nameplate)
   end
 end
 
