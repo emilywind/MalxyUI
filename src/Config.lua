@@ -396,7 +396,12 @@ local function setupEuiOptions()
     function(value)
       EUIDB.enableFont = value
       UpdateFontChooser()
-      Main_Reload:Show()
+      UpdateFonts()
+      if value == false then
+        Main_Reload:Show()
+      else
+        Main_Reload:Hide()
+      end
     end,
     lootSpecDisplay
   )
