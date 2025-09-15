@@ -602,6 +602,7 @@ local function setupEuiOptions()
     200,
     function(value)
       EUIDB.nameplateFont = value
+      RefreshNameplates()
     end,
     Nameplate_Content
   )
@@ -616,7 +617,10 @@ local function setupEuiOptions()
     1,
     "Font size for Nameplates",
     nameplateFontDropdown,
-    Nameplate_Content
+    Nameplate_Content,
+    function()
+      RefreshNameplates()
+    end
   )
   nameplateFontSlider:ClearAllPoints()
   nameplateFontSlider:SetPoint("LEFT", nameplateFontDropdown, "RIGHT", 220, 0)
@@ -1197,8 +1201,7 @@ local function setupEuiOptions()
     "Font size for Chat",
     chatFontDropdown,
     EUI_Misc,
-    function(value)
-      EUIDB.chatFontSize = value
+    function()
       ReloadChats()
     end
   )
