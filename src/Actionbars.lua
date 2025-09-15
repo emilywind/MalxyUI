@@ -83,14 +83,14 @@ local function doToActionButtons(func)
   func(ExtraActionButton1)
 end
 
-local function toggleHotKeys()
+local function updateHotkeys()
   doToActionButtons(updateHotkey)
 end
 
 function StyleActionBars()
   doToActionButtons(styleActionButton)
 
-  toggleHotKeys()
+  updateHotkeys()
 end
 
 OnEvents({
@@ -99,7 +99,7 @@ OnEvents({
   "EDIT_MODE_LAYOUTS_UPDATED"
 }, function(_, event)
   if event == "PLAYER_LOGIN" then
-    OnEvent("UPDATE_BINDINGS", toggleHotKeys)
+    OnEvent("UPDATE_BINDINGS", updateHotkeys)
 
     SpellFlyout:HookScript("OnSizeChanged", skinSpellFlyout)
   end
