@@ -88,11 +88,7 @@ function PartyMarker(frame)
     partyMarker:Hide()
   end
 
-  if EUIDB.partyMarkerHideRaidmarker then
-    frame.RaidTargetFrame.RaidTargetIcon:SetAlpha(0)
-  else
-    frame.RaidTargetFrame.RaidTargetIcon:SetAlpha(1)
-  end
+  frame.RaidTargetFrame.RaidTargetIcon:SetAlpha(EUIDB.partyMarkerHideRaidmarker and 0 or 1)
 end
 
 local function RefreshAllNameplates()
