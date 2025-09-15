@@ -83,9 +83,8 @@ function PartyMarker(frame)
     partyMarker.icon:Hide()
   elseif EUIDB.partyMarker then
     partyMarker.healerIcon:Hide()
-    partyMarker:Show()
+    partyMarker.icon:Show()
   else
-    partyMarker.healerIcon:Hide()
     partyMarker:Hide()
   end
 
