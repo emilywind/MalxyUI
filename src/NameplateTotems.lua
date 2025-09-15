@@ -1,11 +1,6 @@
 -- Simplified and enhanced version of NugTotemIcon
 OnPlayerLogin(function()
-  if
-    not EUIDB.skinNameplates
-    or EUIDB.nameplateTotemIndicators == "none"
-  then
-    return
-  end
+  if not EUIDB.skinNameplates then return end
 
   local f = OnEvents({
     "NAME_PLATE_UNIT_ADDED",
@@ -51,15 +46,17 @@ OnPlayerLogin(function()
     [97285] = { 192077, 15 },  -- Wind Rush
   }
 
-  local totemNpcIDs = {}
+  local totemNpcIDs
 
   function UpdateTotemIndicatorSetting()
-    totemNpcIDs = CopyTable(importantTotemNpcIDs)
+    totemNpcIDs = {}
+
+    if EUIDB.nameplateTotemIndicators == "none" then return end
+
+    PushTableIntoTable(totemNpcIDs, importantTotemNpcIDs)
 
     if EUIDB.nameplateTotemIndicators == "all" then
-      for k, v in pairs(lessImportantTotemNpcIDs) do
-        totemNpcIDs[k] = v
-      end
+      PushTableIntoTable(totemNpcIDs, lessImportantTotemNpcIDs)
     end
   end
   UpdateTotemIndicatorSetting()

@@ -451,3 +451,9 @@ function GetAllNameplates()
   end
   return allNameplates
 end
+
+function PushTableIntoTable(destTable, srcTable)
+  for k, v in pairs(srcTable) do
+    destTable[k] = v
+  end
+end
