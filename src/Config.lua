@@ -1059,14 +1059,7 @@ local function setupEuiOptions()
     tooltipShowNpcID:Enable()
   end
 
-  if
-    C_AddOns.IsAddOnLoaded('TinyTooltip')
-    or C_AddOns.IsAddOnLoaded('TipTac')
-  then
-    DisableTooltipSettings()
-    enhanceTooltips.tooltip = "Disabled due to addon TinyTooltip or TipTac"
-    enhanceTooltips:Disable()
-  elseif not EUIDB.enhanceTooltips then
+  if not EUIDB.enhanceTooltips then
     DisableTooltipSettings()
   end
 

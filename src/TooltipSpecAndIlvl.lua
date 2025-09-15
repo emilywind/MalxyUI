@@ -169,14 +169,7 @@ local function TSI_UpdateTooltip(unitCacheRecord)
 end
 
 local function TSI_OnTooltipSetUnit()
-  if (
-        C_AddOns.IsAddOnLoaded('TinyTooltip')
-        or C_AddOns.IsAddOnLoaded('TipTac')
-        or not EUIDB.enhanceTooltips
-        or not EUIDB.tooltipSpecAndIlvl
-      ) then
-    return
-  end
+  if not EUIDB.enhanceTooltips or not EUIDB.tooltipSpecAndIlvl then return end
 
   -- get the unit id -- check the UnitFrame unit if this tip is from a concated unit, such as "targettarget".
   local unitID = GetTooltipUnit()
