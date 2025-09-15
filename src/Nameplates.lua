@@ -83,11 +83,11 @@ OnPlayerLogin(function()
     local hPercFrame = frame.healthPercentage
     if not hPercFrame then
       hPercFrame = frame.healthBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-      ModifyFont(hPercFrame, EUIDB.nameplateFont)
       hPercFrame:SetTextColor( 1, 1, 1 )
       hPercFrame:SetPoint("CENTER", frame.healthBar, "CENTER", 0, 0)
       frame.healthPercentage = hPercFrame
     end
+    ModifyFont(hPercFrame, EUIDB.nameplateFont)
 
     if EUIDB.nameplateHealthPercent and healthPercentage ~= 100 then
       hPercFrame:SetText(healthPercentage .. '%')
@@ -200,11 +200,13 @@ OnPlayerLogin(function()
     end
 
     if EUIDB.nameplateShowLevel then
-      if not frame.levelText then
-        frame.levelText = frame.healthBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-        frame.levelText:SetPoint("RIGHT", frame.healthBar, "RIGHT", -1, 0)
-        ModifyFont(frame.levelText, EUIDB.nameplateFont)
+      local levelText = frame.levelText
+      if not levelText then
+        levelText = frame.healthBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+        levelText:SetPoint("RIGHT", frame.healthBar, "RIGHT", -1, 0)
+        frame.levelText = levelText
       end
+      ModifyFont(levelText, EUIDB.nameplateFont)
       frame.unitLevel = unitInfo.level
       local c = GetCreatureDifficultyColor(frame.unitLevel)
       if unitInfo.classification == 'rare' or unitInfo.classification == 'rareelite' then

@@ -615,7 +615,7 @@ local function setupEuiOptions()
     6,
     24,
     1,
-    "Font size for Nameplates",
+    "Font size for Nameplate Names",
     nameplateFontDropdown,
     Nameplate_Content,
     function()

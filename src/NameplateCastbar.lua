@@ -74,15 +74,15 @@ function SkinCastbar(frame)
 
   local unitToken = frame.displayedUnit or frame.unit
 
-  if not castBar.timer then
-    ModifyFont(castBar.Text, EUIDB.nameplateFont)
-    ApplyEuiBackdrop(castBar.Icon, castBar)
-
-    local timer = castBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    ModifyFont(timer, EUIDB.nameplateFont, 11, "THINOUTLINE", 'ffffffff')
+  ApplyEuiBackdrop(castBar.Icon, castBar)
+  local timer = castBar.timer
+  if not timer then
+    timer = castBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
     timer:SetPoint("LEFT", castBar, "RIGHT", 2, 0)
     castBar.timer = timer
   end
+  ModifyFont(castBar.Text, EUIDB.nameplateFont)
+  ModifyFont(timer, EUIDB.nameplateFont, 11, "THINOUTLINE", 'ffffffff')
 
   local castBarTexture = castBar:GetStatusBarTexture()
   local spellName, spellID, notInterruptible, endTime, channeling, castStart, empoweredCast
@@ -212,14 +212,16 @@ local function updateCastTimer(frame, castBar, unit)
 end
 
 local function UpdateNameplateTargetText(frame, unit)
-  if not frame.TargetText then
-    frame.TargetText = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    frame.TargetText:SetJustifyH("CENTER")
-    frame.TargetText:SetParent(frame.castBar)
-    frame.TargetText:SetIgnoreParentScale(true)
-    ModifyFont(frame.TargetText, EUIDB.nameplateFont)
+  local targetText = frame.TargetText
+  if not targetText then
+    targetText = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    targetText:SetJustifyH("CENTER")
+    targetText:SetParent(frame.castBar)
+    targetText:SetIgnoreParentScale(true)
+    frame.TargetText = targetText
     -- fix me (make it appear above resource when higher strata resource) bodify
   end
+  ModifyFont(targetText, EUIDB.nameplateFont)
 
   local isCasting = UnitCastingInfo(unit) or UnitChannelInfo(unit)
 
