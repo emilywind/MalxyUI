@@ -380,6 +380,7 @@ local function setupEuiOptions()
     EUIDB.lootSpecDisplay,
     function(value)
       EUIDB.lootSpecDisplay = value
+      UpdateLootSpecDisplay()
     end,
     portraitSelect
   )

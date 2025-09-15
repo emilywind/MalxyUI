@@ -1,9 +1,38 @@
+local lootSpecId = nil
+
+function UpdateLootSpecDisplay(event)
+	if not EUIDB.lootSpecDisplay then
+		if PlayerLootSpecFrame:IsShown() then
+			PlayerLootSpecFrame:Hide()
+		end
+		return
+	else
+		if not PlayerLootSpecFrame:IsShown() then
+			PlayerLootSpecFrame:Show()
+		end
+	end
+
+	local newLootSpecId = GetLootSpecialization()
+	local lootIcon = ''
+
+	if lootSpecId ~= newLootSpecId or (lootSpecId == 0 and event == "PLAYER_TALENT_UPDATE") then
+		lootSpecId = newLootSpecId
+
+		if lootSpecId ~= 0 then
+			lootIcon = select(4, GetSpecializationInfoByID(lootSpecId))
+		else
+			lootIcon = select(4, GetSpecializationInfo(GetSpecialization()))
+		end
+
+		if not lootIcon then return end
+
+		local lootIconText = format('|T%s:16:16:0:0:64:64:4:60:4:60|t', lootIcon)
+		PlayerLootSpecFrame.specname:SetFormattedText("%s", lootIconText)
+	end
+end
+
 OnPlayerLogin(function()
-	if not EUIDB.lootSpecDisplay then return end
-
-	local lootSpecId = nil
-
-	local PlayerLootSpecFrame = CreateFrame("Frame", nil, PlayerFrame)
+	PlayerLootSpecFrame = CreateFrame("Frame", nil, PlayerFrame)
 
 	PlayerLootSpecFrame:SetPoint("BOTTOMRIGHT", PlayerFrame.portrait, "BOTTOMRIGHT", 0, 0)
 	PlayerLootSpecFrame:SetHeight(20)
@@ -17,22 +46,6 @@ OnPlayerLogin(function()
 		"PLAYER_LOOT_SPEC_UPDATED",
 		"PLAYER_TALENT_UPDATE"
 	}, function(_, event)
-		local newLootSpecId = GetLootSpecialization()
-		local lootIcon = ''
-
-		if lootSpecId ~= newLootSpecId or (lootSpecId == 0 and event == "PLAYER_TALENT_UPDATE") then
-			lootSpecId = newLootSpecId
-
-			if lootSpecId ~= 0 then
-				lootIcon = select(4, GetSpecializationInfoByID(lootSpecId))
-			else
-				lootIcon = select(4, GetSpecializationInfo(GetSpecialization()))
-			end
-
-			if not lootIcon then return end
-
-			local lootIconText = format('|T%s:16:16:0:0:64:64:4:60:4:60|t', lootIcon)
-			PlayerLootSpecFrame.specname:SetFormattedText("%s", lootIconText)
-		end
+		UpdateLootSpecDisplay(event)
 	end)
 end)
