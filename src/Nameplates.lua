@@ -266,7 +266,6 @@ OnPlayerLogin(function()
       updateName(nameplate)
       updateHealth(nameplate)
       modifyNamePlates(nameplate)
-      print('updating nameplate for', nameplate.displayedUnit)
     end
   end
 

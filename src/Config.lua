@@ -652,6 +652,7 @@ local function setupEuiOptions()
     EUIDB.nameplateFriendlyNamesClassColor,
     function(value)
       EUIDB.nameplateFriendlyNamesClassColor = value
+      RefreshNameplates()
     end,
     nameplateHideServerNames,
     Nameplate_Content
@@ -675,6 +676,7 @@ local function setupEuiOptions()
     EUIDB.nameplateShowLevel,
     function(value)
       EUIDB.nameplateShowLevel = value
+      RefreshNameplates()
     end,
     nameplateFriendlySmall,
     Nameplate_Content
@@ -686,6 +688,7 @@ local function setupEuiOptions()
     EUIDB.nameplateHealthPercent,
     function(value)
       EUIDB.nameplateHealthPercent = value
+      RefreshNameplates()
     end,
     nameplateShowLevel,
     Nameplate_Content
@@ -709,6 +712,7 @@ local function setupEuiOptions()
     EUIDB.arenaNumbers,
     function(value)
       EUIDB.arenaNumbers = value
+      RefreshNameplates()
     end,
     nameplateTotemIndicators,
     Nameplate_Content
@@ -722,6 +726,7 @@ local function setupEuiOptions()
     EUIDB.nameplateHideCastText,
     function(value)
       EUIDB.nameplateHideCastText = value
+      RefreshNameplates()
     end,
     arenaNumbers,
     Nameplate_Content
@@ -733,6 +738,7 @@ local function setupEuiOptions()
     EUIDB.nameplateHideFriendlyHealthbars,
     function(value)
       EUIDB.nameplateHideFriendlyHealthbars = value
+      RefreshNameplates()
     end,
     nameplateHideCastText,
     Nameplate_Content
@@ -744,6 +750,7 @@ local function setupEuiOptions()
     EUIDB.nameplateHideFriendlyCastbars,
     function(value)
       EUIDB.nameplateHideFriendlyCastbars = value
+      RefreshNameplates()
     end,
     nameplateHideFriendlyHealthbars,
     Nameplate_Content
@@ -755,6 +762,7 @@ local function setupEuiOptions()
     EUIDB.nameplateHideClassificationIcon,
     function(value)
       EUIDB.nameplateHideClassificationIcon = value
+      RefreshNameplates()
     end,
     nameplateHideFriendlyCastbars,
     Nameplate_Content
@@ -778,6 +786,7 @@ local function setupEuiOptions()
     EUIDB.nameplateCastbarColorInterrupt,
     function(value)
       EUIDB.nameplateCastbarColorInterrupt = value
+      RefreshNameplates()
     end,
     nameplateFriendlyClickthrough,
     Nameplate_Content
@@ -789,6 +798,7 @@ local function setupEuiOptions()
     EUIDB.nameplateShowTargetText,
     function(value)
       EUIDB.nameplateShowTargetText = value
+      RefreshNameplates()
     end,
     nameplateColorInterrupt,
     Nameplate_Content
@@ -800,6 +810,7 @@ local function setupEuiOptions()
     EUIDB.nameplatePetIndicator,
     function(value)
       EUIDB.nameplatePetIndicator = value
+      RefreshNameplates()
     end,
     nameplateShowTargetText,
     Nameplate_Content
@@ -811,6 +822,7 @@ local function setupEuiOptions()
     EUIDB.nameplateFadeSecondaryPets,
     function(value)
       EUIDB.nameplateFadeSecondaryPets = value
+      RefreshNameplates()
     end,
     nameplatePetIndicator,
     Nameplate_Content
@@ -823,6 +835,7 @@ local function setupEuiOptions()
     80,
     function(value)
       EUIDB.nameplateCombatIndicator = value
+      RefreshNameplates()
     end,
     Nameplate_Content
   )
@@ -838,6 +851,7 @@ local function setupEuiOptions()
     EUIDB.partyMarker,
     function(value)
       EUIDB.partyMarker = value
+      RefreshNameplates()
     end,
     partyMarkerText,
     Nameplate_Content
@@ -849,6 +863,7 @@ local function setupEuiOptions()
     EUIDB.partyMarkerHealer,
     function(value)
       EUIDB.partyMarkerHealer = value
+      RefreshNameplates()
     end,
     partyMarker,
     Nameplate_Content
@@ -860,6 +875,7 @@ local function setupEuiOptions()
     EUIDB.partyMarkerHideRaidmarker,
     function(value)
       EUIDB.partyMarkerHideRaidmarker = value
+      RefreshNameplates()
     end,
     partyMarkerHealer,
     Nameplate_Content
