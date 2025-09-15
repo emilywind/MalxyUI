@@ -92,8 +92,9 @@ OnPlayerLogin(function()
 
     local npcID = GetNPCIDFromGUID(guid)
 
+    local iconFrame = np.totemIcon
+
     if npcID and totemNpcIDs[npcID] then
-      local iconFrame = np.totemIcon
       if not iconFrame then
         iconFrame = CreateIcon(np)
         np.totemIcon = iconFrame
@@ -114,6 +115,8 @@ OnPlayerLogin(function()
       else
         iconFrame.cooldown:Hide()
       end
+    elseif iconFrame then
+      iconFrame:Hide()
     end
   end
 
