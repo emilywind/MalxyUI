@@ -79,7 +79,6 @@ local function colorCastbarByInterrupt(castBar, unit)
   local knownInterruptSpellIDs = GetKnownInterruptSpells()
 
   local cooldownRemaining = nil
-
   for _, interruptSpellID in ipairs(knownInterruptSpellIDs) do
     local start, duration = TWWGetSpellCooldown(interruptSpellID)
     local cooldown = start + duration - GetTime()
@@ -90,7 +89,6 @@ local function colorCastbarByInterrupt(castBar, unit)
       cooldownRemaining = cooldown
     end
   end
-
   if not cooldownRemaining then return end
 
   local castRemaining = (endTime / 1000) - GetTime()
