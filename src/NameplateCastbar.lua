@@ -98,85 +98,70 @@ function SkinCastbar(frame)
     end
   end
 
-  if EUIDB.nameplateCastbarColorInterrupt then
-    if spellName or spellID then
-      if not GetUnitInfo(unitToken).isEnemy then return end
+  if not EUIDB.nameplateCastbarColorInterrupt or (not spellName and not spellID) then return end
 
-      local knownInterruptSpellID = GetInterruptSpell()
-      if not knownInterruptSpellID or notInterruptible then return end
+  if not UnitIsEnemy("player", unitToken) then return end
 
-      local start, duration = TWWGetSpellCooldown(knownInterruptSpellID)
-      local cooldownRemaining = start + duration - GetTime()
-      local castRemaining = (endTime / 1000) - GetTime()
-      local totalCastTime = (endTime / 1000) - (castStart / 1000)
+  local knownInterruptSpellID = GetInterruptSpell()
+  if not knownInterruptSpellID or notInterruptible then return end
 
-      if castBar.spark and castBar.spark:IsShown() then
-        castBar.spark:Hide()
-      end
+  local start, duration = TWWGetSpellCooldown(knownInterruptSpellID)
+  local cooldownRemaining = start + duration - GetTime()
+  local castRemaining = (endTime / 1000) - GetTime()
+  local totalCastTime = (endTime / 1000) - (castStart / 1000)
 
-      if cooldownRemaining > 0 and cooldownRemaining > castRemaining then
-        if castBarTexture then
-          castBarTexture:SetDesaturated(true)
-        end
-        castBar:SetStatusBarColor(unpack(CASTBAR_NO_INTERRUPT_COLOR))
-      elseif cooldownRemaining > 0 and cooldownRemaining <= castRemaining then
-        if castBarTexture then
-          castBarTexture:SetDesaturated(true)
-        end
-        castBar:SetStatusBarColor(unpack(CASTBAR_DELAYED_INTERRUPT_COLOR))
+  local castSpark = castBar.spark
+  if not castSpark then
+    castSpark = castBar:CreateTexture(nil, "OVERLAY")
+    castSpark:SetColorTexture(0, 1, 0, 1)     -- Solid green color with full opacity
+    castSpark:SetSize(2, castBar:GetHeight())
+    castBar.spark = castSpark
+  end
+  if castSpark and castSpark:IsShown() then
+    castSpark:Hide()
+  end
 
-        if cooldownRemaining < castRemaining then
-          if not castBar.spark then
-            castBar.spark = castBar:CreateTexture(nil, "OVERLAY")
-            castBar.spark:SetColorTexture(0, 1, 0, 1) -- Solid green color with full opacity
-            castBar.spark:SetSize(2, castBar:GetHeight())
-          end
+  if cooldownRemaining > 0 and cooldownRemaining > castRemaining then
+    castBarTexture:SetDesaturated(true)
+    castBar:SetStatusBarColor(unpack(CASTBAR_NO_INTERRUPT_COLOR))
+  elseif cooldownRemaining > 0 and cooldownRemaining <= castRemaining then
+    castBarTexture:SetDesaturated(true)
+    castBar:SetStatusBarColor(unpack(CASTBAR_DELAYED_INTERRUPT_COLOR))
 
-          local interruptPercent = (totalCastTime - castRemaining + cooldownRemaining) / totalCastTime
+    if cooldownRemaining < castRemaining then
+      local interruptPercent = (totalCastTime - castRemaining + cooldownRemaining) / totalCastTime
 
-          -- Adjust the spark position based on the percentage, reverse if channeling
-          local sparkPosition
-          if channeling then
-            -- Channeling: reverse the direction, starting from the right
-            sparkPosition = (1 - interruptPercent) * castBar:GetWidth()
-          else
-            -- Casting: normal direction, from left to right
-            sparkPosition = interruptPercent * castBar:GetWidth()
-            if empoweredCast then
-              sparkPosition = sparkPosition * 0.7 -- ? idk why but on empowered casts it needs to be roughly 30% to the left compared to cast/channel
-            end
-          end
-
-          castBar.spark:SetPoint("CENTER", castBar, "LEFT", sparkPosition, 0)
-          castBar.spark:Show()
-
-          -- Schedule the color update for when the interrupt will be ready
-          C_Timer.After(cooldownRemaining, function()
-            if castBar then
-              if castBarTexture then
-                castBarTexture:SetDesaturated(false)
-              end
-              castBar:SetStatusBarColor(1, 1, 1)
-              if castBar.spark then
-                castBar.spark:Hide()
-              end
-            end
-          end)
-        else
-          if castBar.spark then
-            castBar.spark:Hide()
-          end
-        end
+      -- Adjust the spark position based on the percentage, reverse if channeling
+      local sparkPosition
+      if channeling then
+        -- Channeling: reverse the direction, starting from the right
+        sparkPosition = (1 - interruptPercent) * castBar:GetWidth()
       else
-        if castBarTexture then
-          castBarTexture:SetDesaturated(false)
-        end
-        castBar:SetStatusBarColor(1, 1, 1)
-        if castBar.spark then
-          castBar.spark:Hide()
+        -- Casting: normal direction, from left to right
+        sparkPosition = interruptPercent * castBar:GetWidth()
+        if empoweredCast then
+          sparkPosition = sparkPosition * 0.7 -- ? idk why but on empowered casts it needs to be roughly 30% to the left compared to cast/channel
         end
       end
+
+      castSpark:SetPoint("CENTER", castBar, "LEFT", sparkPosition, 0)
+      castSpark:Show()
+
+      -- Schedule the color update for when the interrupt will be ready
+      C_Timer.After(cooldownRemaining, function()
+        if castBar then
+          castBarTexture:SetDesaturated(false)
+          castBar:SetStatusBarColor(1, 1, 1)
+          castSpark:Hide()
+        end
+      end)
+    else
+      castSpark:Hide()
     end
+  else
+    castBarTexture:SetDesaturated(false)
+    castBar:SetStatusBarColor(1, 1, 1)
+    castSpark:Hide()
   end
 end
 
