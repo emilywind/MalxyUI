@@ -28,15 +28,6 @@ function PartyMarker(frame)
     partyMarker.icon:SetPoint("BOTTOM", partyMarker, "BOTTOM", 0, 5)
     partyMarker.icon:SetDesaturated(true)
 
-    partyMarker.highlight = partyMarker:CreateTexture(nil, "BACKGROUND")
-    partyMarker.highlight:SetAtlas(PARTY_MARKER)
-    partyMarker.highlight:SetSize(55, 69)
-    partyMarker.highlight:SetPoint("CENTER", partyMarker.icon, "CENTER", 0, -1)
-    partyMarker.highlight:SetDesaturated(true)
-    partyMarker.highlight:SetBlendMode("ADD")
-    partyMarker.highlight:SetVertexColor(1, 1, 0)
-    partyMarker.highlight:Hide()
-
     partyMarker.healerIcon = partyMarker:CreateTexture(nil, "BORDER")
     partyMarker.healerIcon:SetAtlas("communities-chat-icon-plus")
     partyMarker.healerIcon:SetSize(45, 45)
@@ -55,23 +46,12 @@ function PartyMarker(frame)
   partyMarker:SetScale(EUIDB.partyMarkerScale)
   partyMarker.icon:SetWidth(120)
   partyMarker.icon:SetHeight(120)
-  partyMarker.highlight:SetWidth(120 + 26)
-  partyMarker.highlight:SetHeight(120 + 26)
   partyMarker.healerIcon:SetScale(EUIDB.partyMarkerScale)
 
   partyMarker:SetPoint("BOTTOM", frame.name, "TOP", 0, -26)
 
   local healthColor = GetUnitHealthColor(frame.displayedUnit)
   partyMarker.icon:SetVertexColor(healthColor.r, healthColor.g, healthColor.b)
-
-  if EUIDB.partyMarkerHighlight then
-    partyMarker.highlight:SetScale(EUIDB.partyMarkerScale)
-    if info.isTarget then
-      partyMarker.highlight:Show()
-    else
-      partyMarker.highlight:Hide()
-    end
-  end
 
   local specID = GetSpecID(frame)
   if EUIDB.partyMarkerHealer and specID and HEALER_SPECS[specID] then
