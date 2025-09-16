@@ -49,24 +49,7 @@ local function GetInterruptSpell()
   return nil
 end
 
-local interruptSpellUpdate = OnEvents({
-  "TRAIT_CONFIG_UPDATED",
-  "PLAYER_TALENT_UPDATE"
-}, function(_, event, _, _, spellID)
-  if event == "UNIT_SPELLCAST_SUCCEEDED" then
-    if not petSummonSpells[spellID] then return end
-  end
-  if EUIDB.skinNameplates then
-    C_Timer.After(0.1, function()
-      for _, nameplate in pairs(GetAllNameplates()) do
-        SkinCastbar(nameplate)
-      end
-    end)
-  end
-end)
-interruptSpellUpdate:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
-
-function SkinCastbar(frame)
+local function skinCastbar(frame)
   local castBar = frame.castBar
   if not castBar then return end
   if castBar:IsForbidden() then return end
@@ -196,6 +179,23 @@ local function updateCastTimer(frame, castBar, unit)
   end
 end
 
+local interruptSpellUpdate = OnEvents({
+  "TRAIT_CONFIG_UPDATED",
+  "PLAYER_TALENT_UPDATE"
+}, function(_, event, _, _, spellID)
+  if event == "UNIT_SPELLCAST_SUCCEEDED" then
+    if not petSummonSpells[spellID] then return end
+  end
+  if EUIDB.skinNameplates then
+    C_Timer.After(0.1, function()
+      for _, nameplate in pairs(GetAllNameplates()) do
+        skinCastbar(nameplate)
+      end
+    end)
+  end
+end)
+interruptSpellUpdate:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
+
 local function UpdateNameplateTargetText(frame, unit)
   local targetText = frame.TargetText
   if not targetText then
@@ -261,10 +261,10 @@ hooksecurefunc(CastingBarMixin, "OnEvent", function(self)
     UpdateNameplateTargetText(frame, unit)
   end
 
-  SkinCastbar(frame)
+  skinCastbar(frame)
 end)
 
 OnEvent("UNIT_TARGET", function(_, _, unit)
   local np = GetSafeNameplate(unit)
-  if np then SkinCastbar(np) end
+  if np then skinCastbar(np) end
 end)
