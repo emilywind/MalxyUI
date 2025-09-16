@@ -270,8 +270,3 @@ hooksecurefunc(CastingBarMixin, "OnEvent", function(self)
 
   skinCastbar(frame)
 end)
-
-OnEvent("UNIT_TARGET", function(_, _, unit)
-  local np = GetSafeNameplate(unit)
-  if np then skinCastbar(np) end
-end)
