@@ -49,29 +49,13 @@ local function GetInterruptSpell()
   return nil
 end
 
-local function skinCastbar(frame)
-  local castBar = frame.castBar
-  if not castBar then return end
-  if castBar:IsForbidden() then return end
-
-  local unitToken = frame.displayedUnit or frame.unit
-
-  ApplyEuiBackdrop(castBar.Icon, castBar)
-  local timer = castBar.timer
-  if not timer then
-    timer = castBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    timer:SetPoint("LEFT", castBar, "RIGHT", 2, 0)
-    castBar.timer = timer
-  end
-  ModifyFont(castBar.Text, EUIDB.nameplateFont)
-  ModifyFont(timer, EUIDB.nameplateFont, 11, "THINOUTLINE", 'ffffffff')
-
+local function colorCastbarByInterrupt(castBar, unit)
   local spellName, spellID, notInterruptible, endTime, channeling, castStart, empoweredCast
 
-  if UnitCastingInfo(unitToken) then
-    spellName, _, _, castStart, endTime, _, _, notInterruptible, spellID = UnitCastingInfo(unitToken)
-  elseif UnitChannelInfo(unitToken) then
-    spellName, _, _, castStart, endTime, _, notInterruptible, spellID, empoweredCast = UnitChannelInfo(unitToken)
+  if UnitCastingInfo(unit) then
+    spellName, _, _, castStart, endTime, _, _, notInterruptible, spellID = UnitCastingInfo(unit)
+  elseif UnitChannelInfo(unit) then
+    spellName, _, _, castStart, endTime, _, notInterruptible, spellID, empoweredCast = UnitChannelInfo(unit)
     if empoweredCast then
       channeling = false
     else
@@ -79,9 +63,9 @@ local function skinCastbar(frame)
     end
   end
 
-  if not EUIDB.nameplateCastbarColorInterrupt or (not spellName and not spellID) then return end
+  if not spellName and not spellID then return end
 
-  if not UnitIsEnemy("player", unitToken) then return end
+  if not UnitIsEnemy("player", unit) then return end
 
   local knownInterruptSpellID = GetInterruptSpell()
   if not knownInterruptSpellID or notInterruptible then return end
@@ -123,7 +107,8 @@ local function skinCastbar(frame)
         -- Casting: normal direction, from left to right
         sparkPosition = interruptPercent * castBar:GetWidth()
         if empoweredCast then
-          sparkPosition = sparkPosition * 0.7 -- ? idk why but on empowered casts it needs to be roughly 30% to the left compared to cast/channel
+          sparkPosition = sparkPosition *
+          0.7                                 -- ? idk why but on empowered casts it needs to be roughly 30% to the left compared to cast/channel
         end
       end
 
@@ -145,6 +130,28 @@ local function skinCastbar(frame)
     castBarTexture:SetDesaturated(false)
     castBar:SetStatusBarColor(1, 1, 1)
     castSpark:Hide()
+  end
+end
+
+local function skinCastbar(frame)
+  local castBar = frame.castBar
+  if not castBar then return end
+  if castBar:IsForbidden() then return end
+
+  local unit = frame.displayedUnit or frame.unit
+
+  ApplyEuiBackdrop(castBar.Icon, castBar)
+  local timer = castBar.timer
+  if not timer then
+    timer = castBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    timer:SetPoint("LEFT", castBar, "RIGHT", 2, 0)
+    castBar.timer = timer
+  end
+  ModifyFont(castBar.Text, EUIDB.nameplateFont)
+  ModifyFont(timer, EUIDB.nameplateFont, 11, "THINOUTLINE", 'ffffffff')
+
+  if EUIDB.nameplateCastbarColorInterrupt then
+    colorCastbarByInterrupt(castBar, unit)
   end
 end
 
