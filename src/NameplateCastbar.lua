@@ -188,6 +188,15 @@ end
 
 local function UpdateNameplateTargetText(frame, unit)
   local targetText = frame.TargetText
+
+  if not EUIDB.nameplateShowTargetText then
+    if targetText then
+      targetText:SetText("")
+    end
+    return
+  end
+
+
   if not targetText then
     targetText = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
     targetText:SetJustifyH("CENTER")
