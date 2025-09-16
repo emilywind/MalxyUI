@@ -261,9 +261,7 @@ hooksecurefunc(CastingBarMixin, "OnEvent", function(self)
     UpdateNameplateTargetText(frame, unit)
   end
 
-  if EUIDB.nameplateCastbarColorInterrupt then
-    SkinCastbar(frame)
-  end
+  SkinCastbar(frame)
 end)
 
 OnEvent("UNIT_TARGET", function(_, _, unit)
