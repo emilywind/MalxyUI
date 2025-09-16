@@ -24,7 +24,7 @@ function PartyMarker(frame)
     partyMarker:SetSize(24, 24)
     partyMarker.icon = partyMarker:CreateTexture(nil, "BACKGROUND", nil, 1)
     partyMarker.icon:SetAtlas("plunderstorm-glues-logoarrow")
-    partyMarker.icon:SetSize(34, 48)
+    partyMarker.icon:SetSize(48, 48)
     partyMarker.icon:SetPoint("BOTTOM", partyMarker, "BOTTOM", 0, 5)
     partyMarker.icon:SetDesaturated(true)
 
