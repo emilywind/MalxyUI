@@ -40,12 +40,10 @@ local function updateHealth(frame)
     ClassNameplateManaBarFrame.FeedbackFrame.BarTexture:SetTexture(EUIDB.statusBarTex)
     ClassNameplateManaBarFrame.FeedbackFrame.LossGlowTexture:SetTexture(EUIDB.statusBarTex)
 
-    if frame.optionTable.colorNameBySelection then
-      if healthPercentage <= 100 and healthPercentage >= 30 then
-        healthBar:SetStatusBarColor(healthColor.r, healthColor.g, healthColor.b, 1)
-      elseif healthPercentage < 30 then -- Red color when below 30% on Personal Resource Bar
-        healthBar:SetStatusBarColor(1, 0, 0)
-      end
+    if healthPercentage <= 100 and healthPercentage >= 30 then
+      healthBar:SetStatusBarColor(healthColor.r, healthColor.g, healthColor.b, 1)
+    elseif healthPercentage < 30 then -- Red color when below 30% on Personal Resource Bar
+      healthBar:SetStatusBarColor(1, 0, 0)
     end
   end
 
