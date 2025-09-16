@@ -1,35 +1,40 @@
-local interruptSpells = {
-  1766,     -- Kick (Rogue)
-  2139,     -- Counterspell (Mage)
-  6552,     -- Pummel (Warrior)
-  19647,    -- Spell Lock (Warlock)
-  47528,    -- Mind Freeze (Death Knight)
-  57994,    -- Wind Shear (Shaman)
-  --91802, -- Shambling Rush (Death Knight)
-  96231,    -- Rebuke (Paladin)
-  106839,   -- Skull Bash (Feral)
-  115781,   -- Optical Blast (Warlock)
-  116705,   -- Spear Hand Strike (Monk)
-  132409,   -- Spell Lock (Warlock)
-  119910,   -- Spell Lock (Warlock Pet)
-  89766,    -- Axe Toss (Warlock Pet)
-  171138,   -- Shadow Lock (Warlock)
-  147362,   -- Countershot (Hunter)
-  183752,   -- Disrupt (Demon Hunter)
-  187707,   -- Muzzle (Hunter)
-  212619,   -- Call Felhunter (Warlock)
-  --231665,-- Avengers Shield (Paladin)
-  351338,   -- Quell (Evoker)
-  97547,    -- Solar Beam
-  78675,    -- Solar Beam
-  15487,    -- Silence
-  --47482, -- Leap (DK Transform)
-}
-
-local petSummonSpells = {
-  [30146]  = true,   -- Summon Demonic Tyrant (Demonology)
-  [691]    = true,   -- Summon Felhunter (for Spell Lock)
-  [108503] = true,   -- Grimoire of Sacrifice
+local interruptSpellsByClass = {
+  -- [classID] = {spellID, ...}
+  [1] = { 6552 },  -- Pummel (Warrior)
+  [2] = {          -- Paladin
+    96231,         -- Rebuke
+    231665,        -- Avenger's Shield
+  },
+  [3] = {          -- Hunter
+    187707,        -- Muzzle
+    147362,        -- Countershot
+  },
+  [4] = { 1766 },  -- Kick (Rogue)
+  [6] = {          -- Death Knight
+    47528,         -- Mind Freeze
+    15487,         -- Silence
+    47482,         -- Leap
+    91802,         -- Shambling Rush
+  },
+  [7] = { 57994 },   -- Wind Shear (Shaman)
+  [8] = { 2139 },    -- Counterspell (Mage)
+  [9] = {            -- Warlock
+    19647,           -- Spell Lock
+    132409,          -- Spell Lock
+    119910,          -- Spell lock (pet)
+    115781,          -- Optical Blast
+    89766,           -- Axe Toss
+    212619,          -- Call Felhunter
+    171138,          -- Shadow Lock
+  },
+  [10] = { 116705 }, -- Spear Hand Strike (Monk)
+  [11] = {          -- Druid
+    97547,          -- Solar Beam
+    78675,          -- Solar Beam
+    106839,         -- Skull Bash
+  },
+  [12] = { 183752 }, -- Disrupt (Demon Hunter)
+  [13] = { 351338 }, -- Evoker (Quell)
 }
 
 local isSpellKnown = function(spellID, isPet)
@@ -37,12 +42,12 @@ local isSpellKnown = function(spellID, isPet)
 end
 
 local function GetInterruptSpell()
+  local classID = select(3, UnitClass("player"))
+  local interruptSpells = interruptSpellsByClass[classID]
+
   for _, spellID in ipairs(interruptSpells) do
     if isSpellKnown(spellID, false) or (UnitExists("pet") and isSpellKnown(spellID, true)) then
-      petSummonSpells[spellID] = true
       return spellID
-    elseif petSummonSpells[spellID] then
-      petSummonSpells[spellID] = nil
     end
   end
 
