@@ -78,7 +78,7 @@ local function colorCastbarByInterrupt(castBar, unit)
 
   local knownInterruptSpellIDs = GetKnownInterruptSpells()
 
-  local cooldownRemaining
+  local cooldownRemaining = nil
   local castRemaining = (endTime / 1000) - GetTime()
   local totalCastTime = (endTime / 1000) - (castStart / 1000)
 
