@@ -42,16 +42,20 @@ local isSpellKnown = function(spellID, isPet)
   return C_SpellBook.IsSpellInSpellBook(spellID, isPet and 1 or 0, true)
 end
 
-local function GetInterruptSpell()
+local function GetKnownInterruptSpells()
   local classID = select(3, UnitClass("player"))
   local interruptSpells = interruptSpellsByClass[classID]
-  if not interruptSpells then return end
+  if not interruptSpells then return {} end
+
+  local knownInterruptSpells = {}
 
   for _, spellID in ipairs(interruptSpells) do
     if isSpellKnown(spellID, false) or (UnitExists("pet") and isSpellKnown(spellID, true)) then
-      return spellID
+      table.insert(knownInterruptSpells, spellID)
     end
   end
+
+  return knownInterruptSpells
 end
 
 local function colorCastbarByInterrupt(castBar, unit)
@@ -68,17 +72,26 @@ local function colorCastbarByInterrupt(castBar, unit)
     end
   end
 
-  if not spellName and not spellID then return end
+  if notInterruptible or (not spellName and not spellID) then return end
 
   if not UnitIsEnemy("player", unit) then return end
 
-  local knownInterruptSpellID = GetInterruptSpell()
-  if not knownInterruptSpellID or notInterruptible then return end
+  local knownInterruptSpellIDs = GetKnownInterruptSpells()
 
-  local start, duration = TWWGetSpellCooldown(knownInterruptSpellID)
-  local cooldownRemaining = start + duration - GetTime()
+  local cooldownRemaining
   local castRemaining = (endTime / 1000) - GetTime()
   local totalCastTime = (endTime / 1000) - (castStart / 1000)
+
+  for _, interruptSpellID in ipairs(knownInterruptSpellIDs) do
+    local start, duration = TWWGetSpellCooldown(interruptSpellID)
+    local cooldown = start + duration - GetTime()
+
+    if not cooldownRemaining then
+      cooldownRemaining = cooldown
+    elseif cooldown and cooldown < cooldownRemaining then
+      cooldownRemaining = cooldown
+    end
+  end
 
   local castSpark = castBar.spark
   if not castSpark then
