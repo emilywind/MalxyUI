@@ -200,23 +200,23 @@ local function UpdateNameplateTargetText(frame, unit)
 
   local isCasting = UnitCastingInfo(unit) or UnitChannelInfo(unit)
 
-  frame.TargetText:SetText("")
+  targetText:SetText("")
 
   if isCasting and UnitExists(unit.."target") and frame.castBar:IsShown() and not frame.hideCastInfo then
     local targetOfTarget = unit.."target"
     local name = UnitName(targetOfTarget)
     local classColor = GetUnitHealthColor(targetOfTarget)
 
-    frame.TargetText:SetText(name)
-    frame.TargetText:SetTextColor(classColor.r, classColor.g, classColor.b)
-    frame.TargetText:ClearAllPoints()
+    targetText:SetText(name)
+    targetText:SetTextColor(classColor.r, classColor.g, classColor.b)
+    targetText:ClearAllPoints()
     if UnitCanAttack("player", unit) then
-      frame.TargetText:SetPoint("TOPRIGHT", frame.castBar, "BOTTOMRIGHT", -4, 0)  -- Set anchor point for enemy
+      targetText:SetPoint("TOPRIGHT", frame.castBar, "BOTTOMRIGHT", -4, 0)  -- Set anchor point for enemy
     else
-      frame.TargetText:SetPoint("TOP", frame.castBar, "BOTTOM", 0, 0)  -- Set anchor point for friendly
+      targetText:SetPoint("TOP", frame.castBar, "BOTTOM", 0, 0)  -- Set anchor point for friendly
     end
   else
-    frame.TargetText:SetText("")
+    targetText:SetText("")
   end
 end
 
