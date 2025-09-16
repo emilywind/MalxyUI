@@ -186,23 +186,6 @@ local function updateCastTimer(frame, castBar, unit)
   end
 end
 
-local interruptSpellUpdate = OnEvents({
-  "TRAIT_CONFIG_UPDATED",
-  "PLAYER_TALENT_UPDATE"
-}, function(_, event, _, _, spellID)
-  if event == "UNIT_SPELLCAST_SUCCEEDED" then
-    if not petSummonSpells[spellID] then return end
-  end
-  if EUIDB.skinNameplates then
-    C_Timer.After(0.1, function()
-      for _, nameplate in pairs(GetAllNameplates()) do
-        skinCastbar(nameplate)
-      end
-    end)
-  end
-end)
-interruptSpellUpdate:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
-
 local function UpdateNameplateTargetText(frame, unit)
   local targetText = frame.TargetText
   if not targetText then
