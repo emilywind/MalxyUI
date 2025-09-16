@@ -72,7 +72,7 @@ OnPlayerLogin(function()
     end
   end
 
-  local function Register(button)
+  local function register(button)
     button:HookScript("OnShow", UpdateButtonStatus)
     button:HookScript("OnHide", UpdateButtonStatus)
     button:SetScript("OnUpdate", nil)
@@ -85,7 +85,7 @@ OnPlayerLogin(function()
 
   local function registerButtonRange(button)
     if button.Update then
-      Register(button)
+      register(button)
       hooksecurefunc(button, "Update", UpdateButtonStatus)
       hooksecurefunc(button, "UpdateUsable", button_UpdateUsable)
     end
