@@ -24,6 +24,7 @@ local interruptSpellsByClass = {
     119910,          -- Spell lock (pet)
     115781,          -- Optical Blast
     89766,           -- Axe Toss
+    119914,          -- Axe Toss (pet)
     212619,          -- Call Felhunter
     171138,          -- Shadow Lock
   },
