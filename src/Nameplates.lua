@@ -155,8 +155,8 @@ OnPlayerLogin(function()
 
   local function updateName(frame)
     local unit = frame.displayedUnit or frame.unit
-    if not unit or frame:IsForbidden() then return end
     if unit == "player" then return end -- No need to do this for personal resource display
+    if not unit or frame:IsForbidden() then return end
 
     frame.classificationIndicator:SetAlpha(EUIDB.nameplateHideClassificationIcon and 0 or 1)
     frame.selectionHighlight:SetAlpha(0) -- Hide the ugly target background
