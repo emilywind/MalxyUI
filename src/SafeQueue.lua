@@ -10,11 +10,7 @@ PVPReadyDialog.leaveButton.Show = function() end -- Prevent other mods from show
 PVPReadyDialog.enterButton:ClearAllPoints()
 PVPReadyDialog.enterButton:SetPoint("BOTTOM", PVPReadyDialog, "BOTTOM", 0, 25)
 
-local function Print(msg)
-	DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99Em's UI|r: " .. msg)
-end
-
-local function PrintTime()
+local function printTime()
 	local secs, str = floor(GetTime() - queueTime[queue]), "Queue popped "
 	local mins = floor(secs/60)
 	if secs < 1 then
@@ -30,7 +26,7 @@ local function PrintTime()
 		end
 	end
 
-	Print(str)
+	DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99Em's UI|r: " .. str)
 end
 
 local SafeQueue = OnEvent("UPDATE_BATTLEFIELD_STATUS", function()
@@ -46,7 +42,7 @@ local SafeQueue = OnEvent("UPDATE_BATTLEFIELD_STATUS", function()
 		elseif status == "confirm" then
 			if queueTime[i] then
 				queue = i
-				PrintTime()
+				printTime()
 				queueTime[i] = nil
 			end
 		end
