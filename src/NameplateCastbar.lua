@@ -45,13 +45,13 @@ end
 local function GetKnownInterruptSpells()
   local classID = select(3, UnitClass("player"))
   local interruptSpells = interruptSpellsByClass[classID]
-  if not interruptSpells then return {} end
-
   local knownInterruptSpells = {}
 
-  for _, spellID in ipairs(interruptSpells) do
-    if isSpellKnown(spellID, false) or (UnitExists("pet") and isSpellKnown(spellID, true)) then
-      table.insert(knownInterruptSpells, spellID)
+  if interruptSpells then
+    for _, spellID in ipairs(interruptSpells) do
+      if isSpellKnown(spellID, false) or (UnitExists("pet") and isSpellKnown(spellID, true)) then
+        table.insert(knownInterruptSpells, spellID)
+      end
     end
   end
 
