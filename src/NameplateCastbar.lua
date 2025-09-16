@@ -45,14 +45,13 @@ end
 local function GetInterruptSpell()
   local classID = select(3, UnitClass("player"))
   local interruptSpells = interruptSpellsByClass[classID]
+  if not interruptSpells then return end
 
   for _, spellID in ipairs(interruptSpells) do
     if isSpellKnown(spellID, false) or (UnitExists("pet") and isSpellKnown(spellID, true)) then
       return spellID
     end
   end
-
-  return nil
 end
 
 local function colorCastbarByInterrupt(castBar, unit)
