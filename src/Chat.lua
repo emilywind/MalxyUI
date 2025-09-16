@@ -30,7 +30,7 @@ OnPlayerLogin(function()
     "CHAT_MSG_CHANNEL",
     "CHAT_MSG_SYSTEM"
   } do
-    ChatFrame_AddMessageEventFilter(event, function(self, event, str, ...)
+    ChatFrame_AddMessageEventFilter(event, function(_, _, str, ...)
       for _, pattern in pairs(patterns) do
         local result, match = string.gsub(str, pattern, "|cff0394ff|Hurl:%1|h[%1]|h|r")
         if match > 0 then
