@@ -100,7 +100,8 @@ local function colorCastbarByInterrupt(castBar, unit)
     castSpark:SetSize(2, castBar:GetHeight())
     castBar.spark = castSpark
   end
-  if castSpark and castSpark:IsShown() then
+
+  if castSpark:IsShown() then
     castSpark:Hide()
   end
 
