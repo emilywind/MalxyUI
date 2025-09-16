@@ -93,6 +93,8 @@ local function colorCastbarByInterrupt(castBar, unit)
     end
   end
 
+  if not cooldownRemaining then return end
+
   local castSpark = castBar.spark
   if not castSpark then
     castSpark = castBar:CreateTexture(nil, "OVERLAY")
