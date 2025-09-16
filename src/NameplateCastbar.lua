@@ -285,7 +285,5 @@ OnEvent("UNIT_TARGET", function(_, _, unit)
   if not EUIDB.nameplateCastbarColorInterrupt then return end
 
   local npFrame = GetSafeNameplate(unit)
-  if npFrame then
-    SkinCastbar(npFrame)
-  end
+  if npFrame then SkinCastbar(npFrame) end
 end)
