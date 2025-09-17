@@ -236,7 +236,7 @@ function SetEuiBorderColor(border, color)
   if border.SetVertexColor then
     SetVertexColor(border, color)
   else
-    border:SetBackdropBorderColor(color:GetRGB())
+    border:SetBackdropBorderColor(color:GetRGBA())
   end
 end
 
@@ -249,7 +249,7 @@ end
 ---@param texture Texture
 ---@param color ColorMixin
 function SetVertexColor(texture, color)
-  texture:SetVertexColor(color.r, color.g, color.b, color.a or 1)
+  texture:SetVertexColor(color:GetRGBA())
 end
 
 ---@param textObject FontString
