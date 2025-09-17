@@ -68,6 +68,7 @@ SafeQueue:SetScript("OnUpdate", function()
 		timerBar.Text:SetPoint("CENTER", timerBar, "CENTER")
 	end
 
+	---@param self StatusBar
 	local function barUpdate(self)
 		local timeLeft = GetBattlefieldPortExpiration(queue)
 
