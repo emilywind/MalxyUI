@@ -11,7 +11,9 @@ OnPlayerLogin(function()
     ["unusable"] = CreateColor(.3, .3, .3)
   }
 
-  local function SetButtonColor(button, colorIndex)
+  ---@param button Button
+  ---@param colorIndex "normal"|"oor"|"oom"|"unusable"
+  local function setButtonColor(button, colorIndex)
     if buttonColors[button] == colorIndex then
       return
     end
@@ -20,7 +22,9 @@ OnPlayerLogin(function()
     SetVertexColor(button.icon, colors[colorIndex])
   end
 
-  local function UpdateButtonUsable(button, force)
+  ---@param button Button
+  ---@param force? boolean
+  local function updateButtonUsable(button, force)
     if force then
       buttonColors[button] = nil
     end
@@ -30,18 +34,18 @@ OnPlayerLogin(function()
 
     if isUsable then
       local inRange = IsActionInRange(action)
-      SetButtonColor(button, inRange == false and "oor" or "normal")
+      setButtonColor(button, not inRange and "oor" or "normal")
     elseif notEnoughMana then
-      SetButtonColor(button, "oom")
+      setButtonColor(button, "oom")
     else
-      SetButtonColor(button, "unusable")
+      setButtonColor(button, "unusable")
     end
   end
 
-  local function UpdateButtons()
+  local function updateButtons()
     if next(buttonsToUpdate) then
       for button in pairs(buttonsToUpdate) do
-        UpdateButtonUsable(button)
+        updateButtonUsable(button)
       end
       return true
     end
@@ -49,19 +53,22 @@ OnPlayerLogin(function()
     return false
   end
 
-  local function OnUpdateRange(self, elapsed)
+  ---@param self Button
+  ---@param elapsed number
+  local function onUpdateRange(self, elapsed)
     timeElapsed = (timeElapsed or UPDATE_DELAY) - elapsed
     if timeElapsed <= 0 then
       timeElapsed = UPDATE_DELAY
 
-      if not UpdateButtons() then
+      if not updateButtons() then
         self:Hide()
       end
     end
   end
-  updater:SetScript("OnUpdate", OnUpdateRange)
+  updater:SetScript("OnUpdate", onUpdateRange)
 
-  local function UpdateButtonStatus(button)
+  ---@param button Button
+  local function updateButtonStatus(button)
     local action = button.action
 
     buttonsToUpdate[button] = (action and button:IsVisible() and HasAction(action)) and true or nil
@@ -71,22 +78,22 @@ OnPlayerLogin(function()
     end
   end
 
+  ---@param button Button
   local function register(button)
-    button:HookScript("OnShow", UpdateButtonStatus)
-    button:HookScript("OnHide", UpdateButtonStatus)
+    button:HookScript("OnShow", updateButtonStatus)
+    button:HookScript("OnHide", updateButtonStatus)
     button:SetScript("OnUpdate", nil)
-    UpdateButtonStatus(button)
+    updateButtonStatus(button)
   end
 
-  local function button_UpdateUsable(button)
-    UpdateButtonUsable(button, true)
-  end
-
+  ---@param button Button
   local function registerButtonRange(button)
     if button.Update then
       register(button)
-      hooksecurefunc(button, "Update", UpdateButtonStatus)
-      hooksecurefunc(button, "UpdateUsable", button_UpdateUsable)
+      hooksecurefunc(button, "Update", updateButtonStatus)
+      hooksecurefunc(button, "UpdateUsable", function(self)
+        updateButtonUsable(self, true)
+      end)
     end
   end
 
