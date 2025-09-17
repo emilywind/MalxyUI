@@ -105,7 +105,7 @@ OnPlayerLogin(function()
 
   ---@param self Frame
   ---@param elapsed number
-  local function CastingBarFrame_OnUpdate_Hook(self, elapsed)
+  local function castBarOnUpdate(self, elapsed)
     if not self.timer then return end
     if self.update and self.update < elapsed then
       if self.casting then
@@ -121,7 +121,7 @@ OnPlayerLogin(function()
     end
   end
 
-  PlayerCastingBarFrame:HookScript("OnUpdate", CastingBarFrame_OnUpdate_Hook)
-  TargetFrameSpellBar:HookScript("OnUpdate", CastingBarFrame_OnUpdate_Hook)
-  FocusFrameSpellBar:HookScript("OnUpdate", CastingBarFrame_OnUpdate_Hook)
+  PlayerCastingBarFrame:HookScript("OnUpdate", castBarOnUpdate)
+  TargetFrameSpellBar:HookScript("OnUpdate", castBarOnUpdate)
+  FocusFrameSpellBar:HookScript("OnUpdate", castBarOnUpdate)
 end)
