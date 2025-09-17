@@ -1,12 +1,10 @@
 -- If the camera isn't reset OnShow, it'll show the entire character instead of just the head. Silly, is it not? :D
+---@param portraitModel PlayerModel
 local function resetCamera(portraitModel)
   portraitModel:SetPortraitZoom(1)
 end
 
-local function resetGUID(portraitModel)
-  portraitModel.guid = nil
-end
-
+---@param frame Frame
 local function makePortraitBG(frame)
   frame.portraitBG = CreateFrame("Frame", nil, frame)
   frame.portraitBG:SetFrameLevel(frame:GetFrameLevel() - 1)
@@ -19,6 +17,7 @@ local function makePortraitBG(frame)
   frame.portraitBG.backlayer = backLayer
 end
 
+---@param frame Frame
 local function make3DPortraitFG(frame)
   local portraitFG = CreateFrame("Frame", nil, frame)
   portraitFG:SetFrameLevel(frame:GetFrameLevel())
@@ -38,6 +37,7 @@ end
 
 local euiPortraits = {}
 
+---@param frame Frame
 local function updateEUIPortrait(frame)
   if not frame or not frame.portrait then return end
 
@@ -89,7 +89,9 @@ local function updateEUIPortrait(frame)
     if not portraitModel then
       portraitModel = CreateFrame("PlayerModel", nil, frame) -- Initialize 3D Model Container
       portraitModel:SetScript("OnShow", resetCamera)
-      portraitModel:SetScript("OnHide", resetGUID)
+      portraitModel:SetScript("OnHide", function(self)
+        self.guid = nil
+      end)
       portraitModel.parent = frame
       portraitModel:SetFrameLevel(0)
 
