@@ -130,6 +130,8 @@ for iconStyle, data in next, classInfo.styles do
   CLASS_PORTRAIT_PACKS[format('%s%s', classInfo.path, iconStyle)] = format('%s (by %s)', data.name, data.artist)
 end
 
+---@param unit UnitToken
+---@return ColorMixin|nil
 local function GetUnitClassColor(unit)
   if not unit or not UnitIsPlayer(unit) then return end
 
@@ -159,6 +161,9 @@ function GetFrameColor(unit)
   end
 end
 
+---@param events string[]
+---@param callback fun(self: Frame, event: string, ...: any)
+---@return Frame
 function OnEvents(events, callback)
   local frame = CreateFrame("Frame")
   for _, event in ipairs(events) do
@@ -168,10 +173,15 @@ function OnEvents(events, callback)
   return frame
 end
 
+---@param event string
+---@param callback fun(self: Frame, event: string, ...: any)
+---@return Frame
 function OnEvent(event, callback)
   return OnEvents({ event }, callback)
 end
 
+---@param callback fun(self: Frame, event: string, ...: any)
+---@return Frame
 function OnPlayerLogin(callback)
   return OnEvent("PLAYER_LOGIN", callback)
 end
@@ -186,6 +196,7 @@ EUI_FONTS = {
 
 EUI_DAMAGE_FONT = FontsDir.."\\Bangers-Regular.ttf"
 
+---@param ic Texture
 function StyleIcon(ic)
   ic:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 end
@@ -196,6 +207,9 @@ EUI_BACKDROP = {
   edgeSize = 10,
 }
 
+---@param b Button|Texture
+---@param frame? Frame
+---@return Texture
 function ApplyEuiBackdrop(b, frame)
   if b.euiBorder then return b.euiBorder end
 
@@ -292,10 +306,14 @@ function SkinStatusBar(bar)
   ApplyUIMode(border)
 end
 
+---@param guid string
+---@return number|nil
 function GetNPCIDFromGUID(guid)
   return tonumber(guid:match("%-([0-9]+)%-%x+$"))
 end
 
+---@param unit UnitToken
+---@return table
 function GetUnitInfo(unit)
   local info = {
     id = unit,
@@ -340,6 +358,8 @@ function GetUnitInfo(unit)
   return info
 end
 
+---@param unit UnitToken
+---@return ColorMixin
 function GetUnitHealthColor(unit)
   local unitInfo = GetUnitInfo(unit)
   local classColor = GetUnitClassColor(unit)
@@ -360,13 +380,18 @@ CASTBAR_NO_INTERRUPT_COLOR = { 1, 0, 0.01568627543747425 }
 
 CASTBAR_DELAYED_INTERRUPT_COLOR = { 1, 0.4784314036369324, 0.9568628072738647 }
 
+---@param frame Frame
+---@param unit UnitToken
+---@return table|nil
 function GetNameplateUnitInfo(frame, unit)
-  unit = unit or frame.unit or frame.displayedUnit
+  unit = unit or frame.displayedUnit or frame.unit
   if not unit then return end
 
   return GetUnitInfo(unit)
 end
 
+---@param unit UnitToken
+---@return Frame|nil
 function GetSafeNameplate(unit)
   local nameplate = C_NamePlate.GetNamePlateForUnit(unit, issecure())
 
@@ -445,12 +470,20 @@ function GetInstanceData()
   }
 end
 
+---@param s string
+---@return string, integer
 function Trim(s)
-  if not s then return '' end
+  if not s then return '', 0 end
 
   return s:gsub("^%s*(.-)%s*$", "%1")
 end
 
+--- Sets a CVar and saves it to EUIDB
+---@param cvarName string
+---@param value boolean|number|string|nil
+---@param euiVarName? string Pass if the EUIDB variable name is different from the CVar name
+---@param settingNil? boolean If true, allows setting nil value to the CVar
+---@return boolean
 function EUISetCVar(cvarName, value, euiVarName, settingNil)
   euiVarName = euiVarName or cvarName
 
@@ -460,7 +493,7 @@ function EUISetCVar(cvarName, value, euiVarName, settingNil)
     EUIDB[euiVarName] = value
   end
 
-  C_CVar.SetCVar(cvarName, value == true and 1 or value == false and 0 or value)
+  return C_CVar.SetCVar(cvarName, value == true and 1 or value == false and 0 or value)
 end
 
 function GetAllNameplates()
