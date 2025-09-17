@@ -29,7 +29,7 @@ local function printTime()
 	DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99Em's UI|r: " .. str)
 end
 
-local SafeQueue = OnEvent("UPDATE_BATTLEFIELD_STATUS", function()
+SafeQueue = OnEvent("UPDATE_BATTLEFIELD_STATUS", function()
 	local queued = false
 	for i = 1, GetMaxBattlefieldID() do
 		local status = GetBattlefieldStatus(i)
