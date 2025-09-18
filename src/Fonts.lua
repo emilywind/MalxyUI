@@ -158,4 +158,8 @@ function RestoreDefaultFonts()
       _G[FontObject] = font
     end
   end
+
+  if EUIDB.enableDamageFont then
+    DAMAGE_TEXT_FONT = EUIDB.damageFont
+  end
 end
