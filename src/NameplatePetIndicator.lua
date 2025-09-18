@@ -8,7 +8,6 @@ local petValidSpellIDs = {
 
 local mainPets = {
   [26125] = true,    -- DK Pet
-  [17252] = true,    -- Felguard Lock
   [103673] = true,   -- Darkglare
   [135002] = true,   -- Demonic Tyrant
   [89] = true,       -- Infernal
