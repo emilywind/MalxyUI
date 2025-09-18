@@ -76,7 +76,7 @@ OnPlayerLogin(function()
     return frame
   end
 
-  OnEvent("NAME_PLATE_UNIT_ADDED", function(unit)
+  OnEvent("NAME_PLATE_UNIT_ADDED", function(_, _, unit)
     local np = GetSafeNameplate(unit)
     local guid = UnitGUID(unit)
 
@@ -112,7 +112,7 @@ OnPlayerLogin(function()
     end
   end)
 
-  OnEvent("NAME_PLATE_UNIT_REMOVED", function(unit)
+  OnEvent("NAME_PLATE_UNIT_REMOVED", function(_, _, unit)
     local np = GetSafeNameplate(unit)
 
     if not np then return end
