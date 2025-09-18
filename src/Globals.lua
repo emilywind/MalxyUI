@@ -455,14 +455,13 @@ function EUISetCVar(cvarName, value, settingNil)
   return C_CVar.SetCVar(cvarName, (value == true and 1) or (value == false and 0) or value)
 end
 
-function GetAllNameplates()
-  local allNameplates = {}
+---@param func fun(frame: Frame)
+function DoToAllNameplates(func)
   for _, frame in pairs(C_NamePlate.GetNamePlates()) do
     if frame.UnitFrame then
-      table.insert(allNameplates, frame.UnitFrame)
+      func(frame.UnitFrame)
     end
   end
-  return allNameplates
 end
 
 ---@param destTable table

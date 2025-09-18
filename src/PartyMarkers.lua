@@ -123,9 +123,9 @@ end
 hooksecurefunc("CompactUnitFrame_UpdateName", PartyMarker)
 
 local function refreshAllNameplates()
-  for _, nameplate in pairs(GetAllNameplates()) do
+  DoToAllNameplates(function(nameplate)
     PartyMarker(nameplate)
-  end
+  end)
 end
 
 -- Update in solo shuffle
