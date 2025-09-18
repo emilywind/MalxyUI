@@ -367,7 +367,7 @@ local function setupEuiOptions()
 
   local classColoredUnitFrames = newCheckbox(
     "Class Colored Unit Frame Borders",
-    "Color unit frame borders by class when units are players.",
+    "Color unit frame borders by class for players.",
     EUIDB.classColoredUnitFrames,
     function(value)
       EUIDB.classColoredUnitFrames = value
