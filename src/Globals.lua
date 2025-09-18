@@ -347,6 +347,11 @@ function GetUnitInfo(unit)
   info.isFocus = UnitIsUnit("focus", unit)
   info.isPet = UnitIsUnit("pet", unit)
   info.isPlayer = UnitIsPlayer(unit)
+
+  local name, realm = UnitName(unit)
+  info.name = name
+  info.realm = realm
+
   info.isNpc = not info.isPlayer
   info.npcID = info.isNpc and GetNPCIDFromGUID(info.guid) or nil
   info.className = info.isPlayer and className or nil

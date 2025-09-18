@@ -118,9 +118,9 @@ OnPlayerLogin(function()
     NamePlateDriverFrame,
     'GetNamePlateTypeFromUnit',
     function(_, unit)
-      local unitInfo = GetUnitInfo(unit)
+      local isFriend = UnitIsFriend("player", unit)
       local instanceInfo = GetInstanceData()
-      if not unitInfo.isFriend or not instanceInfo.isInPvE then
+      if not isFriend or not instanceInfo.isInPvE then
         setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', false)
       else
         if EUIDB.nameplateHideFriendlyHealthbars then
@@ -143,8 +143,8 @@ OnPlayerLogin(function()
   end)
 
   local function updateName(frame)
-    local unit = frame.displayedUnit or frame.unit
-    if not unit or frame:IsForbidden() or not frame.isNameplate then return end
+    local unitInfo = GetNameplateUnitInfo(frame)
+    if not unitInfo.exists or frame:IsForbidden() or not frame.isNameplate then return end
 
     frame.classificationIndicator:SetAlpha(EUIDB.nameplateHideClassificationIcon and 0 or 1)
     frame.selectionHighlight:SetAlpha(0) -- Hide the ugly target background
@@ -154,8 +154,6 @@ OnPlayerLogin(function()
     PartyMarker(frame)
     PetIndicator(frame)
     CombatIndicator(frame)
-
-    local unitInfo = GetUnitInfo(unit)
 
     if not unitInfo.exists then return end
 
@@ -169,7 +167,7 @@ OnPlayerLogin(function()
 
     if EUIDB.arenaNumbers and instanceData.isInArena and unitInfo.isPlayer and unitInfo.isEnemy then -- Check to see if unit is a player to avoid needless checks on pets
       for i = 1, 5 do
-        if UnitIsUnit(frame.unit, "arena" .. i) then
+        if UnitIsUnit(unitInfo.id, "arena" .. i) then
           frame.name:SetText(i)
           frame.hasArenaNumber = true
           break
@@ -179,7 +177,7 @@ OnPlayerLogin(function()
       frame.hasArenaNumber = false
     end
 
-    local healthColor = GetUnitHealthColor(unit)
+    local healthColor = GetUnitHealthColor(unitInfo.id)
     if EUIDB.nameplateFriendlyNamesClassColor and unitInfo.isFriend then
       frame.name:SetTextColor(healthColor.r, healthColor.g, healthColor.b, 1)
     end
@@ -233,10 +231,9 @@ OnPlayerLogin(function()
     end
 
     if not frame.hasArenaNumber and (EUIDB.nameplateHideServerNames or EUIDB.nameplateNameLength > 0) then
-      local name, realm = UnitName(unit)
-
-      if not EUIDB.nameplateHideServerNames and realm then
-        name = name .. " - " .. realm
+      local name = unitInfo.name
+      if not EUIDB.nameplateHideServerNames and unitInfo.realm then
+        name = name .. " - " .. unitInfo.realm
       elseif EUIDB.nameplateNameLength > 0 and not unitInfo.isPlayer then
         name = (string.len(name) > EUIDB.nameplateNameLength) and string.gsub(name, "%s?(.[\128-\191]*)%S+%s", "%1. ") or name
       end
