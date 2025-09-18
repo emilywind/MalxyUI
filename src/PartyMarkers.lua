@@ -50,7 +50,7 @@ function PartyMarker(frame)
 
   partyMarker:SetPoint("BOTTOM", frame.name, "TOP", 0, -26)
 
-  local healthColor = GetUnitHealthColor(frame.displayedUnit)
+  local healthColor = GetUnitHealthColor(info.id)
   SetVertexColor(partyMarker.icon, healthColor)
 
   local specID = GetSpecID(frame)
