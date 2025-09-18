@@ -112,6 +112,10 @@ OnPlayerLogin(function()
 
     ModifyFont(frame.name, EUIDB.nameplateFont, EUIDB.nameplateNameFontSize)
 
+    PartyMarker(frame)
+    PetIndicator(frame)
+    CombatIndicator(frame)
+
     if frame.ClassificationFrame then
       frame.ClassificationFrame:SetPoint('CENTER', frame.healthBar, 'LEFT', 0, 0)
     end
@@ -155,10 +159,6 @@ OnPlayerLogin(function()
     frame.selectionHighlight:SetAlpha(0) -- Hide the ugly target background
 
     local instanceData = GetInstanceData()
-
-    PartyMarker(frame)
-    PetIndicator(frame)
-    CombatIndicator(frame)
 
     if not unitInfo.exists then return end
 
