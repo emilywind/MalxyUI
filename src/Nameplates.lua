@@ -16,13 +16,13 @@ local function setValue(table, member, bool)
 end
 
 OnPlayerLogin(function()
-  if not EUIDB.skinNameplates then return end
-
-  hooksecurefunc(NamePlateDriverFrame, "AcquireUnitFrame", function(_, nameplate)
+  hooksecurefunc(NamePlateDriverFrame, "AcquireUnitFrame", function(_, nameplate) -- This needs to be run for party markers to work
     if (nameplate.UnitFrame) then
       nameplate.UnitFrame.isNameplate = true
     end
   end)
+
+  if not EUIDB.skinNameplates then return end
 
   local cVars = {
     nameplateGlobalScale = 1,
