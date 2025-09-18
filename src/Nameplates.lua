@@ -63,7 +63,7 @@ OnPlayerLogin(function()
   local function updateHealth(frame)
     if frame:IsForbidden() or not frame.isNameplate then return end
 
-    local unit = frame.displayedUnit or frame.unit
+    local unit = GetNameplateUnit(frame)
 
     local healthBar = frame.healthBar
     local healthPercentage = ceil((UnitHealth(unit) / UnitHealthMax(unit) * 100))
