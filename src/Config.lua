@@ -44,7 +44,7 @@ EUIDBDefaults = {
   nameplateFont = EUI_FONTS.Andika,
   nameplateNameFontSize = 16,
   nameplateHideServerNames = true,
-  nameplateNameLength = 20,
+  nameplateAbbrevNames = true,
   nameplateFriendlyNamesClassColor = true,
   nameplateFriendlySmall = true,
   nameplateHideCastText = false,
@@ -640,27 +640,20 @@ local function setupEuiOptions()
   nameplateFontSlider:ClearAllPoints()
   nameplateFontSlider:SetPoint("LEFT", nameplateFontDropdown, "RIGHT", 220, 0)
 
-  local nameplateNameLength = newCheckbox(
+  local nameplateAbbrevNames = newCheckbox(
     "Abbreviate Unit Names",
     "Abbreviate long NPC names on nameplates.",
-    EUIDB.nameplateNameLength > 0,
-    function(value)
-      if value == true then
-        EUIDB.nameplateNameLength = 20
-      else
-        EUIDB.nameplateNameLength = 0
-      end
-    end,
+    "nameplateAbbrevNames",
     nameplateFont,
     Nameplate_Content
   )
-  nameplateNameLength:SetPoint("TOPLEFT", nameplateFont, "BOTTOMLEFT", 0, -50)
+  nameplateAbbrevNames:SetPoint("TOPLEFT", nameplateFont, "BOTTOMLEFT", 0, -50)
 
   local nameplateHideServerNames = newCheckbox(
     "Hide Server Names (Must rezone to see change).",
     "Hide server names for players from different servers to reduce clutter.",
     "nameplateHideServerNames",
-    nameplateNameLength,
+    nameplateAbbrevNames,
     Nameplate_Content
   )
 
@@ -849,7 +842,7 @@ local function setupEuiOptions()
   function DisableNameplateSettings()
     nameplateFontDropdown:Disable()
     nameplateFontSlider:Disable()
-    nameplateNameLength:Disable()
+    nameplateAbbrevNames:Disable()
     nameplateHideServerNames:Disable()
     nameplateFriendlyNamesClassColor:Disable()
     nameplateFriendlySmall:Disable()
@@ -874,7 +867,7 @@ local function setupEuiOptions()
   function EnableNameplateSettings()
     nameplateFontDropdown:Enable()
     nameplateFontSlider:Enable()
-    nameplateNameLength:Enable()
+    nameplateAbbrevNames:Enable()
     nameplateHideServerNames:Enable()
     nameplateFriendlyNamesClassColor:Enable()
     nameplateFriendlySmall:Enable()
