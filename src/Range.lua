@@ -34,7 +34,7 @@ OnPlayerLogin(function()
 
     if isUsable then
       local inRange = IsActionInRange(action)
-      setButtonColor(button, not inRange and "oor" or "normal")
+      setButtonColor(button, inRange == false and "oor" or "normal")
     elseif notEnoughMana then
       setButtonColor(button, "oom")
     else
