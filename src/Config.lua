@@ -175,7 +175,7 @@ local function setupEuiOptions()
   ---@param y? number
   ---@return CheckButton
   local function newCheckbox(label, description, initialValue, onChange, relativeEl, frame, point1, point2, x, y)
-    local check = CreateFrame("CheckButton", "EUICheck" .. label, frame, "ChatConfigCheckButtonTemplate")
+    local check = CreateFrame("CheckButton", "EUICheck" .. label, frame, "ChatConfigCheckButtonTemplate") ---@cast check CheckButton
     check:SetScript("OnClick",
     ---@param self CheckButton
     function(self)
@@ -194,7 +194,6 @@ local function setupEuiOptions()
     check:SetChecked(initialValue)
     check:SetPoint(point1 or "TOPLEFT", relativeEl, point2 or "BOTTOMLEFT", x or 0, y or -8)
 
-    ---@cast check CheckButton
     return check
   end
 
@@ -262,7 +261,7 @@ local function setupEuiOptions()
         onChanged(value)
       end
     end
-    local slider = CreateFrame("Slider", frameName, frame, "OptionsSliderTemplate")
+    local slider = CreateFrame("Slider", frameName, frame, "OptionsSliderTemplate") ---@cast slider Slider
     slider:SetMinMaxValues(min, max)
     slider:SetValue(EUIDB[configVar])
     slider:SetValueStep(valueStep)
@@ -327,14 +326,13 @@ local function setupEuiOptions()
 
     editBox:SetScript("OnEnterPressed", HandleEditBoxInput)
 
-    ---@cast slider Slider
     return slider
   end
 
   ---@param frame Frame
   ---@return Button
   local function addReloadButton(frame)
-    local reload = CreateFrame("Button", "reload", frame, "UIPanelButtonTemplate")
+    local reload = CreateFrame("Button", "reload", frame, "UIPanelButtonTemplate") ---@cast reload Button
     reload:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -10)
     reload:SetSize(100,22)
     reload:SetText("Reload")
@@ -343,7 +341,6 @@ local function setupEuiOptions()
     end)
     reload:Hide()
 
-    ---@cast reload Button
     return reload
   end
 
