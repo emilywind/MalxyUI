@@ -51,7 +51,7 @@ end
 
 ---@param frame Frame
 function PartyMarker(frame)
-  if frame:IsForbidden() then return end
+  if not frame.isNameplate or frame:IsForbidden() then return end
 
   local info = GetNameplateUnitInfo(frame)
   if not info.exists then return end
