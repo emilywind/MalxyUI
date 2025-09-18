@@ -866,7 +866,7 @@ local function setupEuiOptions()
 
   local nameplatePetIndicator = newCheckbox(
     "Show Pet Indicator on Nameplates",
-    "Show an icon on nameplates to indicate pets.",
+    "Show an icon on nameplates to indicate primary/important pets.",
     EUIDB.nameplatePetIndicator,
     function(value)
       EUIDB.nameplatePetIndicator = value
