@@ -1,7 +1,6 @@
 -- Combat Indicator
 function CombatIndicator(frame)
-  local unit = frame.displayedUnit
-  local info = GetUnitInfo(unit)
+  local info = GetNameplateUnitInfo(frame)
 
   local combatIndicator = frame.combatIndicator
   if not combatIndicator then
