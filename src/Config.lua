@@ -1092,7 +1092,7 @@ local function setupEuiOptions()
     "partyMarker",
     partyMarkerText,
     EUI_Misc,
-    RefreshNameplates
+    RefreshPartyMarkers
   )
 
   local partyMarkerHealer = newCheckbox(
@@ -1101,7 +1101,7 @@ local function setupEuiOptions()
     "partyMarkerHealer",
     partyMarker,
     EUI_Misc,
-    RefreshNameplates
+    RefreshPartyMarkers
   )
 
   local partyMarkerHideRaidmarker = newCheckbox(
@@ -1110,7 +1110,7 @@ local function setupEuiOptions()
     "partyMarkerHideRaidmarker",
     partyMarkerHealer,
     EUI_Misc,
-    RefreshNameplates
+    RefreshPartyMarkers
   )
 
   -----------

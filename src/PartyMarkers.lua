@@ -122,7 +122,7 @@ end
 
 hooksecurefunc("CompactUnitFrame_UpdateName", updatePartyMarker)
 
-function RefreshAllPartyMarkers()
+function RefreshPartyMarkers()
   DoToAllNameplates(updatePartyMarker)
 end
 
@@ -143,16 +143,16 @@ OnEvents({
         self.eventRegistered = true
       end
     else
-      RefreshAllPartyMarkers()
+      RefreshPartyMarkers()
       C_Timer.After(1, function()
         if not InCombatLockdown() then
-          RefreshAllPartyMarkers()
+          RefreshPartyMarkers()
         end
       end)
     end
   elseif event == "PLAYER_REGEN_ENABLED" then
     self:UnregisterEvent("PLAYER_REGEN_ENABLED")
     self.eventRegistered = false
-    RefreshAllPartyMarkers()
+    RefreshPartyMarkers()
   end
 end)
