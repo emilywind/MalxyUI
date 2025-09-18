@@ -3,7 +3,7 @@ function PartyMarker(frame)
   if frame:IsForbidden() then return end
 
   local info = GetNameplateUnitInfo(frame)
-  if not info then return end
+  if not info.exists then return end
 
   local partyMarker = frame.partyMarker
 
