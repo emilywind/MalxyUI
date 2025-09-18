@@ -120,7 +120,7 @@ function PartyMarker(frame)
   frame.RaidTargetFrame.RaidTargetIcon:SetAlpha(EUIDB.partyMarkerHideRaidmarker and 0 or 1)
 end
 
-local function RefreshAllNameplates()
+local function refreshAllNameplates()
   for _, nameplate in pairs(GetAllNameplates()) do
     PartyMarker(nameplate)
   end
@@ -143,16 +143,16 @@ OnEvents({
         self.eventRegistered = true
       end
     else
-      RefreshAllNameplates()
+      refreshAllNameplates()
       C_Timer.After(1, function()
         if not InCombatLockdown() then
-          RefreshAllNameplates()
+          refreshAllNameplates()
         end
       end)
     end
   elseif event == "PLAYER_REGEN_ENABLED" then
     self:UnregisterEvent("PLAYER_REGEN_ENABLED")
     self.eventRegistered = false
-    RefreshAllNameplates()
+    refreshAllNameplates()
   end
 end)
