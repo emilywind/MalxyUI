@@ -417,65 +417,6 @@ function GetSafeNameplate(unit)
   return (nameplate and nameplate.UnitFrame) or nil
 end
 
-local function GetLocalizedSpecs()
-  local specs = {}
-
-  for classID = 1, GetNumClasses() do
-    local class = select(2, GetClassInfo(classID))
-    local classMale = LOCALIZED_CLASS_NAMES_MALE[class]
-    local classFemale = LOCALIZED_CLASS_NAMES_FEMALE[class]
-
-    for specIndex = 1, C_SpecializationInfo.GetNumSpecializationsForClassID(classID) do
-      local specID, specName = GetSpecializationInfoForClassID(classID, specIndex)
-
-      if classMale then
-        specs[string.format("%s %s", specName, classMale)] = specID
-      end
-      if classFemale and classFemale ~= classMale then
-        specs[string.format("%s %s", specName, classFemale)] = specID
-      end
-    end
-  end
-
-  return specs
-end
-
-local SpecCache = {}
-local ALL_SPECS = GetLocalizedSpecs()
----@param frame Frame
-function GetSpecID(frame)
-  local unitInfo = GetNameplateUnitInfo(frame)
-
-  if not unitInfo.isPlayer then
-    return
-  end
-
-  local guid = unitInfo.guid
-  local instanceData = GetInstanceData()
-
-  if SpecCache[guid] and instanceData.isInPvP then
-    return SpecCache[guid]
-  end
-
-  local tooltipData = C_TooltipInfo.GetUnit(unitInfo.id)
-  if not tooltipData or not tooltipData.guid or not tooltipData.lines then
-    return nil
-  end
-
-  local tooltipGUID = tooltipData.guid
-  if not tooltipGUID then return end
-
-  for _, line in ipairs(tooltipData.lines) do
-    if line and line.type == Enum.TooltipDataLineType.None and line.leftText and line.leftText ~= "" then
-      local specID = ALL_SPECS[line.leftText]
-      if specID then
-        SpecCache[tooltipGUID] = specID
-        return specID
-      end
-    end
-  end
-end
-
 function GetInstanceData()
   local inInstance, instanceType = IsInInstance()
   local isInArena = inInstance and (instanceType == "arena")
