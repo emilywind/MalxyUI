@@ -68,7 +68,7 @@ local function nameplateTotem(np)
 
   local iconFrame = np.totemIcon
 
-  if unitInfo.npcID and totemNpcIDs[unitInfo.npcID] then
+  if EUIDB.skinNameplates and unitInfo.npcID and totemNpcIDs[unitInfo.npcID] then
     if not iconFrame then
       iconFrame = createIcon(np)
       np.totemIcon = iconFrame
@@ -94,36 +94,30 @@ local function nameplateTotem(np)
   end
 end
 
-OnPlayerLogin(function()
-  if not EUIDB.skinNameplates then return end
+OnEvent("NAME_PLATE_UNIT_ADDED", function(self, _, unit)
+  local np = GetSafeNameplate(unit)
+  nameplateTotem(np)
+end)
 
-  OnEvent("NAME_PLATE_UNIT_ADDED", function(self, _, unit)
-    local np = GetSafeNameplate(unit)
-    nameplateTotem(np)
-  end)
+OnEvent("NAME_PLATE_UNIT_REMOVED", function(_, _, unit)
+  local np = GetSafeNameplate(unit)
 
-  UpdateTotemIndicatorSetting()
+  if not np then return end
 
-  OnEvent("NAME_PLATE_UNIT_REMOVED", function(_, _, unit)
-    local np = GetSafeNameplate(unit)
+  if np.totemIcon then
+    np.totemIcon:Hide()
+  end
+end)
 
-    if not np then return end
+OnEvent("COMBAT_LOG_EVENT_UNFILTERED", function()
+  local _, subevent, _, _, _, _, _, destGUID = CombatLogGetCurrentEventInfo()
 
-    if np.totemIcon then
-      np.totemIcon:Hide()
+  if subevent == "SPELL_SUMMON" then
+    local npcID = GetNPCIDFromGUID(destGUID)
+    if npcID and totemNpcIDs[npcID] then
+      totemStartTimes[destGUID] = GetTime()
     end
-  end)
-
-  OnEvent("COMBAT_LOG_EVENT_UNFILTERED", function()
-    local _, subevent, _, _, _, _, _, destGUID = CombatLogGetCurrentEventInfo()
-
-    if subevent == "SPELL_SUMMON" then
-      local npcID = GetNPCIDFromGUID(destGUID)
-      if npcID and totemNpcIDs[npcID] then
-        totemStartTimes[destGUID] = GetTime()
-      end
-    end
-  end)
+  end
 end)
 
 function UpdateTotemIndicatorSetting()
@@ -139,3 +133,7 @@ function UpdateTotemIndicatorSetting()
 
   DoToNameplates(nameplateTotem)
 end
+
+OnPlayerLogin(function()
+  UpdateTotemIndicatorSetting()
+end)
