@@ -102,6 +102,7 @@ EUIDBDefaults = {
   chatTop = false, -- Move chat edit box to top of chat frame
   chatFont = EUI_FONTS.Andika,
   chatFontSize = 14,
+  chatShowSidePanel = false,
 }
 
 ---@param src table
@@ -1072,15 +1073,24 @@ local function setupEuiOptions()
   chatFontSize:ClearAllPoints()
   chatFontSize:SetPoint("LEFT", chatFontDropdown, "RIGHT", 220, 0)
 
+  local chatShowSidePanel = newCheckbox(
+    "Show Chat Side Panel",
+    "Show the side panel on the chat frame.",
+    "chatShowSidePanel",
+    chatFont,
+    EUI_Misc,
+    ReloadChats
+  )
+  chatShowSidePanel:ClearAllPoints()
+  chatShowSidePanel:SetPoint("TOPLEFT", chatFont, "BOTTOMLEFT", 0, -48)
+
   local fasterLoot = newCheckbox(
     "Enable Faster Autoloot",
     "Enable faster autolooting of items. May cause the loot window not to appear.",
     "fasterLoot",
-    chatFont,
+    chatShowSidePanel,
     EUI_Misc
   )
-  fasterLoot:ClearAllPoints()
-  fasterLoot:SetPoint("TOPLEFT", chatFont, "BOTTOMLEFT", 0, -48)
 
   local partyMarkerText = EUI_Misc:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   partyMarkerText:SetText("Party Markers")
