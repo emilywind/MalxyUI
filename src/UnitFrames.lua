@@ -1,3 +1,5 @@
+local unitHealthbars = {}
+
 -------------------------------
 -- Class Colored Health Bars --
 -------------------------------
@@ -7,13 +9,26 @@ local function setUnitColor(healthbar)
   if not unit then return end
   local unitInfo = GetUnitInfo(unit)
 
-  healthbar:SetStatusBarDesaturated(1)
-  local healthColor = GetUnitHealthColor(unit)
+  unitHealthbars[unit] = healthbar
 
+  if not EUIDB.classColoredUnitHealth then
+    healthbar:SetStatusBarDesaturated(false)
+    SetStatusBarColor(healthbar, COLOR_WHITE)
+    return
+  end
+
+  healthbar:SetStatusBarDesaturated(true)
+  local healthColor = GetUnitHealthColor(unit)
   if unitInfo.isPlayer and not unitInfo.isConnected then
     SetStatusBarColor(healthbar, COLOR_GREY)
   else
     SetStatusBarColor(healthbar, healthColor)
+  end
+end
+
+function UpdateUnitFrameHealthbars()
+  for _, healthbar in pairs(unitHealthbars) do
+    setUnitColor(healthbar)
   end
 end
 

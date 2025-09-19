@@ -4,6 +4,8 @@ local name, EUI = ...
 EUIDBDefaults = {
   uiMode = 'dark', -- 'dark', 'light', 'black', or 'blizzard'
   classColoredUnitFrames = true,
+  classColoredUnitHealth = true,
+
   cUFClassColoredHealth = true,
   cUFDisplayPowerBars = true,
   cUFPowerBarsHealerOnly = true,
@@ -377,7 +379,20 @@ local function setupEuiOptions()
     "LEFT",
     "RIGHT",
     100,
-    0
+    15
+  )
+
+  local classColoredUnitHealth = newCheckbox(
+    "Class Colored Unit Health Bars",
+    "Color unit health bars by class for players.",
+    "classColoredUnitHealth",
+    uiModeDropdown,
+    EUI.panel,
+    UpdateUnitFrameHealthbars,
+    "LEFT",
+    "RIGHT",
+    100,
+    -15
   )
 
   local portraitSelect, portraitDropdown = newDropdown(
