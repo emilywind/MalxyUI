@@ -324,6 +324,7 @@ end
 ---@param frame Frame
 function CreateTimerBar(name, frame)
   local timerBar = CreateFrame("StatusBar", name, frame)
+  timerBar:SetFrameLevel(10) -- Ensure it appears above the popup
   timerBar:SetPoint("TOP", frame, "BOTTOM", 0, -5)
   timerBar:SetSize(194, 14)
 

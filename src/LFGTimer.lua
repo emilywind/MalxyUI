@@ -13,7 +13,6 @@ OnPlayerLogin(function()
   end
 
   local timerBar = CreateTimerBar("EmsUILFGStatusBar", LFGDungeonReadyPopup)
-  timerBar:SetFrameLevel(10) -- Ensure it appears above the popup
 
   local timeLeft = 0
   local function barUpdate(self, elapsed)
