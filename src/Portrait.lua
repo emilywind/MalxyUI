@@ -4,37 +4,6 @@ local function resetCamera(portraitModel)
   portraitModel:SetPortraitZoom(1)
 end
 
----@param frame Frame
-local function makePortraitBG(frame)
-  frame.portraitBG = CreateFrame("Frame", nil, frame)
-  frame.portraitBG:SetFrameLevel(frame:GetFrameLevel() - 1)
-  frame.portraitBG:SetFrameStrata("background")
-  frame.portraitBG:SetAllPoints(frame.portrait)
-  local backLayer = frame.portraitBG:CreateTexture("backLayer", "BACKGROUND", nil, -1)
-	backLayer:SetTexture(EUI_TEXTURES.circleTexture)
-  SetVertexColor(backLayer, COLOR_BLACK)
-  backLayer:SetAllPoints(frame.portraitBG)
-  frame.portraitBG.backlayer = backLayer
-end
-
----@param frame Frame
-local function make3DPortraitFG(frame)
-  local portraitFG = CreateFrame("Frame", nil, frame)
-  portraitFG:SetFrameLevel(frame:GetFrameLevel())
-  portraitFG:SetFrameStrata("LOW")
-  portraitFG:SetAllPoints(frame.portrait)
-  portraitFG:SetPoint("TOPLEFT", frame.portrait, "TOPLEFT", 0, -1)
-  portraitFG:SetPoint("BOTTOMRIGHT", frame.portrait, "BOTTOMRIGHT", 0, -1)
-
-  local foreground = portraitFG:CreateTexture("foreLayer", "OVERLAY", nil)
-  foreground:SetTexture(EUI_TEXTURES.portraitModelFront)
-  SetVertexColor(foreground, COLOR_BLACK)
-  foreground:SetAllPoints(portraitFG)
-
-  portraitFG.forelayer = foreground
-  frame.portraitFG = portraitFG
-end
-
 local euiPortraits = {}
 
 ---@param frame Frame
@@ -54,10 +23,9 @@ local function updateEUIPortrait(frame)
 
   portrait:Show()
 
-  if not frame.portraitFG then
-    make3DPortraitFG(frame)
+  if frame.portraitFG then
+    frame.portraitFG:Hide()
   end
-  frame.portraitFG:Hide()
 
   if portraitModel then
     portraitModel:Hide()
@@ -70,7 +38,16 @@ local function updateEUIPortrait(frame)
   if EUIDB.portraitStyle == "default" then return end
 
   if not frame.portraitBG then
-    makePortraitBG(frame)
+    local portraitBG = CreateFrame("Frame", nil, frame)
+    portraitBG:SetFrameLevel(frame:GetFrameLevel() - 1)
+    portraitBG:SetFrameStrata("background")
+    portraitBG:SetAllPoints(frame.portrait)
+    local backLayer = portraitBG:CreateTexture("backLayer", "BACKGROUND", nil, -1)
+    backLayer:SetTexture(EUI_TEXTURES.circleTexture)
+    SetVertexColor(backLayer, COLOR_BLACK)
+    backLayer:SetAllPoints(portraitBG)
+    portraitBG.backlayer = backLayer
+    frame.portraitBG = portraitBG
   end
 
   if EUIDB.portraitStyle == "class" and info.classFileName then
@@ -105,7 +82,20 @@ local function updateEUIPortrait(frame)
       frame.portraitModel = portraitModel
 
       -- Add foreground mask
-      make3DPortraitFG(frame)
+      local portraitFG = CreateFrame("Frame", nil, frame)
+      portraitFG:SetFrameLevel(frame:GetFrameLevel())
+      portraitFG:SetFrameStrata("LOW")
+      portraitFG:SetAllPoints(frame.portrait)
+      portraitFG:SetPoint("TOPLEFT", frame.portrait, "TOPLEFT", 0, -1)
+      portraitFG:SetPoint("BOTTOMRIGHT", frame.portrait, "BOTTOMRIGHT", 0, -1)
+
+      local foreground = portraitFG:CreateTexture("foreLayer", "OVERLAY", nil)
+      foreground:SetTexture(EUI_TEXTURES.portraitModelFront)
+      SetVertexColor(foreground, COLOR_BLACK)
+      foreground:SetAllPoints(portraitFG)
+
+      portraitFG.forelayer = foreground
+      frame.portraitFG = portraitFG
     end
 
     frame.portraitFG:Show()
