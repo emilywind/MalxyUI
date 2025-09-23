@@ -97,32 +97,31 @@ local function nameplateTotem(np)
   end
 end
 
-OnEvent("NAME_PLATE_UNIT_ADDED",
+OnEvents({
+  "NAME_PLATE_UNIT_ADDED",
+  "NAME_PLATE_UNIT_REMOVED",
+  "COMBAT_LOG_EVENT_UNFILTERED"
+},
+---@param event string
 ---@param unit UnitToken
-function(_, _, unit)
+function(_, event, unit)
   local np = GetSafeNameplate(unit)
-  nameplateTotem(np)
-end)
-
-OnEvent("NAME_PLATE_UNIT_REMOVED",
----@param unit UnitToken
-function(_, _, unit)
-  local np = GetSafeNameplate(unit)
-
   if not np then return end
 
-  if np.totemIcon then
-    np.totemIcon:Hide()
-  end
-end)
+  if event == 'NAME_PLATE_UNIT_ADDED' then
+    nameplateTotem(np)
+  elseif event == 'NAME_PLATE_UNIT_REMOVED' then
+    if np.totemIcon then
+      np.totemIcon:Hide()
+    end
+  elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
+    local _, subevent, _, _, _, _, _, destGUID = CombatLogGetCurrentEventInfo()
 
-OnEvent("COMBAT_LOG_EVENT_UNFILTERED", function()
-  local _, subevent, _, _, _, _, _, destGUID = CombatLogGetCurrentEventInfo()
-
-  if subevent == "SPELL_SUMMON" then
-    local npcID = GetNPCIDFromGUID(destGUID)
-    if npcID and npcIDs[npcID] then
-      npcStartTimes[destGUID] = GetTime()
+    if subevent == "SPELL_SUMMON" then
+      local npcID = GetNPCIDFromGUID(destGUID)
+      if npcID and npcIDs[npcID] then
+        npcStartTimes[destGUID] = GetTime()
+      end
     end
   end
 end)
