@@ -12,17 +12,14 @@ OnPlayerLogin(function()
     end)
   end
 
-  local timerBar = CreateTimerBar("EmsUILFGStatusBar", LFGDungeonReadyPopup)
-
   local timeLeft = 0
-  local function barUpdate(self, elapsed)
+  local timerBar = CreateTimerBar("EmsUILFGStatusBar", LFGDungeonReadyPopup, function(self, elapsed)
     timeLeft = (timeLeft or 0) - elapsed
     timeLeft = max(timeLeft, 0) -- Ensure timeLeft doesn't go negative
 
     self:SetValue(timeLeft)
     self.Text:SetFormattedText("%.1f", timeLeft)
-  end
-  timerBar:SetScript("OnUpdate", barUpdate)
+  end)
 
   OnEvent("LFG_PROPOSAL_SHOW", function()
     timerBar:SetMinMaxValues(0, TIMEOUT)

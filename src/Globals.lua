@@ -322,7 +322,9 @@ end
 
 ---@param name string
 ---@param frame Frame
-function CreateTimerBar(name, frame)
+---@param onUpdate fun(self: StatusBar, elapsed: number)
+---@return StatusBar
+function CreateTimerBar(name, frame, onUpdate)
   local timerBar = CreateFrame("StatusBar", name, frame)
   timerBar:SetFrameLevel(10) -- Ensure it appears above the popup
   timerBar:SetPoint("TOP", frame, "BOTTOM", 0, -5)
@@ -333,6 +335,8 @@ function CreateTimerBar(name, frame)
   timerBar.Text = timerBar:CreateFontString(nil, "OVERLAY")
   timerBar.Text:SetFontObject(GameFontHighlight)
   timerBar.Text:SetPoint("CENTER", timerBar, "CENTER")
+
+  timerBar:SetScript("OnUpdate", onUpdate)
 
   return timerBar
 end
