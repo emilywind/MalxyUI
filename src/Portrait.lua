@@ -39,8 +39,7 @@ local function updateEUIPortrait(frame)
 
   if not frame.portraitBG then
     local portraitBG = CreateFrame("Frame", nil, frame)
-    portraitBG:SetFrameLevel(frame:GetFrameLevel() - 1)
-    portraitBG:SetFrameStrata("background")
+    portraitBG:SetFrameStrata("BACKGROUND")
     portraitBG:SetAllPoints(frame.portrait)
     local backLayer = portraitBG:CreateTexture("backLayer", "BACKGROUND", nil, -1)
     backLayer:SetTexture(EUI_TEXTURES.circleTexture)
