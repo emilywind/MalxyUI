@@ -106,12 +106,11 @@ OnEvents({
 ---@param unit UnitToken
 function(_, event, unit)
   local np = GetSafeNameplate(unit)
-  if not np then return end
 
   if event == 'NAME_PLATE_UNIT_ADDED' then
-    nameplateTotem(np)
+    if np then nameplateTotem(np) end
   elseif event == 'NAME_PLATE_UNIT_REMOVED' then
-    if np.totemIcon then
+    if np and np.totemIcon then
       np.totemIcon:Hide()
     end
   elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then

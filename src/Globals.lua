@@ -456,6 +456,7 @@ end
 ---@param unit UnitToken
 ---@return Frame|nil
 function GetSafeNameplate(unit)
+  if not unit then return end
   local nameplate = C_NamePlate.GetNamePlateForUnit(unit, issecure())
 
   return (nameplate and nameplate.UnitFrame) or nil
