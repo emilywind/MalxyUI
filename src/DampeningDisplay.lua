@@ -17,9 +17,7 @@ frame:SetScript("OnEvent", function(self, event)
 			self:UnregisterEvent("UNIT_AURA")
 			self:Hide()
 		end
-	end
-
-	if event == "UNIT_AURA" then
+	elseif event == "UNIT_AURA" then
 		local percentage = C_Commentator_GetDampeningPercent()
 		if percentage and percentage > 0 then
 			if not self:IsShown() then
