@@ -35,6 +35,10 @@ local lessImportantTotemNpcIDs = {
   [97285] = { 192077, 15 },    -- Wind Rush
 }
 
+local allTotemNpcIDs = {}
+PushTableIntoTable(allTotemNpcIDs, importantTotemNpcIDs)
+PushTableIntoTable(allTotemNpcIDs, lessImportantTotemNpcIDs)
+
 local totemStartTimes = setmetatable({}, { __mode = "v" })
 
 local function createIcon(nameplate)
@@ -123,12 +127,10 @@ end)
 function UpdateTotemIndicatorSetting()
   totemNpcIDs = {}
 
-  if EUIDB.nameplateTotemIndicators == "important" or EUIDB.nameplateTotemIndicators == "all" then
-    PushTableIntoTable(totemNpcIDs, importantTotemNpcIDs)
-  end
-
-  if EUIDB.nameplateTotemIndicators == "all" then
-    PushTableIntoTable(totemNpcIDs, lessImportantTotemNpcIDs)
+  if EUIDB.nameplateTotemIndicators == "important" then
+    totemNpcIDs = importantTotemNpcIDs
+  elseif EUIDB.nameplateTotemIndicators == "all" then
+    totemNpcIDs = allTotemNpcIDs
   end
 
   DoToNameplates(nameplateTotem)
