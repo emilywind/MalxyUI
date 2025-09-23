@@ -1,6 +1,6 @@
 <Ui xmlns='http://www.blizzard.com/wow/ui/'>
-  <Include file="Media.lua" />
   <Include file="Globals.lua" />
+  <Include file="Media.lua" />
   <Include file="Fonts.lua" />
   <Include file="Stats.lua" />
   <Include file="DynamicCVars.lua" />

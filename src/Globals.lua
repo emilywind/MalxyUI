@@ -1,9 +1,9 @@
-SQUARE_TEXTURE = "Interface\\BUTTONS\\WHITE8X8"
+SQUARE_TEXTURE = [[Interface\BUTTONS\WHITE8X8]]
 
-AddonDir = "Interface\\AddOns\\EmsUI"
-MediaDir = AddonDir.."\\media"
-FontsDir = MediaDir.."\\fonts"
-TextureDir = MediaDir.."\\textures"
+AddonDir = [[Interface\AddOns\EmsUI]]
+MediaDir = AddonDir..[[\media]]
+FontsDir = MediaDir..[[\fonts]]
+TextureDir = MediaDir..[[\textures]]
 
 COLOR_DARK = CreateColorFromHexString('ff4d4d4d')
 COLOR_BLACK = CreateColorFromHexString('ff000000')
@@ -18,38 +18,38 @@ COLOR_CASTBAR_DELAYED_INTERRUPT = CreateColorFromHexString('ffff7aa5')
 
 EUI_TEXTURES = {
   buttons = {
-    normal = TextureDir.."\\buttons\\button-normal.tga",
-    pushed = TextureDir.."\\buttons\\button-pressed.tga",
-    checked = TextureDir.."\\buttons\\button-checked.tga",
+    normal = TextureDir..[[\buttons\button-normal.tga]],
+    pushed = TextureDir..[[\buttons\button-pressed.tga]],
+    checked = TextureDir..[[\buttons\button-checked.tga]],
   },
 
-  tooltipBorder = TextureDir.."\\tooltip-border.tga",
+  tooltipBorder = TextureDir..[[\tooltip-border.tga]],
 
-  roundedBorder = TextureDir.."\\rounded-border.tga",
+  roundedBorder = TextureDir..[[\rounded-border.tga]],
 
-  statusBar = TextureDir.."\\blizz-inspired.tga",
+  statusBar = TextureDir..[[\blizz-inspired.tga]],
 
-  classCircles = TextureDir.."\\class\\fabledrealm",
+  classCircles = TextureDir..[[\class\fabledrealm]],
 
-  circleTexture = TextureDir.."\\Portrait-ModelBack.tga",
-  portraitModelFront = TextureDir.."\\portrait-modelfront.tga",
+  circleTexture = TextureDir..[[\Portrait-ModelBack.tga]],
+  portraitModelFront = TextureDir..[[\portrait-modelfront.tga]],
 
   minimap = {
-    dungeonDifficulty = TextureDir.."\\minimap\\UI-DungeonDifficulty-Button.tga"
+    dungeonDifficulty = TextureDir..[[\minimap\UI-DungeonDifficulty-Button.tga]]
   },
 
   lfg = {
-    portraitRoles = TextureDir.."\\lfgframe\\UI-LFG-ICON-PORTRAITROLES.tga",
-    roles = TextureDir.."\\lfgframe\\UI-LFG-ICON-ROLES.tga"
+    portraitRoles = TextureDir..[[\lfgframe\UI-LFG-ICON-PORTRAITROLES.tga]],
+    roles = TextureDir..[[\lfgframe\UI-LFG-ICON-ROLES.tga]]
   },
 }
 
 EUI_FONTS = {
-  Andika = FontsDir .. "\\Andika.ttf",
-  Fira = FontsDir .. "\\FiraSans.ttf",
-  SourceSans = FontsDir .. "\\SourceSans3.ttf",
-  Marmelad = FontsDir .. "\\Marmelad.ttf",
-  Bangers = FontsDir .. "\\Bangers-Regular.ttf",
+  Andika = FontsDir .. [[\Andika.ttf]],
+  Fira = FontsDir .. [[\FiraSans.ttf"]],
+  SourceSans = FontsDir .. [[\SourceSans3.ttf]],
+  Marmelad = FontsDir .. [[\Marmelad.ttf]],
+  Bangers = FontsDir .. [[\Bangers-Regular.ttf]],
 }
 
 FABLED_CLASS_CIRCLES_DATA = {
