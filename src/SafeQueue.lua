@@ -77,5 +77,9 @@ SafeQueue:SetScript("OnUpdate", function()
 		self:SetValue(timeLeft)
 		self.Text:SetFormattedText("%.1f", timeLeft)
 	end
-	timerBar:SetScript("OnUpdate", barUpdate)
+
+	if not timerBar.euiHooked then
+		timerBar:SetScript("OnUpdate", barUpdate)
+		timerBar.euiHooked = true
+	end
 end)
