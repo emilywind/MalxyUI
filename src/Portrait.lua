@@ -23,12 +23,9 @@ local function updateEUIPortrait(frame)
 
   portrait:Show()
 
-  if frame.portraitFG then
-    frame.portraitFG:Hide()
-  end
-
   if portraitModel then
     portraitModel:Hide()
+    frame.portraitFG:Hide()
   end
 
   if portraitClass then
