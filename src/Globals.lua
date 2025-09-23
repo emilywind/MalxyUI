@@ -290,7 +290,7 @@ function ModifyFont(textObject, font, size, flags, color)
 end
 
 ---@param bar StatusBar
-function SkinStatusBar(bar)
+function SkinTimerStatusBar(bar)
   if not bar then return end
 
   if bar.BorderMid then
@@ -341,7 +341,7 @@ function CreateTimerBar(name, frame, onUpdate)
   timerBar:SetPoint("TOP", frame, "BOTTOM", 0, -5)
   timerBar:SetSize(194, 14)
 
-  SkinStatusBar(timerBar)
+  SkinTimerStatusBar(timerBar)
 
   timerBar.Text = timerBar:CreateFontString(nil, "OVERLAY")
   timerBar.Text:SetFontObject(GameFontHighlight)

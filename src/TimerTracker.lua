@@ -8,7 +8,7 @@ OnPlayerLogin(function()
       local statusBar = _G['TimerTrackerTimer'..i..'StatusBar']
       if statusBar and not timer.isFree then
         _G[prefix..'StatusBarBorder']:Hide()
-        SkinStatusBar(statusBar)
+        SkinTimerStatusBar(statusBar)
       end
     end
   end)
