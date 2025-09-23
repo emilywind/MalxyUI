@@ -2,8 +2,6 @@
 -- Shows dampening display in arena --
 --------------------------------------
 local dampeningtext = C_Spell.GetSpellInfo(110310).name
-local widgetSetID = C_UIWidgetManager.GetTopCenterWidgetSetID()
-local widgetSetInfo = C_UIWidgetManager.GetWidgetSetInfo(widgetSetID)
 
 local frame = CreateFrame("Frame", "Dampening_Display", UIParent, "UIWidgetTemplateIconAndText")
 frame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -31,6 +29,10 @@ frame:SetScript("OnEvent", function(self, event)
 		end
 	end
 end)
+
+--- Positioning ---
+local widgetSetID = C_UIWidgetManager.GetTopCenterWidgetSetID()
+local widgetSetInfo = C_UIWidgetManager.GetWidgetSetInfo(widgetSetID)
 frame:SetPoint(UIWidgetTopCenterContainerFrame.verticalAnchorPoint, UIWidgetTopCenterContainerFrame,
 	UIWidgetTopCenterContainerFrame.verticalRelativePoint, 0, widgetSetInfo.verticalPadding)
 frame.Text:SetParent(frame)
