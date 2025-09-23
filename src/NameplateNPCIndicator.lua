@@ -103,8 +103,9 @@ OnEvents({
   "COMBAT_LOG_EVENT_UNFILTERED"
 },
 ---@param event string
----@param unit UnitToken
-function(_, event, unit)
+---@param ... any
+function(_, event, ...)
+  local unit = ...
   local np = GetSafeNameplate(unit)
 
   if event == 'NAME_PLATE_UNIT_ADDED' then
