@@ -1,5 +1,6 @@
 local lootSpecId = nil
 
+---@param event string
 function UpdateLootSpecDisplay(event)
 	if not EUIDB.lootSpecDisplay then
 		if PlayerLootSpecFrame:IsShown() then
