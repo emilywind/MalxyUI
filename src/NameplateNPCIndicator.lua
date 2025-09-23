@@ -97,12 +97,16 @@ local function nameplateTotem(np)
   end
 end
 
-OnEvent("NAME_PLATE_UNIT_ADDED", function(_, _, unit)
+OnEvent("NAME_PLATE_UNIT_ADDED",
+---@param unit UnitToken
+function(_, _, unit)
   local np = GetSafeNameplate(unit)
   nameplateTotem(np)
 end)
 
-OnEvent("NAME_PLATE_UNIT_REMOVED", function(_, _, unit)
+OnEvent("NAME_PLATE_UNIT_REMOVED",
+---@param unit UnitToken
+function(_, _, unit)
   local np = GetSafeNameplate(unit)
 
   if not np then return end
