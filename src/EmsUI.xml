@@ -12,7 +12,7 @@
   <Include file="DetailsIconThemes.lua" />
   <Include file="Buffs.lua" />
   <Include file="Nameplates.lua" />
-  <Include file="NameplateTotems.lua" />
+  <Include file="NameplateNPCIndicator.lua" />
   <Include file="NameplateCastbar.lua" />
   <Include file="NameplateCombatIndicator.lua" />
   <Include file="NameplatePetIndicator.lua" />

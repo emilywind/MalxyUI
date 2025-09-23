@@ -1,7 +1,6 @@
--- Simplified and enhanced version of NugTotemIcon
-local totemNpcIDs = {}
+local npcIDs = {}
 
-local importantTotemNpcIDs = {
+local importantNpcIDs = {
   -- [npcID] = { spellID, duration }
   [5913] = { 8143, 10 },       -- Tremor
   [5925] = { 204336, 3 },      -- Grounding
@@ -26,7 +25,7 @@ local importantTotemNpcIDs = {
   [103673] = { 205180, 20 },   -- Darkglare
 }
 
-local lessImportantTotemNpcIDs = {
+local lessImportantNpcIDs = {
   [2630] = { 2484, 20 },       -- Earthbind
   [60561] = { 51485, 20 },     -- Earthgrab
   [3527] = { 5394, 15 },       -- Healing Stream
@@ -35,11 +34,11 @@ local lessImportantTotemNpcIDs = {
   [97285] = { 192077, 15 },    -- Wind Rush
 }
 
-local allTotemNpcIDs = {}
-PushTableIntoTable(allTotemNpcIDs, importantTotemNpcIDs)
-PushTableIntoTable(allTotemNpcIDs, lessImportantTotemNpcIDs)
+local allNpcIDs = {}
+PushTableIntoTable(allNpcIDs, importantNpcIDs)
+PushTableIntoTable(allNpcIDs, lessImportantNpcIDs)
 
-local totemStartTimes = setmetatable({}, { __mode = "v" })
+local npcStartTimes = setmetatable({}, { __mode = "v" })
 
 local function createIcon(nameplate)
   local frame = CreateFrame("Frame", nil, nameplate)
@@ -72,7 +71,7 @@ local function nameplateTotem(np)
 
   local iconFrame = np.totemIcon
 
-  if unitInfo.isNpc and unitInfo.npcID and totemNpcIDs[unitInfo.npcID] then
+  if unitInfo.isNpc and unitInfo.npcID and npcIDs[unitInfo.npcID] then
     if not iconFrame then
       iconFrame = createIcon(np)
       np.totemIcon = iconFrame
@@ -80,13 +79,13 @@ local function nameplateTotem(np)
 
     iconFrame:Show()
 
-    local totemData = totemNpcIDs[unitInfo.npcID]
+    local totemData = npcIDs[unitInfo.npcID]
     local spellID, duration = unpack(totemData)
 
     local tex = C_Spell.GetSpellTexture(spellID)
 
     iconFrame.icon:SetTexture(tex)
-    local startTime = totemStartTimes[unitInfo.guid]
+    local startTime = npcStartTimes[unitInfo.guid]
     if startTime then
       iconFrame.cooldown:SetCooldown(startTime, duration)
       iconFrame.cooldown:Show()
@@ -118,19 +117,19 @@ OnEvent("COMBAT_LOG_EVENT_UNFILTERED", function()
 
   if subevent == "SPELL_SUMMON" then
     local npcID = GetNPCIDFromGUID(destGUID)
-    if npcID and totemNpcIDs[npcID] then
-      totemStartTimes[destGUID] = GetTime()
+    if npcID and npcIDs[npcID] then
+      npcStartTimes[destGUID] = GetTime()
     end
   end
 end)
 
 function UpdateTotemIndicatorSetting()
-  totemNpcIDs = {}
+  npcIDs = {}
 
   if EUIDB.nameplateTotemIndicators == "important" then
-    totemNpcIDs = importantTotemNpcIDs
+    npcIDs = importantNpcIDs
   elseif EUIDB.nameplateTotemIndicators == "all" then
-    totemNpcIDs = allTotemNpcIDs
+    npcIDs = allNpcIDs
   end
 
   DoToNameplates(nameplateTotem)
