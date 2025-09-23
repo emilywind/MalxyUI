@@ -26,7 +26,7 @@ local function printTime()
 		end
 	end
 
-	DEFAULT_CHAT_FRAME:AddMessage("|cff33ff99Em's UI|r: " .. str)
+	print("|cff33ff99Em's UI|r: " .. str)
 end
 
 OnEvent("UPDATE_BATTLEFIELD_STATUS", function()
