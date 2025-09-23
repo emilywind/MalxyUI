@@ -4,7 +4,6 @@
 local dampeningtext = C_Spell.GetSpellInfo(110310).name
 local widgetSetID = C_UIWidgetManager.GetTopCenterWidgetSetID()
 local widgetSetInfo = C_UIWidgetManager.GetWidgetSetInfo(widgetSetID)
-local C_Commentator_GetDampeningPercent = C_Commentator.GetDampeningPercent
 
 local frame = CreateFrame("Frame", "Dampening_Display", UIParent, "UIWidgetTemplateIconAndText")
 frame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -18,7 +17,7 @@ frame:SetScript("OnEvent", function(self, event)
 			self:Hide()
 		end
 	elseif event == "UNIT_AURA" then
-		local percentage = C_Commentator_GetDampeningPercent()
+		local percentage = C_Commentator.GetDampeningPercent()
 		if percentage and percentage > 0 then
 			if not self:IsShown() then
 				self:Show()
