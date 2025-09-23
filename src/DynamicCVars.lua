@@ -1,6 +1,9 @@
 local SetCVar = C_CVar.SetCVar
 
-OnEvent("PLAYER_ENTERING_WORLD", function()
+OnEvents({
+  "PLAYER_ENTERING_WORLD",
+  "ZONE_CHANGED_NEW_AREA"
+}, function()
     local instanceInfo = GetInstanceData()
 
     if instanceInfo.isInPvE and EUIDB.nameplateHideFriendsPve then
