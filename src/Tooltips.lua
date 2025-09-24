@@ -85,7 +85,7 @@ function InitTooltips()
 			GameTooltip.border = border
 		end
 
-		local bar = GameTooltipStatusBar
+		local bar = GameTooltipStatusBar ---@cast bar StatusBar
 		if not bar.bg then
 			bar.bg = bar:CreateTexture('GameTooltipStatusBarBackground', "BACKGROUND")
 			bar.bg:SetAllPoints(bar)
@@ -100,12 +100,15 @@ function InitTooltips()
 		end
 
 		-- Gametooltip statusbar
-		bar:SetStatusBarTexture(EUIDB.statusBarTex)
-		bar:ClearAllPoints()
-		bar:SetPoint("LEFT", 7, 0)
-		bar:SetPoint("RIGHT", -7, 0)
-		bar:SetPoint("BOTTOM", 0, 7)
-		bar:SetHeight(10)
+		if not bar.euiClean then
+			bar:SetStatusBarTexture(EUIDB.statusBarTex)
+			bar:ClearAllPoints()
+			bar:SetPoint("LEFT", 7, 0)
+			bar:SetPoint("RIGHT", -7, 0)
+			bar:SetPoint("BOTTOM", 0, 7)
+			bar:SetHeight(10)
+			bar.euiClean = true
+		end
 	end
   skinGameTooltip()
 
