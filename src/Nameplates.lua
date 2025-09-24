@@ -168,16 +168,21 @@ local function updateNameplate(frame)
 end
 
 local initNameplates = false
+local hookedAcquireUnitFrame = false
 function InitNameplates()
   if initNameplates then return end
 
-  hooksecurefunc(NamePlateDriverFrame, "AcquireUnitFrame",
-    ---@param nameplate Frame
-    function(_, nameplate) -- This needs to be run for party markers to work
-      if (nameplate.UnitFrame) then
-        nameplate.UnitFrame.isNameplate = true
+  if not hookedAcquireUnitFrame then
+    hooksecurefunc(NamePlateDriverFrame, "AcquireUnitFrame",
+      ---@param nameplate Frame
+      function(_, nameplate) -- This needs to be run for party markers to work
+        if (nameplate.UnitFrame) then
+          nameplate.UnitFrame.isNameplate = true
+        end
       end
-    end)
+    )
+    hookedAcquireUnitFrame = true
+  end
 
   if not EUIDB.skinNameplates then return end
 
