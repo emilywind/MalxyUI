@@ -1,7 +1,9 @@
 OnPlayerLogin(function()
   StatsFrame = CreateFrame("Frame", "StatsFrame", UIParent)
   StatsFrame:ClearAllPoints()
-  StatsFrame:SetPoint(EUIDB.statsframe.point, UIParent, EUIDB.statsframe.point, EUIDB.statsframe.x, EUIDB.statsframe.y)
+
+  local layout = GetLayoutDB()
+  StatsFrame:SetPoint(layout.statsframe.point, UIParent, layout.statsframe.point, layout.statsframe.x, layout.statsframe.y)
 
   local fontSize = 13
   local color = GetUnitHealthColor("player")

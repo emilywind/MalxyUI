@@ -514,3 +514,17 @@ function PushTableIntoTable(destTable, srcTable)
     destTable[k] = v
   end
 end
+
+---@param layoutName? string
+---@return table
+function GetLayoutDB(layoutName)
+  layoutName = layoutName or EditModeManagerFrame:GetActiveLayoutInfo().layoutName
+  local layout = EUIDB.layouts[layoutName]
+
+  if not layout then
+    layout = CopyTable(EUIDB.defaultLayout)
+    EUIDB.layouts[layoutName] = layout
+  end
+
+  return layout
+end
