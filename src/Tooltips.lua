@@ -75,6 +75,8 @@ function InitTooltips()
 		ns:SetCenterColor(0.08, 0.08, 0.08, 0.8)
 		ns:SetBorderColor(0, 0, 0, 0)
 
+		if GameTooltip.euiClean then return end
+
 		local border = GameTooltip.border
 		if not border then
 			border = CreateFrame('Frame', 'GameTooltipBorder', GameTooltip, "BackdropTemplate")
@@ -100,15 +102,14 @@ function InitTooltips()
 		end
 
 		-- Gametooltip statusbar
-		if not bar.euiClean then
-			bar:SetStatusBarTexture(EUIDB.statusBarTex)
-			bar:ClearAllPoints()
-			bar:SetPoint("LEFT", 7, 0)
-			bar:SetPoint("RIGHT", -7, 0)
-			bar:SetPoint("BOTTOM", 0, 7)
-			bar:SetHeight(10)
-			bar.euiClean = true
-		end
+		bar:SetStatusBarTexture(EUIDB.statusBarTex)
+		bar:ClearAllPoints()
+		bar:SetPoint("LEFT", 7, 0)
+		bar:SetPoint("RIGHT", -7, 0)
+		bar:SetPoint("BOTTOM", 0, 7)
+		bar:SetHeight(10)
+
+		GameTooltip.euiClean = true
 	end
   skinGameTooltip()
 
