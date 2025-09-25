@@ -127,10 +127,13 @@ local function copyTable(src, dst)
   if type(dst) ~= "table" then dst = {} end
 
   for k, v in pairs(src) do
+    local dstVal = dst[k]
     if type(v) == "table" then
-      newTable[k] = copyTable(v, dst[k])
-    elseif type(v) ~= type(dst[k]) then
+      newTable[k] = copyTable(v, dstVal)
+    elseif type(v) ~= type(dstVal) then
       newTable[k] = v
+    elseif dstVal then
+      newTable[k] = dstVal
     end
   end
 
