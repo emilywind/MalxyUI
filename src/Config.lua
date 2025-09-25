@@ -115,21 +115,26 @@ EUIDBDefaults = {
   chatShowSidePanel = false,
 }
 
+if not EUIDB then -- Put this here to get correct typing on this
+  EUIDB = EUIDBDefaults
+end
+
 ---@param src table
 ---@param dst? table
 ---@return table
 local function copyTable(src, dst)
+  local newTable = {} -- Things are passed by reference in Lua so let's make a new table
   if type(dst) ~= "table" then dst = {} end
 
   for k, v in pairs(src) do
     if type(v) == "table" then
-      dst[k] = copyTable(v, dst[k])
+      newTable[k] = copyTable(v, dst[k])
     elseif type(v) ~= type(dst[k]) then
-      dst[k] = v
+      newTable[k] = v
     end
   end
 
-  return dst
+  return newTable
 end
 
 OnPlayerLogin(function()
