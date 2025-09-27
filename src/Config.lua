@@ -123,21 +123,18 @@ end
 ---@param dst? table
 ---@return table
 local function copyTable(src, dst)
-  local newTable = {} -- Things are passed by reference in Lua so let's make a new table
   if type(dst) ~= "table" then dst = {} end
 
   for k, v in pairs(src) do
     local dstVal = dst[k]
     if type(v) == "table" then
-      newTable[k] = copyTable(v, dstVal)
+      dst[k] = copyTable(v, dstVal)
     elseif type(v) ~= type(dstVal) then
-      newTable[k] = v
-    elseif dstVal ~= nil then
-      newTable[k] = dstVal
+      dst[k] = v
     end
   end
 
-  return newTable
+  return dst
 end
 
 OnPlayerLogin(function()
