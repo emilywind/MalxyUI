@@ -515,6 +515,19 @@ function PushTableIntoTable(destTable, srcTable)
   end
 end
 
+local defaultLayout = {
+  queueicon = {
+    point = 'BOTTOMRIGHT',
+    x = -330,
+    y = 5,
+  },
+  statsframe = {
+    point = 'BOTTOMLEFT',
+    x = 5,
+    y = 3
+  },
+}
+
 function GetLayoutName()
   return EditModeManagerFrame:GetActiveLayoutInfo().layoutName
 end
@@ -525,7 +538,7 @@ function GetDBLayout()
   local layout = EUIDB.layouts[layoutName]
 
   if not layout then
-    layout = CopyTable(EUIDB.defaultLayout)
+    layout = CopyTable(defaultLayout)
     EUIDB.layouts[layoutName] = layout
   end
 

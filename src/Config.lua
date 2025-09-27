@@ -89,19 +89,6 @@ EUIDBDefaults = {
 
   layouts = {},
 
-  defaultLayout = {
-    queueicon = {
-      point = 'BOTTOMRIGHT',
-      x = -330,
-      y = 5,
-    },
-    statsframe = {
-      point = 'BOTTOMLEFT',
-      x = 5,
-      y = 3
-    },
-  },
-
   enableStatsFrame = false,
   enableStatsSpeed = false,
 
