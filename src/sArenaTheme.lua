@@ -227,8 +227,8 @@ function layout:Initialize(frame)
       ApplyUIMode(trinketBorder, unit)
       ApplyUIMode(racialBorder, unit)
       ApplyUIMode(specBorder, unit)
-      ApplyUIMode(castBarBorder, unit)
       ApplyUIMode(frameTexture, unit)
+      ApplyUIMode(castBarBorder)
     end)
 
     frame.hooked = true
