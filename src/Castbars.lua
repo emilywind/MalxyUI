@@ -78,50 +78,46 @@ FocusFrameSpellBar:HookScript("OnEvent", function(self)
   skinCastBar(self, true)
 end)
 
+---@param self Frame
+---@param elapsed number
+local function castBarUpdateTimer(self, elapsed)
+  if not self.timer then return end
+  if self.update and self.update < elapsed then
+    if self.casting then
+      self.timer:SetText(format("%.1f", max(self.maxValue - self.value, 0)))
+    elseif self.channeling then
+      self.timer:SetText(format("%.1f", max(self.value, 0)))
+    else
+      self.timer:SetText("")
+    end
+    self.update = .1
+  else
+    self.update = self.update - elapsed
+  end
+end
+
+PlayerCastingBarFrame:HookScript("OnUpdate", castBarUpdateTimer)
+TargetFrameSpellBar:HookScript("OnUpdate", castBarUpdateTimer)
+FocusFrameSpellBar:HookScript("OnUpdate", castBarUpdateTimer)
+
 ------------
 -- Timers --
 ------------
 OnPlayerLogin(function()
-  local format = string.format
-  local max = math.max
   local FONT = EUIDB.font
 
-  if not InCombatLockdown() then
-    PlayerCastingBarFrame.timer = PlayerCastingBarFrame:CreateFontString(nil)
-    ModifyFont(PlayerCastingBarFrame.timer, FONT, 14, "THINOUTLINE")
-    PlayerCastingBarFrame.timer:SetPoint("LEFT", PlayerCastingBarFrame, "RIGHT", 5, 0)
-    PlayerCastingBarFrame.update = 0.1
+  PlayerCastingBarFrame.timer = PlayerCastingBarFrame:CreateFontString(nil)
+  ModifyFont(PlayerCastingBarFrame.timer, FONT, 14, "THINOUTLINE")
+  PlayerCastingBarFrame.timer:SetPoint("LEFT", PlayerCastingBarFrame, "RIGHT", 5, 0)
+  PlayerCastingBarFrame.update = 0.1
 
-    TargetFrameSpellBar.timer = TargetFrameSpellBar:CreateFontString(nil)
-    ModifyFont(TargetFrameSpellBar.timer, FONT, 11, "THINOUTLINE")
-    TargetFrameSpellBar.timer:SetPoint("LEFT", TargetFrameSpellBar, "RIGHT", 4, 0)
-    TargetFrameSpellBar.update = 0.1
+  TargetFrameSpellBar.timer = TargetFrameSpellBar:CreateFontString(nil)
+  ModifyFont(TargetFrameSpellBar.timer, FONT, 11, "THINOUTLINE")
+  TargetFrameSpellBar.timer:SetPoint("LEFT", TargetFrameSpellBar, "RIGHT", 4, 0)
+  TargetFrameSpellBar.update = 0.1
 
-    FocusFrameSpellBar.timer = FocusFrameSpellBar:CreateFontString(nil)
-    ModifyFont(FocusFrameSpellBar.timer, FONT, 11, "THINOUTLINE")
-    FocusFrameSpellBar.timer:SetPoint("LEFT", FocusFrameSpellBar, "RIGHT", 4, 0)
-    FocusFrameSpellBar.update = 0.1
-  end
-
-  ---@param self Frame
-  ---@param elapsed number
-  local function castBarUpdateTimer(self, elapsed)
-    if not self.timer then return end
-    if self.update and self.update < elapsed then
-      if self.casting then
-        self.timer:SetText(format("%.1f", max(self.maxValue - self.value, 0)))
-      elseif self.channeling then
-        self.timer:SetText(format("%.1f", max(self.value, 0)))
-      else
-        self.timer:SetText("")
-      end
-      self.update = .1
-    else
-      self.update = self.update - elapsed
-    end
-  end
-
-  PlayerCastingBarFrame:HookScript("OnUpdate", castBarUpdateTimer)
-  TargetFrameSpellBar:HookScript("OnUpdate", castBarUpdateTimer)
-  FocusFrameSpellBar:HookScript("OnUpdate", castBarUpdateTimer)
+  FocusFrameSpellBar.timer = FocusFrameSpellBar:CreateFontString(nil)
+  ModifyFont(FocusFrameSpellBar.timer, FONT, 11, "THINOUTLINE")
+  FocusFrameSpellBar.timer:SetPoint("LEFT", FocusFrameSpellBar, "RIGHT", 4, 0)
+  FocusFrameSpellBar.update = 0.1
 end)
