@@ -105,17 +105,17 @@ FocusFrameSpellBar:HookScript("OnUpdate", castBarUpdateTimer)
 ------------
 OnPlayerLogin(function()
   PlayerCastingBarFrame.timer = PlayerCastingBarFrame:CreateFontString(nil)
-  ModifyFont(PlayerCastingBarFrame.timer, EUIDB.font, 14, "THINOUTLINE")
+  SetDefaultFont(PlayerCastingBarFrame.timer, 14, "THINOUTLINE")
   PlayerCastingBarFrame.timer:SetPoint("LEFT", PlayerCastingBarFrame, "RIGHT", 5, 0)
   PlayerCastingBarFrame.update = 0.1
 
   TargetFrameSpellBar.timer = TargetFrameSpellBar:CreateFontString(nil)
-  ModifyFont(TargetFrameSpellBar.timer, EUIDB.font, 11, "THINOUTLINE")
+  SetDefaultFont(TargetFrameSpellBar.timer, 11, "THINOUTLINE")
   TargetFrameSpellBar.timer:SetPoint("LEFT", TargetFrameSpellBar, "RIGHT", 4, 0)
   TargetFrameSpellBar.update = 0.1
 
   FocusFrameSpellBar.timer = FocusFrameSpellBar:CreateFontString(nil)
-  ModifyFont(FocusFrameSpellBar.timer, EUIDB.font, 11, "THINOUTLINE")
+  SetDefaultFont(FocusFrameSpellBar.timer, 11, "THINOUTLINE")
   FocusFrameSpellBar.timer:SetPoint("LEFT", FocusFrameSpellBar, "RIGHT", 4, 0)
   FocusFrameSpellBar.update = 0.1
 end)
