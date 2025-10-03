@@ -58,6 +58,7 @@ local function updateHealth(frame)
   end
 end
 
+---@param frame Frame
 local function modifyNamePlates(frame)
   if frame:IsForbidden() or not frame.isNameplate then return end
 
@@ -70,7 +71,9 @@ local function modifyNamePlates(frame)
   if frame.ClassificationFrame then
     frame.ClassificationFrame:SetPoint('CENTER', frame.healthBar, 'LEFT', 0, 0)
   end
-end ---@param frame Frame
+end
+
+---@param frame Frame
 local function updateNameplate(frame)
   local unitInfo = GetNameplateUnitInfo(frame)
   if not unitInfo.exists or frame:IsForbidden() or not frame.isNameplate then return end
