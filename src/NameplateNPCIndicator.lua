@@ -10,6 +10,7 @@ local importantNpcIDs = {
   [105451] = { 204331, 15 },   -- Counterstrike
   [105427] = { 204330, 15 },   -- Skyfury
   [179867] = { 355580, 6 },    -- Static Field
+  [104818] = { 207399, 30 },   -- Ancestral Protection
 
   -- Warrior
   [119052] = { 236320, 15 },   -- War Banner
