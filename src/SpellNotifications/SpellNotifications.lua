@@ -133,10 +133,12 @@ function SpellNotifications.OnLoad(self)
 	self:RegisterEvent("ACTIONBAR_UPDATE_STATE")
 end
 
-function SpellNotifications.OnEvent(event)
-    local timeStamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, 
+function SpellNotifications.OnEvent()
+    if not EUIDB.enableSpellNotifications then return end
+
+    local timeStamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags,
           destGUID, destName, destFlags, destRaidFlags = CombatLogGetCurrentEventInfo()
-    
+
     local size = addon.Sizes()
     local color = addon.Colors()
     local affiliation = addon.Affiliations()

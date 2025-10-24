@@ -43,4 +43,5 @@
   <Include file="AutoVendor.lua" />
   <Include file="FriendsList.lua" />
   <Include file="Chat.lua" />
+  <Include file="SpellNotifications\SpellNotifications.xml" />
 </Ui>

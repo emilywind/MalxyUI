@@ -22,6 +22,8 @@ EUIDBDefaults = {
 
   statusBarTex = EUI_TEXTURES.statusBar,
 
+  enableSpellNotifications = true,
+
   lootSpecDisplay = true, -- Display loot spec icon in the player frame
 
   enableFont = true,       -- Update all fonts to something cooler
@@ -1132,6 +1134,14 @@ local function setupEuiOptions()
     partyMarkerHealer,
     EUI_Misc,
     RefreshPartyMarkers
+  )
+
+  local enableSpellNotifications = newCheckbox(
+    "Enable Spell Notifications",
+    "Show notifications when spells are interrupted, dispelled, or stolen.",
+    "enableSpellNotifications",
+    partyMarkerHideRaidmarker,
+    EUI_Misc
   )
 
   -----------
