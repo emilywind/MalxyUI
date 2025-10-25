@@ -490,7 +490,7 @@ local function setupEuiOptions()
   pvpText:SetPoint("TOPLEFT", enableDamageFont, "BOTTOMLEFT", 0, -16)
 
   local enableSpellNotifications = newCheckbox(
-    "Enable Spell Notifications",
+    "Spell Notifications",
     "Show notifications when spells are interrupted, dispelled, or stolen.",
     "enableSpellNotifications",
     pvpText,
