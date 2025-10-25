@@ -491,7 +491,7 @@ local function setupEuiOptions()
 
   local enableSpellNotifications = newCheckbox(
     "Spell Notifications",
-    "Show notifications when spells are interrupted, dispelled, or stolen.",
+    "Show notifications when spells are interrupted, purged, or stolen.",
     "enableSpellNotifications",
     pvpText,
     EUI.panel
