@@ -489,11 +489,19 @@ local function setupEuiOptions()
   pvpText:SetText("PvP")
   pvpText:SetPoint("TOPLEFT", enableDamageFont, "BOTTOMLEFT", 0, -16)
 
+  local enableSpellNotifications = newCheckbox(
+    "Enable Spell Notifications",
+    "Show notifications when spells are interrupted, dispelled, or stolen.",
+    "enableSpellNotifications",
+    pvpText,
+    EUI.panel
+  )
+
   local dampeningDisplay = newCheckbox(
     "Dampening Display",
     "Display Dampening % under remaining time at the top of the screen in arenas.",
     "dampeningDisplay",
-    pvpText,
+    enableSpellNotifications,
     EUI.panel
   )
 
@@ -1134,14 +1142,6 @@ local function setupEuiOptions()
     partyMarkerHealer,
     EUI_Misc,
     RefreshPartyMarkers
-  )
-
-  local enableSpellNotifications = newCheckbox(
-    "Enable Spell Notifications",
-    "Show notifications when spells are interrupted, dispelled, or stolen.",
-    "enableSpellNotifications",
-    partyMarkerHideRaidmarker,
-    EUI_Misc
   )
 
   -----------
