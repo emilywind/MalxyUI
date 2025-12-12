@@ -88,9 +88,6 @@ end
 
 function StyleActionBars()
   for _, texture in pairs({
-    MainMenuBar.EndCaps.LeftEndCap,
-    MainMenuBar.BorderArt,
-    MainMenuBar.EndCaps.RightEndCap,
     ActionButton1.RightDivider,
     ActionButton2.RightDivider,
     ActionButton3.RightDivider,

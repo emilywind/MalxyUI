@@ -1,8 +1,8 @@
-## Interface: 110105, 110107, 110100, 110200, 110205
+## Interface: 110105, 110107, 110100, 110200, 110205, 110207
 ## Title: Em's UI
 ## Notes: Simple skinnning modifications and quality of life features for the default interface to make it nicer looking and more user-friendly.
 ## Author: Emily
-## Version: 7.3.9
+## Version: 7.4.0
 ## SavedVariables: EUIDB
 ## IconTexture: Interface\Addons\EmsUI\media\icons\EmsUI
 ## Email: emlywind@gmail.com
