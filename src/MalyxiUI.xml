@@ -13,9 +13,9 @@
   <Include file="Buffs.lua" />
   <!-- <Include file="Nameplates.lua" /> -->
   <!-- <Include file="NameplateNPCIndicator.lua" /> -->
-  <!-- <Include file="NameplateCastbar.lua" /> -->
-  <!-- <Include file="NameplateCombatIndicator.lua" /> -->
-  <!-- <Include file="NameplatePetIndicator.lua" /> -->
+  <Include file="NameplateCastbar.lua" />
+  <Include file="NameplateCombatIndicator.lua" />
+  <Include file="NameplatePetIndicator.lua" />
   <Include file="PartyMarkers.lua" />
   <Include file="Tooltips.lua" />
   <Include file="LootSpecDisplay.lua" />
