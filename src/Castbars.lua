@@ -83,13 +83,7 @@ end)
 local function castBarUpdateTimer(self, elapsed)
   if not self.timer then return end
   if self.update and self.update < elapsed then
-    if self.casting then
-      if not self:HasSecretValues() then
-        self.timer:SetText(format("%.1f", max(self.maxValue - self.value, 0)))
-      else
-        self.timer:SetText(format("%.1f", max(self.value, 0)))
-      end
-    elseif self.channeling then
+    if self.casting or self.channeling then
       self.timer:SetText(format("%.1f", max(self.value, 0)))
     else
       self.timer:SetText("")
