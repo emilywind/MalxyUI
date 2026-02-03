@@ -51,10 +51,12 @@ local function skinCastBar(self, setScale)
   ApplyUIMode(self.Background)
 
   local castText = self.Text:GetText()
-  if castText ~= nil then
-    if (strlen(castText) > 19) then
-      local newCastText = strsub(castText, 0, 19)
-      self.Text:SetText(newCastText .. "...")
+  if not self.Text:HasSecretValues() then
+    if castText ~= nil and not castText:HasSecretValues() then
+      if (strlen(castText) > 19) then
+        local newCastText = strsub(castText, 0, 19)
+        self.Text:SetText(newCastText .. "...")
+      end
     end
   end
 end
