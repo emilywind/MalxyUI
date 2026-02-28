@@ -49,16 +49,6 @@ local function skinCastBar(self, setScale)
 
   ApplyUIMode(self.Border)
   ApplyUIMode(self.Background)
-
-  local castText = self.Text:GetText()
-  if not self.Text:HasSecretValues() then
-    if castText ~= nil and not castText:HasSecretValues() then
-      if (strlen(castText) > 19) then
-        local newCastText = strsub(castText, 0, 19)
-        self.Text:SetText(newCastText .. "...")
-      end
-    end
-  end
 end
 
 for i = 1, 3 do
@@ -97,8 +87,6 @@ local function castBarUpdateTimer(self, elapsed)
 end
 
 PlayerCastingBarFrame:HookScript("OnUpdate", castBarUpdateTimer)
-TargetFrameSpellBar:HookScript("OnUpdate", castBarUpdateTimer)
-FocusFrameSpellBar:HookScript("OnUpdate", castBarUpdateTimer)
 
 ------------
 -- Timers --
