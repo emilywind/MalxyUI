@@ -211,40 +211,40 @@ function InitNameplates()
   SetCVar("nameplateOtherBottomInset", 0.1)
   SetCVar("nameplateOtherTopInset", 0.08)
 
-  C_NamePlate.SetNamePlateFriendlyClickThrough(EUIDB.nameplateFriendlyClickthrough)
+  -- C_NamePlate.SetNamePlateFriendlyClickThrough(EUIDB.nameplateFriendlyClickthrough)
 
-  local defaultFriendlyWidth, defaultFriendlyHeight = C_NamePlate.GetNamePlateFriendlySize()
+  -- local defaultFriendlyWidth, defaultFriendlyHeight = C_NamePlate.GetNamePlateFriendlySize()
 
-  function SetFriendlyNameplateSize()
-    if EUIDB.nameplateFriendlySmall then
-      C_NamePlate.SetNamePlateFriendlySize((0.7 * defaultFriendlyWidth), defaultFriendlyHeight)
-    else
-      C_NamePlate.SetNamePlateFriendlySize(defaultFriendlyWidth, defaultFriendlyHeight)
-    end
-  end
+  -- function SetFriendlyNameplateSize()
+  --   if EUIDB.nameplateFriendlySmall then
+  --     C_NamePlate.SetNamePlateFriendlySize((0.7 * defaultFriendlyWidth), defaultFriendlyHeight)
+  --   else
+  --     C_NamePlate.SetNamePlateFriendlySize(defaultFriendlyWidth, defaultFriendlyHeight)
+  --   end
+  -- end
 
-  SetFriendlyNameplateSize()
+  -- SetFriendlyNameplateSize()
 
   hooksecurefunc("CompactUnitFrame_UpdateHealth", updateHealth)
-  hooksecurefunc("DefaultCompactNamePlateFrameSetup", modifyNamePlates)
+  hooksecurefunc("CompactUnitFrame_UpdateName", modifyNamePlates)
 
-  hooksecurefunc(
-    NamePlateDriverFrame,
-    'GetNamePlateTypeFromUnit',
-    function(_, unit)
-      local isFriend = UnitIsFriend("player", unit)
-      local instanceInfo = GetInstanceData()
-      if not isFriend or not instanceInfo.isInPvE then
-        setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', false)
-      else
-        if EUIDB.nameplateHideFriendlyHealthbars then
-          setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', true)
-        else
-          setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', false)
-        end
-      end
-    end
-  )
+  -- hooksecurefunc(
+  --   NamePlateDriverFrame,
+  --   'GetNamePlateTypeFromUnit',
+  --   function(_, unit)
+  --     local isFriend = UnitIsFriend("player", unit)
+  --     local instanceInfo = GetInstanceData()
+  --     if not isFriend or not instanceInfo.isInPvE then
+  --       setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', false)
+  --     else
+  --       if EUIDB.nameplateHideFriendlyHealthbars then
+  --         setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', true)
+  --       else
+  --         setValue(DefaultCompactNamePlateFrameSetUpOptions, 'hideHealthbar', false)
+  --       end
+  --     end
+  --   end
+  -- )
 
   OnEvents({
     "NAME_PLATE_UNIT_ADDED",

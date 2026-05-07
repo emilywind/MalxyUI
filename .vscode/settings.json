@@ -12,7 +12,7 @@
         "utf8": "disable"
     },
     "Lua.workspace.library": [
-        "~/.vscode/extensions/ketho.wow-api-0.22.2/Annotations/Core"
+        "~/.vscode/extensions/ketho.wow-api-0.22.3/Annotations/Core"
     ],
     "Lua.diagnostics.globals": [
         "EditModeManagerFrame",
@@ -300,7 +300,18 @@
         "FCF_GetChatWindowInfo",
         "FCF_SetChatWindowFontSize",
         "QuickJoinToastButton",
-        "MAX_PARTY_MEMBERS"
+        "MAX_PARTY_MEMBERS",
+        "MergeTable",
+        "StaticPopup_SetButtonText",
+        "StaticPopup_AddDefinition",
+        "DEBUFF_SYMBOL_MAGIC",
+        "DEBUFF_SYMBOL_CURSE",
+        "DEBUFF_SYMBOL_DISEASE",
+        "DEBUFF_SYMBOL_POISON",
+        "GetPowerBarColor",
+        "SettingsTooltip",
+        "DefaultTooltipMixin",
+        "EditModeSystemSettingsDialog"
     ],
     "Lua.diagnostics.disable": [
         "cast-local-type",

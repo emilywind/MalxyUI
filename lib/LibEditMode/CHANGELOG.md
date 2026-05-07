@@ -1,173 +1,200 @@
 # Lib: EditMode
 
-## [9](https://github.com/p3lim-wow/LibEditMode/tree/9) (2025-07-26)
-[Full Changelog](https://github.com/p3lim-wow/LibEditMode/commits/9) [Previous Releases](https://github.com/p3lim-wow/LibEditMode/releases)
+## [15](https://github.com/p3lim-wow/LibEditMode/tree/15) (2026-02-10)
+[Full Changelog](https://github.com/p3lim-wow/LibEditMode/commits/15) [Previous Releases](https://github.com/p3lim-wow/LibEditMode/releases)
 
-- Bump minor  
-- Update Interface version (#25)  
+- Bump version  
+- Make LibStub optional  
+- Only call :Layout() when frames are shown (#79)  
+    * Only call :Layout() when dialog is shown  
+    * Only call :Layout() when extension is shown  
+- Support callable values for dropdowns  
+- Bump version  
+- Wrong place  
+- Announce and react to external resets  
+- Propagate mouse motion events on checkboxes (#78)  
+- Try to prevent old hooks and events from running  
+- Update docs  
+- More adjustments  
+- Touchups  
+- Divider adjustments and label hiding (#76)  
+    * Fix divider alignment  
+    * Add .hideLabel option to divider  
+    * Adjust divider's font  
+    All elements use GameFontHighlightMedium, GameFontHighlightLarge is only  
+    used by the header.  
+    ---------  
+    Co-authored-by: Adrian L Lange <p3lim@users.noreply.github.com>  
+- Add widget state refreshing and expander widget (#74)  
+    * Add widget state refreshing  
+    * Lint  
+    * Styling  
+    * Styling  
+    * Add expander widget  
+    * Fix alignment  
+- Update Interface version (#72)  
     Co-authored-by: p3lim <26496+p3lim@users.noreply.github.com>  
-- Lint  
-- Add fix for 11.2  
-- Fix release job  
-- Fix artifacts  
-- Update license (#24)  
+- Bump version  
+- Remove mainline requirement on TOC  
+- Apparently TBC has Edit Mode  
+- :lipstick:  
+- Provide example for callbacks  
+- :lipstick:  
+- Adjust docs with links for system enums  
+- Fix post-rename update  
+- Provide the source layout name when copying  
+    Fixes #67  
+- Rework callback triggers  
+    There were some issues with the previous logic, this should fix all of  
+    those and document how they all work (kinda)  
+- Adjust docs for subSystemID  
+- Add support for subsystems (#71)  
+    * Add support for subsystems  
+    * Add missing args  
+    * Update docs  
+- Reset dialog when closing  
+    Fixes #68  
+- Check if dialog exists (#70)  
+- Update license (#69)  
     Co-authored-by: p3lim <26496+p3lim@users.noreply.github.com>  
-- Use beta/PTR versions  
-- Bump p3lim/toc-interface-updater from 3 to 4 (#22)  
-    Bumps [p3lim/toc-interface-updater](https://github.com/p3lim/toc-interface-updater) from 3 to 4.  
-    - [Release notes](https://github.com/p3lim/toc-interface-updater/releases)  
-    - [Commits](https://github.com/p3lim/toc-interface-updater/compare/v3...v4)  
-    ---  
-    updated-dependencies:  
-    - dependency-name: p3lim/toc-interface-updater  
-      dependency-type: direct:production  
-      update-type: version-update:semver-major  
-    ...  
-    Signed-off-by: dependabot[bot] <support@github.com>  
-    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>  
-- Bump peter-evans/create-pull-request from 6 to 7 (#23)  
-    Bumps [peter-evans/create-pull-request](https://github.com/peter-evans/create-pull-request) from 6 to 7.  
-    - [Release notes](https://github.com/peter-evans/create-pull-request/releases)  
-    - [Commits](https://github.com/peter-evans/create-pull-request/compare/v6...v7)  
-    ---  
-    updated-dependencies:  
-    - dependency-name: peter-evans/create-pull-request  
-      dependency-type: direct:production  
-      update-type: version-update:semver-major  
-    ...  
-    Signed-off-by: dependabot[bot] <support@github.com>  
-    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>  
-- Bump minor  
-- Use multi-valued interface version  
-- Bump peter-evans/create-pull-request from 5 to 6  
-    Bumps [peter-evans/create-pull-request](https://github.com/peter-evans/create-pull-request) from 5 to 6.  
+- Bump version  
+- Bump peter-evans/create-pull-request from 7 to 8 (#64)  
+    Bumps [peter-evans/create-pull-request](https://github.com/peter-evans/create-pull-request) from 7 to 8.  
     - [Release notes](https://github.com/peter-evans/create-pull-request/releases)  
-    - [Commits](https://github.com/peter-evans/create-pull-request/compare/v5...v6)  
+    - [Commits](https://github.com/peter-evans/create-pull-request/compare/v7...v8)  
     ---  
     updated-dependencies:  
     - dependency-name: peter-evans/create-pull-request  
+      dependency-version: '8'  
       dependency-type: direct:production  
       update-type: version-update:semver-major  
     ...  
     Signed-off-by: dependabot[bot] <support@github.com>  
-- Bump actions/upload-artifact from 3 to 4  
-    Bumps [actions/upload-artifact](https://github.com/actions/upload-artifact) from 3 to 4.  
+    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>  
+- Bump actions/upload-artifact from 5 to 6 (#63)  
+    Bumps [actions/upload-artifact](https://github.com/actions/upload-artifact) from 5 to 6.  
     - [Release notes](https://github.com/actions/upload-artifact/releases)  
-    - [Commits](https://github.com/actions/upload-artifact/compare/v3...v4)  
+    - [Commits](https://github.com/actions/upload-artifact/compare/v5...v6)  
     ---  
     updated-dependencies:  
     - dependency-name: actions/upload-artifact  
+      dependency-version: '6'  
       dependency-type: direct:production  
       update-type: version-update:semver-major  
     ...  
     Signed-off-by: dependabot[bot] <support@github.com>  
-- Bump Interface version  
-- Remove old embeds and references  
-- :broom:  
-- Rename TOC to avoid loading on unsupported versions  
-- Bump TOC  
-- Support changing menu height  
-- Use unsecured pool variant  
-    Not entirely sure this will stay  
-- :broom:  
-- Drop LibDropDown for 11.x built-in system  
-    It's a drop-in system for simple dropdowns, but any entry types other  
-    than checkboxes and radio buttons are not supported by the simple menu.  
-    A complex menu can be made using the generator callback.  
-- Use stock pools logic as much we can  
-- Share tables  
-- Use future TOC bumps  
-    # Conflicts:  
-    #	.github/workflows/version.yml  
-- Create FUNDING.yml  
-- Update Interface version  
-- Bump actions/checkout from 3 to 4  
-    Bumps [actions/checkout](https://github.com/actions/checkout) from 3 to 4.  
+    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>  
+- Consistent type  
+- Indicate to setter that it's a reset  
+    Fixes #62  
+- Trigger callbacks before updating dialog  
+    Otherwise the consumer hasn't had the time to create savedvariables yet  
+- Need to pass through the selection  
+- Update Interface version (#57)  
+    Co-authored-by: p3lim <26496+p3lim@users.noreply.github.com>  
+- Add a dialog refresh method  
+    Fixes #59  
+- Ensure we have a dialog first  
+- Update dialog on layout changes  
+    Fixes #60  
+- Fix opacity not being stored correctly  
+    Fixes #61  
+- Bump version  
+- Rethink how we allow multi-select dropdowns  
+    Ref #56  
+- Lint  
+- Fix doc links  
+- Add option to disable settings, with accompanying functions  
+- Support non-radio correctly  
+    Fixes #56  
+- Add color picker support  
+    Fixes #53  
+- Support fine editing for slider  
+    Fixes #52  
+- Bump actions/checkout from 5 to 6 (#51)  
+    Bumps [actions/checkout](https://github.com/actions/checkout) from 5 to 6.  
     - [Release notes](https://github.com/actions/checkout/releases)  
     - [Changelog](https://github.com/actions/checkout/blob/main/CHANGELOG.md)  
-    - [Commits](https://github.com/actions/checkout/compare/v3...v4)  
+    - [Commits](https://github.com/actions/checkout/compare/v5...v6)  
     ---  
     updated-dependencies:  
     - dependency-name: actions/checkout  
+      dependency-version: '6'  
       dependency-type: direct:production  
       update-type: version-update:semver-major  
     ...  
     Signed-off-by: dependabot[bot] <support@github.com>  
-- Bump p3lim/toc-interface-updater from 2 to 3  
-    Bumps [p3lim/toc-interface-updater](https://github.com/p3lim/toc-interface-updater) from 2 to 3.  
-    - [Release notes](https://github.com/p3lim/toc-interface-updater/releases)  
-    - [Commits](https://github.com/p3lim/toc-interface-updater/compare/v2...v3)  
+    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>  
+- Lint  
+- Add description tooltip support  
+    This is beyond what blizzard supports, but it's nice to have  
+- Update wiki on tags only  
+- Rename tags workflow  
+- Reset dialog predictably  
+    Fixes #5  
+- Don't figure callbacks early  
+- Update cache whenever the layouts change  
+    It's not guaranteed to be on ADDON\_LOADED  
+- Don't throw errors with missing layouts  
+    This actually kills the init process of the entire library  
+- Different table structure  
+- Use cache when querying layout names  
+    C\_EditMode.GetLayouts() requires pulling data from the server, which  
+    causes a freeze every time it's called (based on latency)  
+- Fix error on early loading  
+- Specs can trigger layout changes  
+    Ref https://github.com/Gethe/wow-ui-source/blob/cbd9586890ae30fd5bdfb2f87533f3c35877ef9a/Interface/AddOns/Blizzard\_EditMode/Mainline/EditModeManager.lua#L181C19-L187  
+    Fixes #47  
+- Fix regression  
+    Fixes #48  
+- Try to run layout callback on registration (#46)  
+- Lint  
+- Trigger layout callbacks when frames are added  
+    Otherwise it's rather cumbersome to deal with updates.  
+- Add callbacks for create, rename and delete  
+    Fixes #45  
+- Pass layout index of the changed layout  
+    Fixes #45  
+- Don't get in the way  
+- :lipstick:  
+- Prevent clicking through the extension dialog  
+- Keep extension static (#44)  
+- Add docs for #43  
+- Split entry's name and value (#43)  
+- Manually fetch layout info (#42)  
+- Better handling of system names  
+- Don't waste minutes  
+- :lipstick:  
+- :lipstick:  
+- :lipstick:  
+- :lipstick:  
+- :lipstick:  
+- Rearrange for docs cohesiveness  
+- Re-add docs for the deprecated method but mark it  
+- Make extension settings divider dynamic  
+- Add method to add multiple buttons at once  
+- Overlap system dialogs so they look unified  
+- Fix system dialog width  
+- Add test case for system settings  
+- Oops  
+- It bothers me so much...  
+- Move DropdownOption after Dropdown  
+- Reset position belongs in .Buttons  
+- Add extension to blizz settings (#37)  
+- Add divider widget (#36)  
+- Bump actions/upload-artifact from 4 to 5 (#35)  
+    Bumps [actions/upload-artifact](https://github.com/actions/upload-artifact) from 4 to 5.  
+    - [Release notes](https://github.com/actions/upload-artifact/releases)  
+    - [Commits](https://github.com/actions/upload-artifact/compare/v4...v5)  
     ---  
     updated-dependencies:  
-    - dependency-name: p3lim/toc-interface-updater  
+    - dependency-name: actions/upload-artifact  
+      dependency-version: '5'  
       dependency-type: direct:production  
       update-type: version-update:semver-major  
     ...  
     Signed-off-by: dependabot[bot] <support@github.com>  
-- Update license  
-- :broom:  
-- Update version  
-- Revert dc15c87  
-- Securely dispatch callbacks  
-- Manually trigger layout callbacks registering late  
-- Update version  
-- Use override name for dialog title  
-- Fix checked status for dropdown labels  
-- Fallback on defaults correctly  
-- Correctly reset settings objects  
-- Fix bogus dep  
-- Bump Interface version  
-- Add override for label name  
-- Bump p3lim/license-year-updater from 1 to 2  
-    Bumps [p3lim/license-year-updater](https://github.com/p3lim/license-year-updater) from 1 to 2.  
-    - [Release notes](https://github.com/p3lim/license-year-updater/releases)  
-    - [Commits](https://github.com/p3lim/license-year-updater/compare/v1...v2)  
-    ---  
-    updated-dependencies:  
-    - dependency-name: p3lim/license-year-updater  
-      dependency-type: direct:production  
-      update-type: version-update:semver-major  
-    ...  
-    Signed-off-by: dependabot[bot] <support@github.com>  
-- Bump version  
-- Bump workflow actions  
-- Bump Interface version  
-- Fix for 10.1  
-    Fix #12  
-- LDD refreshes menus itself in minor9  
-- Update Interface version (#9)  
-    Co-authored-by: p3lim <p3lim@users.noreply.github.com>  
-- Merge pull request #8 from p3lim-wow/update-license  
-    Update license  
-- Update license  
-- Update version  
-- Only bump minor  
-- Linting  
-- That's not how this works  
-- There might not be an old minor  
-- Add note about lib.dialog compat  
-- Add utility to help with tagging  
-    Since we define MINOR in multiple places it's crucial they are equal  
-- Almost missed a file  
-- Update Interface version  
-- Only attempt to refresh dropdowns if the lib supports it  
-- Add version compatibility checks and backports  
-- Add note  
-- Don't lint tests  
-- Add a functional example to use for testing/validation  
-- Return a boolean  
-- Refresh dropdowns on selection  
-- Document the layout callback signature  
-- Namespace internal methods and drop their docs  
-- Doc adjustments  
-- Document types  
-- Ignore trailing whitespace in comments  
-- Fix links  
-- Fixup  
-- Create page for object types  
-- Fix some links  
-- Document most of the functionality  
-- Set up automated releases  
-- Update version  
-- Force hide selections when we leave edit mode  
-- :sparkles:  
+    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>  
+- Prevent combat errors from protected API  
+- Prevent OnDragStop from erroring  
+- Stop dragging if the player enters combat  

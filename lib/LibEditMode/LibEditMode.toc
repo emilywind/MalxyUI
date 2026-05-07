@@ -1,6 +1,6 @@
-## Interface: 110107, 110200
+## Interface: 120000, 120001, 20505
 ## Author: p3lim
-## Version: 9
+## Version: 15
 ## Title: Lib: EditMode
 ## Notes: Library that allows easy frame integration with Edit Mode
 ## OptionalDeps: LibStub
@@ -13,4 +13,4 @@ LibStub\LibStub.lua
 
 embed.xml
 
-#tests\xp.lua
+#tests\button.lua
