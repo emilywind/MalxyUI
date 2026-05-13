@@ -322,6 +322,8 @@ function InitTooltips()
 		end
 
 		local unit = GetTooltipUnit()
+		if issecretvalue(unit) then return end
+
 		local unitClassColor = GetUnitHealthColor(unit)
 
 		SetStatusBarColor(self, unitClassColor)

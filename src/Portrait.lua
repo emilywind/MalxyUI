@@ -15,6 +15,12 @@ local function updateEUIPortrait(frame)
   if not euiPortraits[unit] then
     euiPortraits[unit] = frame
   end
+
+  if issecretvalue(unit) then
+    portrait:Show()
+    return
+  end
+
   local info = GetUnitInfo(unit)
   if not info.exists then return end
 

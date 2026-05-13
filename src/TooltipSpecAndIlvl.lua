@@ -175,7 +175,7 @@ local function TSI_OnTooltipSetUnit()
   local unitID = GetTooltipUnit()
 
   -- no unit id
-  if (not unitID) then
+  if not unitID or issecretvalue(unitID) then
     return
   end
 

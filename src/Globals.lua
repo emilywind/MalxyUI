@@ -371,7 +371,7 @@ end
 function GetUnitInfo(unit)
   local info = {
     id = unit,
-    exists = unit and UnitExists(unit),
+    exists = unit and not issecretvalue(unit) and UnitExists(unit),
   }
 
   if not info.exists then return info end
@@ -393,7 +393,7 @@ function GetUnitInfo(unit)
   info.realm = realm
 
   info.isNpc = not info.isPlayer
-  info.npcID = info.isNpc and GetNPCIDFromGUID(info.guid) or nil
+  info.npcID = info.isNpc and not issecretvalue(info.guid) and GetNPCIDFromGUID(info.guid) or nil
   info.className = info.isPlayer and className or nil
   info.classFileName = info.isPlayer and classFileName or nil
   info.classID = info.isPlayer and classID or nil

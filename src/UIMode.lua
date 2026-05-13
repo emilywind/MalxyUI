@@ -33,7 +33,7 @@ OnPlayerLogin(function()
 
   TargetFrame:HookScript("OnUpdate", function()
     ApplyUIMode(TargetFrame.TargetFrameContainer.FrameTexture, "target")
-    ApplyUIMode(TargetFrameToT.FrameTexture, "targettarget")
+    -- ApplyUIMode(TargetFrameToT.FrameTexture, "targettarget")
   end)
 
   FocusFrame:HookScript("OnUpdate", function()
