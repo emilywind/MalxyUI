@@ -32,4 +32,4 @@ local function updateAuras(self)
 end
 
 hooksecurefunc(BuffFrame, "UpdateAuraButtons", updateAuras)
-hooksecurefunc(DebuffFrame, "UpdateAuraButtons", updateAuras)
+-- hooksecurefunc(DebuffFrame, "UpdateAuraButtons", updateAuras)

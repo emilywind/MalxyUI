@@ -61,8 +61,8 @@ local function skinAura(self)
   end
 end
 
-hooksecurefunc("CompactUnitFrame_UtilSetBuff", skinAura)
-hooksecurefunc("CompactUnitFrame_UtilSetDebuff", skinAura)
+-- hooksecurefunc("CompactUnitFrame_UtilSetBuff", skinAura)
+-- hooksecurefunc("CompactUnitFrame_UtilSetDebuff", skinAura)
 
 function UpdateCUFCVars()
   local classColor = EUIDB.cUFClassColoredHealth and 1 or 0

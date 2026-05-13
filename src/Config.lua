@@ -601,270 +601,270 @@ local function setupEuiOptions()
   ----------------
   -- Nameplates --
   ----------------
-  local EUI_Nameplates = makePanel("EUI_Nameplates", EUI.panel, "Nameplates")
+  -- local EUI_Nameplates = makePanel("EUI_Nameplates", EUI.panel, "Nameplates")
 
-  local scrollFrame = CreateFrame("ScrollFrame", "MyConfigScrollFrame", EUI_Nameplates, "UIPanelScrollFrameTemplate")
-  scrollFrame:SetSize(640, 600)
-  scrollFrame:SetPoint("TOPLEFT", EUI_Nameplates, "TOPLEFT", 0, 0)
+  -- local scrollFrame = CreateFrame("ScrollFrame", "MyConfigScrollFrame", EUI_Nameplates, "UIPanelScrollFrameTemplate")
+  -- scrollFrame:SetSize(640, 600)
+  -- scrollFrame:SetPoint("TOPLEFT", EUI_Nameplates, "TOPLEFT", 0, 0)
 
-  local Nameplate_Content = CreateFrame("Frame", nil, scrollFrame)
-  Nameplate_Content:SetSize(640, 720)
-  scrollFrame:SetScrollChild(Nameplate_Content)
+  -- local Nameplate_Content = CreateFrame("Frame", nil, scrollFrame)
+  -- Nameplate_Content:SetSize(640, 720)
+  -- scrollFrame:SetScrollChild(Nameplate_Content)
 
-  local nameplateText = Nameplate_Content:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-  nameplateText:SetText("Nameplates")
-  nameplateText:SetPoint("TOPLEFT", 16, -16)
+  -- local nameplateText = Nameplate_Content:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+  -- nameplateText:SetText("Nameplates")
+  -- nameplateText:SetPoint("TOPLEFT", 16, -16)
 
-  local skinNameplates = newCheckbox(
-    "Enhance Nameplates",
-    "Enable the customisation options below for nameplates.",
-    "skinNameplates",
-    nameplateText,
-    Nameplate_Content,
-    function(value)
-      if not value then
-        Nameplate_Reload:Show()
-      else
-        Nameplate_Reload:Hide()
-      end
-      if value then
-        EnableNameplateSettings()
-        InitNameplates()
-      else
-        DisableNameplateSettings()
-      end
-    end
-  )
+  -- local skinNameplates = newCheckbox(
+  --   "Enhance Nameplates",
+  --   "Enable the customisation options below for nameplates.",
+  --   "skinNameplates",
+  --   nameplateText,
+  --   Nameplate_Content,
+  --   function(value)
+  --     if not value then
+  --       Nameplate_Reload:Show()
+  --     else
+  --       Nameplate_Reload:Hide()
+  --     end
+  --     if value then
+  --       EnableNameplateSettings()
+  --       InitNameplates()
+  --     else
+  --       DisableNameplateSettings()
+  --     end
+  --   end
+  -- )
 
-  local nameplateFont, nameplateFontDropdown = newDropdown(
-    "Nameplate Font",
-    LSM_FONTS,
-    "nameplateFont",
-    200,
-    Nameplate_Content,
-    RefreshNameplates
-  )
-  nameplateFont:SetPoint("TOPLEFT", skinNameplates, "BOTTOMLEFT", 0, -4)
+  -- local nameplateFont, nameplateFontDropdown = newDropdown(
+  --   "Nameplate Font",
+  --   LSM_FONTS,
+  --   "nameplateFont",
+  --   200,
+  --   Nameplate_Content,
+  --   RefreshNameplates
+  -- )
+  -- nameplateFont:SetPoint("TOPLEFT", skinNameplates, "BOTTOMLEFT", 0, -4)
 
-  local nameplateFontSlider = newSlider(
-    FONT_SIZE.." "..FONT_SIZE_TEMPLATE,
-    "nameplateNameFontSize",
-    6,
-    24,
-    1,
-    "Font size for Nameplate Names",
-    nameplateFontDropdown,
-    Nameplate_Content,
-    RefreshNameplates
-  )
-  nameplateFontSlider:ClearAllPoints()
-  nameplateFontSlider:SetPoint("LEFT", nameplateFontDropdown, "RIGHT", 220, 0)
+  -- local nameplateFontSlider = newSlider(
+  --   FONT_SIZE.." "..FONT_SIZE_TEMPLATE,
+  --   "nameplateNameFontSize",
+  --   6,
+  --   24,
+  --   1,
+  --   "Font size for Nameplate Names",
+  --   nameplateFontDropdown,
+  --   Nameplate_Content,
+  --   RefreshNameplates
+  -- )
+  -- nameplateFontSlider:ClearAllPoints()
+  -- nameplateFontSlider:SetPoint("LEFT", nameplateFontDropdown, "RIGHT", 220, 0)
 
-  local nameplateAbbrevNames = newCheckbox(
-    "Abbreviate Unit Names",
-    "Abbreviate long NPC names on nameplates.",
-    "nameplateAbbrevNames",
-    nameplateFont,
-    Nameplate_Content
-  )
-  nameplateAbbrevNames:SetPoint("TOPLEFT", nameplateFont, "BOTTOMLEFT", 0, -50)
+  -- local nameplateAbbrevNames = newCheckbox(
+  --   "Abbreviate Unit Names",
+  --   "Abbreviate long NPC names on nameplates.",
+  --   "nameplateAbbrevNames",
+  --   nameplateFont,
+  --   Nameplate_Content
+  -- )
+  -- nameplateAbbrevNames:SetPoint("TOPLEFT", nameplateFont, "BOTTOMLEFT", 0, -50)
 
-  local nameplateHideServerNames = newCheckbox(
-    "Hide Server Names (Must rezone to see change).",
-    "Hide server names for players from different servers to reduce clutter.",
-    "nameplateHideServerNames",
-    nameplateAbbrevNames,
-    Nameplate_Content
-  )
+  -- local nameplateHideServerNames = newCheckbox(
+  --   "Hide Server Names (Must rezone to see change).",
+  --   "Hide server names for players from different servers to reduce clutter.",
+  --   "nameplateHideServerNames",
+  --   nameplateAbbrevNames,
+  --   Nameplate_Content
+  -- )
 
-  local nameplateFriendlyNamesClassColor = newCheckbox(
-    "Class Color Friendly Names",
-    "Colors friendly players' names on their nameplates.",
-    "nameplateFriendlyNamesClassColor",
-    nameplateHideServerNames,
-    Nameplate_Content,
-    RefreshNameplates
-  )
+  -- local nameplateFriendlyNamesClassColor = newCheckbox(
+  --   "Class Color Friendly Names",
+  --   "Colors friendly players' names on their nameplates.",
+  --   "nameplateFriendlyNamesClassColor",
+  --   nameplateHideServerNames,
+  --   Nameplate_Content,
+  --   RefreshNameplates
+  -- )
 
-  local nameplateFriendlySmall = newCheckbox(
-    "Smaller Friendly Nameplates",
-    "Reduce size of friendly nameplates to more easily distinguish friend from foe",
-    "nameplateFriendlySmall",
-    nameplateFriendlyNamesClassColor,
-    Nameplate_Content,
-    SetFriendlyNameplateSize
-  )
+  -- local nameplateFriendlySmall = newCheckbox(
+  --   "Smaller Friendly Nameplates",
+  --   "Reduce size of friendly nameplates to more easily distinguish friend from foe",
+  --   "nameplateFriendlySmall",
+  --   nameplateFriendlyNamesClassColor,
+  --   Nameplate_Content,
+  --   SetFriendlyNameplateSize
+  -- )
 
-  local nameplateShowLevel = newCheckbox(
-    "Show Level",
-    "Show player/mob level on nameplate",
-    "nameplateShowLevel",
-    nameplateFriendlySmall,
-    Nameplate_Content,
-    RefreshNameplates
-  )
+  -- local nameplateShowLevel = newCheckbox(
+  --   "Show Level",
+  --   "Show player/mob level on nameplate",
+  --   "nameplateShowLevel",
+  --   nameplateFriendlySmall,
+  --   Nameplate_Content,
+  --   RefreshNameplates
+  -- )
 
-  local nameplateShowHealth = newCheckbox(
-    "Show Health Percentage",
-    "Show percentages of health on nameplates",
-    "nameplateHealthPercent",
-    nameplateShowLevel,
-    Nameplate_Content,
-    RefreshNameplates
-  )
+  -- local nameplateShowHealth = newCheckbox(
+  --   "Show Health Percentage",
+  --   "Show percentages of health on nameplates",
+  --   "nameplateHealthPercent",
+  --   nameplateShowLevel,
+  --   Nameplate_Content,
+  --   RefreshNameplates
+  -- )
 
-  local arenaNumbers = newCheckbox(
-    "Show Arena Numbers on nameplates in arenas",
-    "Show Arena number (i.e. 1, 2, 3 etc) on top of nameplates in arenas instead of player names to assist with macro use awareness",
-    "arenaNumbers",
-    nameplateShowHealth,
-    Nameplate_Content,
-    RefreshNameplates
-  )
+  -- local arenaNumbers = newCheckbox(
+  --   "Show Arena Numbers on nameplates in arenas",
+  --   "Show Arena number (i.e. 1, 2, 3 etc) on top of nameplates in arenas instead of player names to assist with macro use awareness",
+  --   "arenaNumbers",
+  --   nameplateShowHealth,
+  --   Nameplate_Content,
+  --   RefreshNameplates
+  -- )
 
-  local nameplateHideCastText = newCheckbox(
-    "Hide Nameplate Cast Text",
-    "Hide cast text from nameplate castbars.",
-    "nameplateHideCastText",
-    arenaNumbers,
-    Nameplate_Content,
-    RefreshNameplates
-  )
+  -- local nameplateHideCastText = newCheckbox(
+  --   "Hide Nameplate Cast Text",
+  --   "Hide cast text from nameplate castbars.",
+  --   "nameplateHideCastText",
+  --   arenaNumbers,
+  --   Nameplate_Content,
+  --   RefreshNameplates
+  -- )
 
-  local nameplateHideFriendlyHealthbars = newCheckbox(
-    "Hide Friendly Nameplate Health Bars",
-    "Hide health bars for friendly players.",
-    "nameplateHideFriendlyHealthbars",
-    nameplateHideCastText,
-    Nameplate_Content,
-    RefreshNameplates
-  )
+  -- local nameplateHideFriendlyHealthbars = newCheckbox(
+  --   "Hide Friendly Nameplate Health Bars",
+  --   "Hide health bars for friendly players.",
+  --   "nameplateHideFriendlyHealthbars",
+  --   nameplateHideCastText,
+  --   Nameplate_Content,
+  --   RefreshNameplates
+  -- )
 
-  local nameplateHideFriendlyCastbars = newCheckbox(
-    "Hide Friendly Nameplate Cast Bars",
-    "Hide cast bars for friendly players.",
-    "nameplateHideFriendlyCastbars",
-    nameplateHideFriendlyHealthbars,
-    Nameplate_Content,
-    RefreshNameplates
-  )
+  -- local nameplateHideFriendlyCastbars = newCheckbox(
+  --   "Hide Friendly Nameplate Cast Bars",
+  --   "Hide cast bars for friendly players.",
+  --   "nameplateHideFriendlyCastbars",
+  --   nameplateHideFriendlyHealthbars,
+  --   Nameplate_Content,
+  --   RefreshNameplates
+  -- )
 
-  local nameplateHideClassificationIcon = newCheckbox(
-    "Hide Nameplate Classification Icon",
-    "Hide the classification icon (e.g. elite, rare) on nameplates.",
-    "nameplateHideClassificationIcon",
-    nameplateHideFriendlyCastbars,
-    Nameplate_Content,
-    RefreshNameplates
-  )
+  -- local nameplateHideClassificationIcon = newCheckbox(
+  --   "Hide Nameplate Classification Icon",
+  --   "Hide the classification icon (e.g. elite, rare) on nameplates.",
+  --   "nameplateHideClassificationIcon",
+  --   nameplateHideFriendlyCastbars,
+  --   Nameplate_Content,
+  --   RefreshNameplates
+  -- )
 
 
-  local nameplateFriendlyClickthrough = newCheckbox(
-    "Friendly Nameplate Clickthrough",
-    "Allow clicking through friendly nameplates to interact with objects behind them.",
-    "nameplateFriendlyClickthrough",
-    nameplateHideClassificationIcon,
-    Nameplate_Content,
-    function(value)
-      C_NamePlate.SetNamePlateFriendlyClickThrough(value)
-    end
-  )
+  -- local nameplateFriendlyClickthrough = newCheckbox(
+  --   "Friendly Nameplate Clickthrough",
+  --   "Allow clicking through friendly nameplates to interact with objects behind them.",
+  --   "nameplateFriendlyClickthrough",
+  --   nameplateHideClassificationIcon,
+  --   Nameplate_Content,
+  --   function(value)
+  --     C_NamePlate.SetNamePlateFriendlyClickThrough(value)
+  --   end
+  -- )
 
-  local nameplateColorInterrupt = newCheckbox(
-    "Color Castbars by Interrupt Availability",
-    "Color castbars based upon interrupt availability. This allows you to track your interrupt cooldown without having to look elsewhere.",
-    "nameplateCastbarColorInterrupt",
-    nameplateFriendlyClickthrough,
-    Nameplate_Content,
-    RefreshNameplates
-  )
+  -- local nameplateColorInterrupt = newCheckbox(
+  --   "Color Castbars by Interrupt Availability",
+  --   "Color castbars based upon interrupt availability. This allows you to track your interrupt cooldown without having to look elsewhere.",
+  --   "nameplateCastbarColorInterrupt",
+  --   nameplateFriendlyClickthrough,
+  --   Nameplate_Content,
+  --   RefreshNameplates
+  -- )
 
-  local nameplateShowTargetText = newCheckbox(
-    "Show Target Text on Nameplates",
-    "Show the target of the current cast on nameplates.",
-    "nameplateShowTargetText",
-    nameplateColorInterrupt,
-    Nameplate_Content,
-    RefreshNameplates
-  )
+  -- local nameplateShowTargetText = newCheckbox(
+  --   "Show Target Text on Nameplates",
+  --   "Show the target of the current cast on nameplates.",
+  --   "nameplateShowTargetText",
+  --   nameplateColorInterrupt,
+  --   Nameplate_Content,
+  --   RefreshNameplates
+  -- )
 
-  local nameplatePetIndicator = newCheckbox(
-    "Show Pet Indicator on Nameplates",
-    "Show an icon on nameplates to indicate primary/important pets.",
-    "nameplatePetIndicator",
-    nameplateShowTargetText,
-    Nameplate_Content,
-    RefreshNameplates
-  )
+  -- local nameplatePetIndicator = newCheckbox(
+  --   "Show Pet Indicator on Nameplates",
+  --   "Show an icon on nameplates to indicate primary/important pets.",
+  --   "nameplatePetIndicator",
+  --   nameplateShowTargetText,
+  --   Nameplate_Content,
+  --   RefreshNameplates
+  -- )
 
-  local nameplateFadeSecondaryPets = newCheckbox(
-    "Fade Secondary Pets",
-    "Fade the nameplates of secondary pets (e.g., second BM Hunter pet, Warlock minions).",
-    "nameplateFadeSecondaryPets",
-    nameplatePetIndicator,
-    Nameplate_Content,
-    RefreshNameplates
-  )
+  -- local nameplateFadeSecondaryPets = newCheckbox(
+  --   "Fade Secondary Pets",
+  --   "Fade the nameplates of secondary pets (e.g., second BM Hunter pet, Warlock minions).",
+  --   "nameplateFadeSecondaryPets",
+  --   nameplatePetIndicator,
+  --   Nameplate_Content,
+  --   RefreshNameplates
+  -- )
 
-  local nameplateCombatIndicator, nameplateCombatIndicatorDropdown = newDropdown(
-    "Nameplate Combat Indicator",
-    { ["none"] = "None", ["food"] = "Food", ["sap"] = "Sap" },
-    "nameplateCombatIndicator",
-    80,
-    Nameplate_Content,
-    RefreshNameplates
-  )
-  nameplateCombatIndicator:SetPoint("TOPLEFT", nameplateFadeSecondaryPets, "BOTTOMLEFT", 0, -4)
+  -- local nameplateCombatIndicator, nameplateCombatIndicatorDropdown = newDropdown(
+  --   "Nameplate Combat Indicator",
+  --   { ["none"] = "None", ["food"] = "Food", ["sap"] = "Sap" },
+  --   "nameplateCombatIndicator",
+  --   80,
+  --   Nameplate_Content,
+  --   RefreshNameplates
+  -- )
+  -- nameplateCombatIndicator:SetPoint("TOPLEFT", nameplateFadeSecondaryPets, "BOTTOMLEFT", 0, -4)
 
-  function DisableNameplateSettings()
-    nameplateFontDropdown:Disable()
-    nameplateFontSlider:Disable()
-    nameplateAbbrevNames:Disable()
-    nameplateHideServerNames:Disable()
-    nameplateFriendlyNamesClassColor:Disable()
-    nameplateFriendlySmall:Disable()
-    nameplateShowLevel:Disable()
-    nameplateShowHealth:Disable()
-    arenaNumbers:Disable()
-    nameplateHideCastText:Disable()
-    nameplateHideFriendlyHealthbars:Disable()
-    nameplateHideFriendlyCastbars:Disable()
-    nameplateHideClassificationIcon:Disable()
-    nameplateFriendlyClickthrough:Disable()
-    nameplateColorInterrupt:Disable()
-    nameplateShowTargetText:Disable()
-    nameplatePetIndicator:Disable()
-    nameplateFadeSecondaryPets:Disable()
-    nameplateCombatIndicatorDropdown:Disable()
-  end
+  -- function DisableNameplateSettings()
+  --   nameplateFontDropdown:Disable()
+  --   nameplateFontSlider:Disable()
+  --   nameplateAbbrevNames:Disable()
+  --   nameplateHideServerNames:Disable()
+  --   nameplateFriendlyNamesClassColor:Disable()
+  --   nameplateFriendlySmall:Disable()
+  --   nameplateShowLevel:Disable()
+  --   nameplateShowHealth:Disable()
+  --   arenaNumbers:Disable()
+  --   nameplateHideCastText:Disable()
+  --   nameplateHideFriendlyHealthbars:Disable()
+  --   nameplateHideFriendlyCastbars:Disable()
+  --   nameplateHideClassificationIcon:Disable()
+  --   nameplateFriendlyClickthrough:Disable()
+  --   nameplateColorInterrupt:Disable()
+  --   nameplateShowTargetText:Disable()
+  --   nameplatePetIndicator:Disable()
+  --   nameplateFadeSecondaryPets:Disable()
+  --   nameplateCombatIndicatorDropdown:Disable()
+  -- end
 
-  function EnableNameplateSettings()
-    nameplateFontDropdown:Enable()
-    nameplateFontSlider:Enable()
-    nameplateAbbrevNames:Enable()
-    nameplateHideServerNames:Enable()
-    nameplateFriendlyNamesClassColor:Enable()
-    nameplateFriendlySmall:Enable()
-    nameplateShowLevel:Enable()
-    nameplateShowHealth:Enable()
-    arenaNumbers:Enable()
-    nameplateHideCastText:Enable()
-    nameplateHideFriendlyHealthbars:Enable()
-    nameplateHideFriendlyCastbars:Enable()
-    nameplateHideClassificationIcon:Enable()
-    nameplateFriendlyClickthrough:Enable()
-    nameplateColorInterrupt:Enable()
-    nameplateShowTargetText:Enable()
-    nameplatePetIndicator:Enable()
-    nameplateFadeSecondaryPets:Enable()
-    nameplateCombatIndicatorDropdown:Enable()
-  end
+  -- function EnableNameplateSettings()
+  --   nameplateFontDropdown:Enable()
+  --   nameplateFontSlider:Enable()
+  --   nameplateAbbrevNames:Enable()
+  --   nameplateHideServerNames:Enable()
+  --   nameplateFriendlyNamesClassColor:Enable()
+  --   nameplateFriendlySmall:Enable()
+  --   nameplateShowLevel:Enable()
+  --   nameplateShowHealth:Enable()
+  --   arenaNumbers:Enable()
+  --   nameplateHideCastText:Enable()
+  --   nameplateHideFriendlyHealthbars:Enable()
+  --   nameplateHideFriendlyCastbars:Enable()
+  --   nameplateHideClassificationIcon:Enable()
+  --   nameplateFriendlyClickthrough:Enable()
+  --   nameplateColorInterrupt:Enable()
+  --   nameplateShowTargetText:Enable()
+  --   nameplatePetIndicator:Enable()
+  --   nameplateFadeSecondaryPets:Enable()
+  --   nameplateCombatIndicatorDropdown:Enable()
+  -- end
 
-  if not EUIDB.skinNameplates then
-    DisableNameplateSettings()
-  else
-    EnableNameplateSettings()
-  end
+  -- if not EUIDB.skinNameplates then
+  --   DisableNameplateSettings()
+  -- else
+  --   EnableNameplateSettings()
+  -- end
 
   --------------
   -- Tooltips --
@@ -1281,15 +1281,6 @@ local function setupEuiOptions()
 
   Nameplate_Reload = addReloadButton(Nameplate_Content)
   Tooltips_Reload = addReloadButton(EUI_Tooltips)
-
-  -------------------
-  -- Slash Command --
-  -------------------
-  SLASH_eui1 = "/eui"
-
-  SlashCmdList["eui"] = function()
-    openEuiConfig()
-  end
 
   ----------------------
   -- Game Menu Button --
