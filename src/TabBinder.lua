@@ -6,17 +6,9 @@ OnEvents({
 "ZONE_CHANGED_NEW_AREA",
 "PLAYER_REGEN_ENABLED",
 "DUEL_REQUESTED",
-"DUEL_FINISHED",
-"CHAT_MSG_SYSTEM"
-}, function(_, event, ...)
+"DUEL_FINISHED"
+}, function(_, event)
 	if not EUIDB.tabBinder then return end
-
-	if event == "CHAT_MSG_SYSTEM" then
-		local RTBChatMessage = ...
-		if RTBChatMessage == ERR_DUEL_REQUESTED then
-			event = "DUEL_REQUESTED"
-		end
-	end
 
 	if event == "ZONE_CHANGED_NEW_AREA" or event == "PLAYER_ENTERING_WORLD" or
 		(event == "PLAYER_REGEN_ENABLED" and RTB_Fail) or
