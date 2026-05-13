@@ -100,8 +100,7 @@ end
 
 OnEvents({
   "NAME_PLATE_UNIT_ADDED",
-  "NAME_PLATE_UNIT_REMOVED",
-  "COMBAT_LOG_EVENT_UNFILTERED"
+  "NAME_PLATE_UNIT_REMOVED"
 },
 ---@param event string
 ---@param ... any
