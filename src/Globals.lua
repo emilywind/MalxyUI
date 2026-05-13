@@ -398,9 +398,9 @@ function GetUnitInfo(unit)
   info.classFileName = info.isPlayer and classFileName or nil
   info.classID = info.isPlayer and classID or nil
   info.reaction = UnitReaction(unit, "player")
-  info.isEnemy = (info.reaction and info.reaction < 4) and not info.isSelf
-  info.isNeutral = (info.reaction and info.reaction == 4) and not info.isSelf
-  info.isFriend = (info.reaction and info.reaction >= 5) and not info.isSelf
+  info.isEnemy = (info.reaction and info.reaction < 4) and not issecretvalue(info.isSelf) and not info.isSelf
+  info.isNeutral = (info.reaction and info.reaction == 4) and not issecretvalue(info.isSelf) and not info.isSelf
+  info.isFriend = (info.reaction and info.reaction >= 5) and not issecretvalue(info.isSelf) and not info.isSelf
   info.sex = UnitSex(unit)
   info.tapDenied = UnitIsTapDenied(unit)
   info.playerControlled = UnitPlayerControlled(unit)
