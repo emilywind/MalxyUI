@@ -1,5 +1,5 @@
 --------------------------------
---- Em's UI SafeQueue Module ---
+--- MalyxiUI SafeQueue Module ---
 --------------------------------
 local queueTime = {} -- Use an array so we can store the time for each queue
 local queue = 0 -- Current queue index of popped queue
@@ -26,7 +26,7 @@ local function printTime()
 		end
 	end
 
-	print("|cff33ff99Em's UI|r: " .. str)
+	print("|cff33ff99MalyxiUI|r: " .. str)
 end
 
 OnEvent("UPDATE_BATTLEFIELD_STATUS", function()
@@ -52,7 +52,7 @@ OnEvent("UPDATE_BATTLEFIELD_STATUS", function()
 end)
 
 OnPlayerLogin(function()
-	CreateTimerBar("EmsUISafeQueueStatusBar", PVPReadyDialog, function(self)
+	CreateTimerBar("MalyxiUISafeQueueStatusBar", PVPReadyDialog, function(self)
 			local timeLeft = GetBattlefieldPortExpiration(queue)
 
 			if justPopped then

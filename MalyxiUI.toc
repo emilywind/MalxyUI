@@ -4,7 +4,7 @@
 ## Author: Emily
 ## Version: 8.1.2
 ## SavedVariables: EUIDB
-## IconTexture: Interface\Addons\EmsUI\media\icons\EmsUI
+## IconTexture: Interface\Addons\MalyxiUI\media\icons\MalyxiUI
 ## Email: emlywind@gmail.com
 ## X-Curse-Project-ID: 336153
 

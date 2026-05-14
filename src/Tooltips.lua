@@ -1,5 +1,5 @@
 --------------------------------------------------------------------
----                     EmsUI Tooltips Module                    ---
+---                     MalyxiUI Tooltips Module                    ---
 --- Thanks to TipTac Reborn for mount code and LibFroznFunctions ---
 --------------------------------------------------------------------
 local LibFroznFunctions = LibStub:GetLibrary("LibFroznFunctions-1.0")

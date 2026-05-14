@@ -13,7 +13,7 @@ OnPlayerLogin(function()
   end
 
   local timeLeft = 0
-  local timerBar = CreateTimerBar("EmsUILFGStatusBar", LFGDungeonReadyPopup, function(self, elapsed)
+  local timerBar = CreateTimerBar("MalyxiUILFGStatusBar", LFGDungeonReadyPopup, function(self, elapsed)
     timeLeft = (timeLeft or 0) - elapsed
     timeLeft = max(timeLeft, 0) -- Ensure timeLeft doesn't go negative
 

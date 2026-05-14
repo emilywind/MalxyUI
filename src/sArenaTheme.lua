@@ -1,6 +1,6 @@
-local layoutName = "Em's UI"
+local layoutName = "MalyxiUI"
 local layout = {}
-layout.name = "Em's UI"
+layout.name = "MalyxiUI"
 
 layout.defaultSettings = {
   posX = 400,

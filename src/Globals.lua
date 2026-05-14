@@ -11,7 +11,7 @@ COLOR_BORDER = CreateColorFromHexString('ff1a1a1a')
 COLOR_CASTBAR_NO_INTERRUPT = CreateColorFromHexString('ffff0004')
 COLOR_CASTBAR_DELAYED_INTERRUPT = CreateColorFromHexString('ffff7aa5')
 
-AddonDir = [[Interface\AddOns\EmsUI]]
+AddonDir = [[Interface\AddOns\MalyxiUI]]
 MediaDir = AddonDir .. [[\media]]
 FontsDir = MediaDir .. [[\fonts]]
 TextureDir = MediaDir .. [[\textures]]
@@ -54,7 +54,7 @@ EUI_TEXTURES = {
 
 FABLED_CLASS_CIRCLES_DATA = {
   class = {
-		path = [[Interface\AddOns\EmsUI\media\textures\class\]],
+    path = [[Interface\AddOns\MalyxiUI\media\textures\class\]],
 		styles = {
 			fabled = {
 				name = 'Fabled',

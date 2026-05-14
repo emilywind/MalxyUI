@@ -148,14 +148,14 @@ end
 local makePanel = function(frameName, mainpanel, panelName)
   local panel = CreateFrame("Frame", frameName, mainpanel)
   panel.name, panel.parent = panelName, name
-  local category = Settings.GetCategory("EmsUI")
+  local category = Settings.GetCategory("MalyxiUI")
   Settings.RegisterCanvasLayoutSubcategory(category, panel, panelName)
 
   return panel
 end
 
 local function openEuiConfig()
-  Settings.OpenToCategory('EmsUI')
+  Settings.OpenToCategory('MalyxiUI')
 end
 
 local function setupEuiOptions()
@@ -163,9 +163,9 @@ local function setupEuiOptions()
   LSM_FONTS = tableToWowDropdown(LSM:HashTable('font'))
   -- Creation of the options menu
   EUI.panel = CreateFrame( "Frame", "euiPanel", UIParent )
-  EUI.panel.name = "EmsUI";
+  EUI.panel.name = "MalyxiUI";
   local category = Settings.RegisterCanvasLayoutCategory(EUI.panel, "Malyxi UI")
-  category.ID = "EmsUI"
+  category.ID = "MalyxiUI"
   Settings.RegisterAddOnCategory(category)
 
   ---@param label string
@@ -351,7 +351,7 @@ local function setupEuiOptions()
     return reload
   end
 
-  local version = C_AddOns.GetAddOnMetadata("EmsUI", "Version")
+  local version = C_AddOns.GetAddOnMetadata("MalyxiUI", "Version")
 
   local euiTitle = EUI.panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   euiTitle:SetPoint("TOPLEFT", 16, -16)
@@ -1285,11 +1285,11 @@ local function setupEuiOptions()
   ----------------------
   -- Game Menu Button --
   ----------------------
-  -- local function emsUIGameMenuButton(self)
+  -- local function MalyxiUIGameMenuButton(self)
   --   self:AddSection()
   --   self:AddButton("Malyxi UI", openEuiConfig)
   -- end
-  -- hooksecurefunc(GameMenuFrame, "InitButtons", emsUIGameMenuButton)
+  -- hooksecurefunc(GameMenuFrame, "InitButtons", MalyxiUIGameMenuButton)
 end
 
 OnPlayerLogin(setupEuiOptions)
