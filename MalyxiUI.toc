@@ -1,8 +1,8 @@
 ## Interface: 120000, 120001, 120005
-## Title: Em's UI
+## Title: Malyxi UI
 ## Notes: Simple skinnning modifications and quality of life features for the default interface to make it nicer looking and more user-friendly. Gives a great rank 1 gladiator arena UI experience without the bloat of a full UI replacement.
 ## Author: Emily
-## Version: 9.0.0
+## Version: 8.1.2
 ## SavedVariables: EUIDB
 ## IconTexture: Interface\Addons\EmsUI\media\icons\EmsUI
 ## Email: emlywind@gmail.com
@@ -23,4 +23,4 @@
 ## Category-zhTW: 使用者介面
 
 lib\embeds.xml
-src\EmsUI.xml
+src\MalyxiUI.xml
