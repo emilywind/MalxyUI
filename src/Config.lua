@@ -164,7 +164,7 @@ local function setupEuiOptions()
   -- Creation of the options menu
   EUI.panel = CreateFrame( "Frame", "euiPanel", UIParent )
   EUI.panel.name = "EmsUI";
-  local category = Settings.RegisterCanvasLayoutCategory(EUI.panel, "Malyxi UI")
+  local category = Settings.RegisterCanvasLayoutCategory(EUI.panel, "Em's UI")
   category.ID = "EmsUI"
   Settings.RegisterAddOnCategory(category)
 
@@ -355,7 +355,7 @@ local function setupEuiOptions()
 
   local euiTitle = EUI.panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   euiTitle:SetPoint("TOPLEFT", 16, -16)
-  euiTitle:SetText("Malyxi UI ("..version..")")
+  euiTitle:SetText("Em's UI ("..version..")")
 
   local uiModeChooser, uiModeDropdown = newDropdown(
     "UI Mode",
@@ -1287,7 +1287,7 @@ local function setupEuiOptions()
   ----------------------
   -- local function emsUIGameMenuButton(self)
   --   self:AddSection()
-  --   self:AddButton("Malyxi UI", openEuiConfig)
+  --   self:AddButton("Em's UI", openEuiConfig)
   -- end
   -- hooksecurefunc(GameMenuFrame, "InitButtons", emsUIGameMenuButton)
 end
