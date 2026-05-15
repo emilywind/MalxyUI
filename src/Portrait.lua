@@ -102,6 +102,8 @@ local function updateEUIPortrait(frame)
 
     frame.portraitFG:Show()
 
+    if issecretvalue(info.guid) then return end -- Don't update portrait if it's a secret value, otherwise it'll cause taint issues in the character frame when inspecting
+
     if not info.guid or (unit == 'targettarget' and info.guid == portraitModel.guid) then return end -- Target of Target is spammy and needs this protection
 
     portraitModel.guid = info.guid
