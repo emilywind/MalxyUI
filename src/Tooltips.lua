@@ -140,7 +140,7 @@ function InitTooltips()
 			local gttLine = _G["GameTooltipTextLeft" .. i]
 			local gttLineText = gttLine:GetText()
 
-			if (type(gttLineText) == "string") then
+			if (not issecretvalue(gttLineText) and type(gttLineText) == "string") then
 				local isGttLineTextUnitPopupRightClick = (gttLineText == UNIT_POPUP_RIGHT_CLICK)
 				local isSpecLine = unitInfo.className and
 				(specNames:Contains(gttLineText:match("^(.+) " .. unitInfo.className .. "$")))
