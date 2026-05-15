@@ -46,7 +46,7 @@ local function TSI_UpdateTooltip(unitCacheRecord)
   -- exit if unit from unit cache record doesn't match the current displaying unit
   local unitID = select(2, LibFroznFunctions:GetUnitFromTooltip(GameTooltip))
 
-  if not unitID then return end
+  if issecretvalue(unitID) or not unitID then return end
 
   local unitGUID = UnitGUID(unitID)
 
