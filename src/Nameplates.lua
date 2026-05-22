@@ -187,29 +187,29 @@ function InitNameplates()
     hookedAcquireUnitFrame = true
   end
 
+  -- Keep nameplates on screen
+  SetCVar("nameplateOtherBottomInset", 0.1)
+  SetCVar("nameplateOtherTopInset", 0.08)
+
   if not EUIDB.skinNameplates then return end
 
-  local cVars = {
-    nameplateGlobalScale = 1,
-    nameplateMinScale = 1,
-    nameplateMaxScale = 1,
-    nameplateSelectedScale = 1.2,
-    namePlateVerticalScale = 2.7,
-    nameplateHorizontalScale = 1.4,
-  }
+  -- local cVars = {
+  --   nameplateGlobalScale = 1,
+  --   nameplateMinScale = 1,
+  --   nameplateMaxScale = 1,
+  --   nameplateSelectedScale = 1.2,
+  --   namePlateVerticalScale = 2.7,
+  --   nameplateHorizontalScale = 1.4,
+  -- }
 
-  for cVar, value in pairs(cVars) do
-    SetCVar(cVar, value)
-  end
+  -- for cVar, value in pairs(cVars) do
+  --   SetCVar(cVar, value)
+  -- end
 
   EUISetCVar("nameplateResourceOnTarget")
   EUISetCVar("nameplateShowAll")
   EUISetCVar("nameplateShowFriends")
   EUISetCVar("nameplateShowEnemyMinions")
-
-  -- Keep nameplates on screen
-  SetCVar("nameplateOtherBottomInset", 0.1)
-  SetCVar("nameplateOtherTopInset", 0.08)
 
   -- C_NamePlate.SetNamePlateFriendlyClickThrough(EUIDB.nameplateFriendlyClickthrough)
 
