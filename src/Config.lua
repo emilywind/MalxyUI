@@ -1113,36 +1113,36 @@ local function setupEuiOptions()
   )
   nameplateNPCIndicators:SetPoint("TOPLEFT", fasterLoot, "BOTTOMLEFT", 0, -8)
 
-  local partyMarkerText = EUI_Misc:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-  partyMarkerText:SetText("Party Markers")
-  partyMarkerText:SetPoint("TOPLEFT", nameplateNPCIndicators, "BOTTOMLEFT", 0, -48)
+  -- local partyMarkerText = EUI_Misc:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+  -- partyMarkerText:SetText("Party Markers")
+  -- partyMarkerText:SetPoint("TOPLEFT", nameplateNPCIndicators, "BOTTOMLEFT", 0, -48)
 
-  local partyMarker = newCheckbox(
-    "Show Party Markers",
-    "Show markers for your party members on their nameplates.",
-    "partyMarker",
-    partyMarkerText,
-    EUI_Misc,
-    RefreshPartyMarkers
-  )
+  -- local partyMarker = newCheckbox(
+  --   "Show Party Markers",
+  --   "Show markers for your party members on their nameplates.",
+  --   "partyMarker",
+  --   partyMarkerText,
+  --   EUI_Misc,
+  --   RefreshPartyMarkers
+  -- )
 
-  local partyMarkerHealer = newCheckbox(
-    "Show Healer Markers",
-    "Show a specific marker for healers in your party.",
-    "partyMarkerHealer",
-    partyMarker,
-    EUI_Misc,
-    RefreshPartyMarkers
-  )
+  -- local partyMarkerHealer = newCheckbox(
+  --   "Show Healer Markers",
+  --   "Show a specific marker for healers in your party.",
+  --   "partyMarkerHealer",
+  --   partyMarker,
+  --   EUI_Misc,
+  --   RefreshPartyMarkers
+  -- )
 
-  local partyMarkerHideRaidmarker = newCheckbox(
-    "Hide Default Party Raid Markers",
-    "Hide the default raid markers above party members' heads.",
-    "partyMarkerHideRaidmarker",
-    partyMarkerHealer,
-    EUI_Misc,
-    RefreshPartyMarkers
-  )
+  -- local partyMarkerHideRaidmarker = newCheckbox(
+  --   "Hide Default Party Raid Markers",
+  --   "Hide the default raid markers above party members' heads.",
+  --   "partyMarkerHideRaidmarker",
+  --   partyMarkerHealer,
+  --   EUI_Misc,
+  --   RefreshPartyMarkers
+  -- )
 
   -----------
   -- CVars --
@@ -1279,7 +1279,7 @@ local function setupEuiOptions()
     ReloadUI()
   end)
 
-  Nameplate_Reload = addReloadButton(Nameplate_Content)
+  -- Nameplate_Reload = addReloadButton(Nameplate_Content)
   Tooltips_Reload = addReloadButton(EUI_Tooltips)
 
   ----------------------
