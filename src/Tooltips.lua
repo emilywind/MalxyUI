@@ -78,7 +78,8 @@ function InitTooltips()
 		if GameTooltip.euiClean then return end
 
 		local border = GameTooltip.border
-		if not border then
+		local width = GameTooltip:GetWidth()
+		if not border and not issecretvalue(width) then
 			border = CreateFrame('Frame', 'GameTooltipBorder', GameTooltip, "BackdropTemplate")
 			border:SetPoint("TOPLEFT", GameTooltip, "TOPLEFT")
 			border:SetPoint("BOTTOMRIGHT", GameTooltip, "BOTTOMRIGHT")
