@@ -34,7 +34,6 @@
   <Include file="TabBinder.lua" />
   <Include file="BigDebuffsSkin.lua" />
   <Include file="ObjectiveTracker.lua" />
-  <Include file="Vigor.lua" />
   <Include file="TooltipSpecAndIlvl.lua" />
   <Include file="HideArenaFrames.lua" />
   <Include file="sArenaTheme.lua" />
