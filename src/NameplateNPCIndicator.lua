@@ -72,7 +72,7 @@ local function nameplateTotem(np)
 
   local iconFrame = np.npcIcon
 
-  if unitInfo.isNpc and unitInfo.npcID and npcIDs[unitInfo.npcID] then
+  if unitInfo.isNpc and unitInfo.isEnemy and unitInfo.npcID and npcIDs[unitInfo.npcID] then
     if not iconFrame then
       iconFrame = createIcon(np)
       np.npcIcon = iconFrame
