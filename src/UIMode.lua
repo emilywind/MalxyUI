@@ -2,9 +2,8 @@
 ---@param unit? UnitToken
 function ApplyUIMode(texture, unit)
   local unitInfo = GetUnitInfo(unit)
-  if not unitInfo.exists then return end
   texture:SetDesaturated(EUIDB.uiMode ~= 'blizzard' or (EUIDB.classColoredUnitFrames and unitInfo.isPlayer))
-  SetVertexColor(texture, GetFrameColor(unit))
+  SetVertexColor(texture, GetFrameColor(unitInfo.exists and unitInfo.id))
 end
 
 function ApplyStaticUIMode()
