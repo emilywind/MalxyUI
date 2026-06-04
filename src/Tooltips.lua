@@ -77,17 +77,6 @@ function InitTooltips()
 
 		if GameTooltip.euiClean then return end
 
-		local border = GameTooltip.border
-		local width = GameTooltip:GetWidth()
-		if not border and not issecretvalue(width) then
-			border = CreateFrame('Frame', 'GameTooltipBorder', GameTooltip, "BackdropTemplate")
-			border:SetPoint("TOPLEFT", GameTooltip, "TOPLEFT")
-			border:SetPoint("BOTTOMRIGHT", GameTooltip, "BOTTOMRIGHT")
-			border:SetBackdrop(EUI_BACKDROP)
-			border:SetBackdropBorderColor(0.08, 0.08, 0.08, 0.8)
-			GameTooltip.border = border
-		end
-
 		local bar = GameTooltipStatusBar ---@cast bar StatusBar
 		if not bar.bg then
 			bar.bg = bar:CreateTexture('GameTooltipStatusBarBackground', "BACKGROUND")
@@ -248,6 +237,11 @@ function InitTooltips()
     skinGameTooltip()
 		cleanupTooltip(self)
 
+		-- Add room for the health bar
+		if not EUIDB.tooltipHideHealthBar then
+			self:AddLine(' ')
+		end
+
 		if not unitInfo.exists then return end
 
 		local level = unitInfo.level
@@ -303,11 +297,6 @@ function InitTooltips()
 		if EUIDB.tooltipShowNpcID and unitInfo.npcID then
 			self:AddLine(" ")
 			self:AddLine("NPC ID: " .. unitInfo.npcID)
-		end
-
-    -- Add room for the health bar
-		if not EUIDB.tooltipHideHealthBar then
-			self:AddLine(' ')
 		end
 	end
 
