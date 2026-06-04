@@ -2,6 +2,7 @@
 ---@param unit? UnitToken
 function ApplyUIMode(texture, unit)
   local unitInfo = GetUnitInfo(unit)
+  if not unitInfo.exists then return end
   texture:SetDesaturated(EUIDB.uiMode ~= 'blizzard' or (EUIDB.classColoredUnitFrames and unitInfo.isPlayer))
   SetVertexColor(texture, GetFrameColor(unit))
 end
@@ -33,7 +34,7 @@ OnPlayerLogin(function()
 
   TargetFrame:HookScript("OnUpdate", function()
     ApplyUIMode(TargetFrame.TargetFrameContainer.FrameTexture, "target")
-    -- ApplyUIMode(TargetFrameToT.FrameTexture, "targettarget")
+    ApplyUIMode(TargetFrameToT.FrameTexture, "targettarget")
   end)
 
   FocusFrame:HookScript("OnUpdate", function()
