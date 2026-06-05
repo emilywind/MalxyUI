@@ -237,12 +237,12 @@ function InitTooltips()
     skinGameTooltip()
 		cleanupTooltip(self)
 
-		-- Add room for the health bar
-		if not EUIDB.tooltipHideHealthBar then
-			self:AddLine(' ')
+		if not unitInfo.exists then
+			if unit then -- Unit exists but is a secret value, so add line to make room for healthbar
+				self:AddLine(' ')
+			end
+			return
 		end
-
-		if not unitInfo.exists then return end
 
 		local level = unitInfo.level
     if (level < 0) then
@@ -297,6 +297,11 @@ function InitTooltips()
 		if EUIDB.tooltipShowNpcID and unitInfo.npcID then
 			self:AddLine(" ")
 			self:AddLine("NPC ID: " .. unitInfo.npcID)
+		end
+
+		-- Add room for the health bar
+		if not EUIDB.tooltipHideHealthBar then
+			self:AddLine(' ')
 		end
 	end
 
