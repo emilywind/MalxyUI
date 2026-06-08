@@ -24,6 +24,8 @@ EUIDBDefaults = {
 
   enableSpellNotifications = true,
 
+  showKillingBlows = true, -- Show killing blows with a custom texture and sound
+
   lootSpecDisplay = true, -- Display loot spec icon in the player frame
 
   enableFont = true,       -- Update all fonts to something cooler
@@ -1112,6 +1114,16 @@ local function setupEuiOptions()
     UpdateNPCIndicatorSetting
   )
   nameplateNPCIndicators:SetPoint("TOPLEFT", fasterLoot, "BOTTOMLEFT", 0, -8)
+
+  local killingBlowEffect = newCheckbox(
+    "Killing Blow Effect",
+    "Show a KO texture and play a KO sound when scoring a killing blow on players. From Garou: Mark of the Wolves.",
+    "showKillingBlows",
+    nameplateNPCIndicators,
+    EUI_Misc,
+    ModifyKillingBlowSetting
+  )
+  killingBlowEffect:SetPoint("TOPLEFT", nameplateNPCIndicators, "BOTTOMLEFT", 0, -48)
 
   -- local partyMarkerText = EUI_Misc:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
   -- partyMarkerText:SetText("Party Markers")

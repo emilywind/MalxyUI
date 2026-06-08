@@ -58,7 +58,7 @@ texture:SetAllPoints()
 
 local group = texture:CreateAnimationGroup()
 
-group:SetScript("OnPlay", function(self)
+group:SetScript("OnPlay", function()
   frame:SetSize(TEXTURE_WIDTH, TEXTURE_HEIGHT) -- Set the frame to the configured size before scaling animation starts
 end)
 
@@ -69,45 +69,28 @@ scale:SetDuration(SCALE_DURATION)
 local delay = group:CreateAnimation("Animation")
 delay:SetDuration(DELAY_DURATION)
 
-delay:SetScript("OnPlay", function(self)
+delay:SetScript("OnPlay", function()
   frame:SetSize(TEXTURE_WIDTH * SCALE_X, TEXTURE_HEIGHT * SCALE_Y) -- Set the frame to the scaled size after the scaling animation ends
 end)
 
-group:SetScript("OnFinished", function(self)
+group:SetScript("OnFinished", function()
   frame:Hide()
 end)
 
-frame:SetScript("OnShow", function(self)
+frame:SetScript("OnShow", function()
   group:Play()
   PlaySoundFile(SOUND_PATH, SOUND_CHANNEL)
 end)
 
-
-------
--- Events
-------
-local addon, ns = ...
-
-local band = bit.band
-
--- true if we have the AddOn security restrictions added in 12.0.0
--- TODO: Confirm if this works in the next Classic version to include the secrets API
-local isCombatLogSecret = C_Secrets and C_Secrets.HasSecretRestrictions and C_Secrets.HasSecretRestrictions()
-
-local FILTER_MINE = bit.bor( -- Matches any "unit" under the player's control
-  COMBATLOG_OBJECT_AFFILIATION_MINE,
-  COMBATLOG_OBJECT_REACTION_FRIENDLY,
-  COMBATLOG_OBJECT_CONTROL_PLAYER
-)
-
+------------
+-- Events --
+------------
 local PLAYER_GUID = UnitGUID("player")
-
 
 -- Thanks to ErnestasBaltinas' HK Sounds for this method of tracking killing blows
 local TOTAL_KILLING_BLOWS_ACHIEVEMENT_ID = 1487
 
 local FirstLoad = true
-local RecentKills = setmetatable({}, { __mode = "kv" }) -- [GUID] = killTime (from GetTime())
 local PreviousKillingBlows = 0
 
 local function GetKillingBlows()
@@ -132,34 +115,36 @@ end
 local inInstancedPvP = false
 
 function frame:RegisterCombatLogEvents()
-  if isCombatLogSecret then
-    frame:RegisterEvent("PARTY_KILL")
-    frame:RegisterEvent("PLAYER_PVP_KILLS_CHANGED")
+  frame:RegisterEvent("PARTY_KILL")
+  frame:RegisterEvent("PLAYER_PVP_KILLS_CHANGED")
+end
+
+function frame:UnregisterCombatLogEvents()
+  frame:UnregisterEvent("PARTY_KILL")
+  frame:UnregisterEvent("PLAYER_PVP_KILLS_CHANGED")
+end
+
+function ModifyKillingBlowSetting(value)
+  if value then
+    frame:RegisterCombatLogEvents()
   else
-    frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+    frame:UnregisterCombatLogEvents()
   end
 end
 
-frame:RegisterEvent("ADDON_LOADED")
-frame:RegisterEvent("PLAYER_LOGIN")
-frame:RegisterCombatLogEvents()
-
 -- Instance
 frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+frame:RegisterEvent("PLAYER_LOGIN")
 
 frame:SetScript("OnEvent", function(self, event, ...)
   self[event](self, ...)
 end)
 
-function frame:ADDON_LOADED(name)
-  if name == addon then
-    self:UnregisterEvent("ADDON_LOADED")
-  end
-end
-
 function frame:PLAYER_LOGIN()
   PLAYER_GUID = UnitGUID("player")
-  PLAYER_NAME = GetUnitName("player", true)
+  if EUIDB.showKillingBlows then
+    frame:RegisterCombatLogEvents()
+  end
 end
 
 function frame:PLAYER_ENTERING_WORLD()
@@ -178,80 +163,42 @@ function frame:PLAYER_ENTERING_WORLD()
   end
 end
 
-if isCombatLogSecret then
-  function frame:PARTY_KILL(attackerGUID, targetGUID)
-    -- If we're in instanced PvP, the kill should be handled by PLAYER_PVP_KILLS_CHANGED
-    if inInstancedPvP then
-      return
-    end
-
-    -- If the player's total killing blows hasn't increased, return now
-    local killingBlowsIncreased = CheckKillingBlowsIncreased()
-    if not killingBlowsIncreased then
-      return
-    end
-
-    -- If attacker is secret or not the player or their pet, return now
-    if not canaccessvalue(attackerGUID) or (attackerGUID ~= PLAYER_GUID and UnitTokenFromGUID(attackerGUID) ~= "pet") then
-      return
-    end
-
-    -- If we're only recording player kills and the target is secret or not a player, return now
-    if PLAYER_KILLS_ONLY and (not canaccessvalue(targetGUID) or not targetGUID:find("^Player%-")) then
-      return
-    end
-
-    KillingBlow()
+function frame:PARTY_KILL(attackerGUID, targetGUID)
+  -- If we're in instanced PvP, the kill should be handled by PLAYER_PVP_KILLS_CHANGED
+  if inInstancedPvP then
+    return
   end
 
-  function frame:PLAYER_PVP_KILLS_CHANGED()
-    -- If we're not in instanced PvP, the kill should be handled by PARTY_KILL
-    if not inInstancedPvP then
-      return
-    end
-
-    -- If the player's total killing blows hasn't increased, return now
-    local killingBlowsIncreased = CheckKillingBlowsIncreased()
-    if not killingBlowsIncreased then
-      return
-    end
-
-    KillingBlow()
-  end
-else
-  local function HandleCLEU(timestamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags,
-                            destGUID,
-                            destName, destFlags, destRaidFlags, ...)
-    -- If there isn't a valid destination GUID
-    if not destGUID or destGUID == "" or
-        -- Or the source unit isn't the player or something controlled by the player (the latter check was suggested by Caellian)
-        (sourceGUID ~= PLAYER_GUID and band(sourceFlags, FILTER_MINE) ~= FILTER_MINE) or
-        -- Or we're only recording player kills and the destination unit isn't a player
-        (PLAYER_KILLS_ONLY and not destGUID:find("^Player%-"))
-    then
-      return
-    end -- Return now
-
-    local _, overkill
-    if event == "SWING_DAMAGE" then
-      _, overkill = ...
-    elseif event:find("_DAMAGE", 1, true) and not event:find("_DURABILITY_DAMAGE", 1, true) then
-      _, _, _, _, overkill = ...
-    end
-
-    local now, previousKill = GetTime(), RecentKills[destGUID]
-
-    -- Caellian has noted that PARTY_KILL doesn't always fire correctly and suggested checking the overkill argument
-    -- (which will be 0 [or maybe -1] for non-killing blows) to mitigate against this.
-    --
-    -- Because most kills will trigger PARTY_KILL and an overkill _DAMAGE, we need to keep a record of recent kill times
-    -- and only record kills of the same unit when they're at least 1 second apart.
-    if (event == "PARTY_KILL" or (overkill and overkill > 0)) and (not previousKill or now - previousKill > 1.0) then
-      KillingBlow()
-    end
+  -- If the player's total killing blows hasn't increased, return now
+  local killingBlowsIncreased = CheckKillingBlowsIncreased()
+  if not killingBlowsIncreased then
+    return
   end
 
-  function frame:COMBAT_LOG_EVENT_UNFILTERED()
-    HandleCLEU(CombatLogGetCurrentEventInfo())
+  -- If attacker is secret or not the player or their pet, return now
+  if not canaccessvalue(attackerGUID) or (attackerGUID ~= PLAYER_GUID and UnitTokenFromGUID(attackerGUID) ~= "pet") then
+    return
   end
+
+  -- If we're only recording player kills and the target is secret or not a player, return now
+  if PLAYER_KILLS_ONLY and (not canaccessvalue(targetGUID) or not targetGUID:find("^Player%-")) then
+    return
+  end
+
+  KillingBlow()
+end
+
+function frame:PLAYER_PVP_KILLS_CHANGED()
+  -- If we're not in instanced PvP, the kill should be handled by PARTY_KILL
+  if not inInstancedPvP then
+    return
+  end
+
+  -- If the player's total killing blows hasn't increased, return now
+  local killingBlowsIncreased = CheckKillingBlowsIncreased()
+  if not killingBlowsIncreased then
+    return
+  end
+
+  KillingBlow()
 end
