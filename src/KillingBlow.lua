@@ -1,15 +1,5 @@
 local KB_TEXTURE = TextureDir .. [[\misc\garouko.tga]]
 
--- You can add your own texture by placing a TGA image in the WoW\Interface\AddOns\KillingBlowImage directory and changing the string after
--- ALLIANCE_TEXTURE_PATH or HORDE_TEXTURE_PATH to match its name.
--- See the "filename" argument on the following page for details on the required texture file format:
--- http://www.wowpedia.org/API_Texture_SetTexture
---
--- GIMP (www.gimp.org) is a free image editing program that can easily convert almost any image format to TGA as well as let you create your own TGA images.
--- If you want your texture to be packaged with the AddOn, just leave a comment on Curse or WoWI with the image embedded or a direct link to download the image.
--- I can convert PNG and other formats to TGA if needed.
--- Make sure that you have ownership rights of any image that you contribute.
-
 -- The height/width of the texture. Using a height:width ratio different to that of the texture file may result in distortion.
 local TEXTURE_WIDTH         = 100
 local TEXTURE_HEIGHT        = 100
