@@ -15,6 +15,7 @@ AddonDir = [[Interface\AddOns\MalyxiUI]]
 MediaDir = AddonDir .. [[\media]]
 FontsDir = MediaDir .. [[\fonts]]
 TextureDir = MediaDir .. [[\textures]]
+SoundDir = MediaDir .. [[\sound]]
 
 EUI_FONTS = {
   Andika = FontsDir .. [[\Andika.ttf]],

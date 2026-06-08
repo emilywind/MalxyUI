@@ -311,7 +311,9 @@
         "GetPowerBarColor",
         "SettingsTooltip",
         "DefaultTooltipMixin",
-        "EditModeSystemSettingsDialog"
+        "EditModeSystemSettingsDialog",
+        "COMBATLOG_OBJECT_CONTROL_PLAYER",
+        "CombatLogGetCurrentEventInfo"
     ],
     "Lua.diagnostics.disable": [
         "cast-local-type",
