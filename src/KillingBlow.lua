@@ -50,6 +50,7 @@ local PLAYER_KILLS_ONLY     = true
 local frame = CreateFrame("Frame", "KillingBlow_EnhancedFrame", UIParent)
 frame:SetPoint(TEXTURE_POINT, UIParent, ANCHOR_POINT, OFFSET_X, OFFSET_Y)
 frame:SetFrameStrata("HIGH")
+frame:SetAlpha(0.6)
 frame:Hide()
 
 local texture = frame:CreateTexture()
