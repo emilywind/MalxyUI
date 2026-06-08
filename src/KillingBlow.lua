@@ -33,7 +33,7 @@ local DELAY_DURATION        = 2 -- The amount of time between the end of the sca
 local SOUND_PATH            = SoundDir .. [[\garou-fullko.ogg]]
 
 -- The channel to play the sound through. This can be "Master", "SFX", "Music" or "Ambience"
-local SOUND_CHANNEL         = "Master"
+local SOUND_CHANNEL         = "SFX"
 
 -- If true, the AddOn will only record killing blows on players. If false, it will record all killing blows.
 local PLAYER_KILLS_ONLY     = true
