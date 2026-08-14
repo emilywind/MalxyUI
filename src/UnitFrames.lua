@@ -327,6 +327,26 @@ local function UpdateUnitAuraContainers(frame, unit)
   end
 end
 
+local function RefreshFrameAuras(frame)
+  if not frame then
+    return
+  end
+
+  UpdateUnitAuraContainers(frame, frame.unit)
+
+  if frame.auraPools then
+    for aura, _ in frame.auraPools:EnumerateActive() do
+      UpdateFrameAuras(aura)
+
+      if aura.Border then
+        StyleTargetDebuff(aura)
+      else
+        StyleTargetBuff(aura)
+      end
+    end
+  end
+end
+
 OnPlayerLogin(function()
   TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:Hide()
   FocusFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor:Hide()
@@ -341,6 +361,14 @@ OnPlayerLogin(function()
   hooksecurefunc(FocusFrame, "OnEvent", function(self)
     UpdateUnitAuraContainers(self, self.unit or "focus")
   end)
+
+  if TargetFrame and type(TargetFrame.UpdateAuras) == "function" then
+    hooksecurefunc(TargetFrame, "UpdateAuras", RefreshFrameAuras)
+  end
+
+  if FocusFrame and type(FocusFrame.UpdateAuras) == "function" then
+    hooksecurefunc(FocusFrame, "UpdateAuras", RefreshFrameAuras)
+  end
 
   hooksecurefunc("PlayerFrame_UpdateStatus", function()
     if IsResting() then
