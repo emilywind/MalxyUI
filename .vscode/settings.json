@@ -313,7 +313,7 @@
         "DefaultTooltipMixin",
         "EditModeSystemSettingsDialog",
         "COMBATLOG_OBJECT_CONTROL_PLAYER",
-        "CombatLogGetCurrentEventInfo"
+        "AnchorUtil"
     ],
     "Lua.diagnostics.disable": [
         "cast-local-type",
