@@ -1,3 +1,5 @@
+MUI = {}
+
 SQUARE_TEXTURE = [[Interface\BUTTONS\WHITE8X8]]
 
 COLOR_DARK = CreateColorFromHexString('ff4d4d4d')
@@ -151,6 +153,8 @@ local function GetUnitClassColor(unit)
   if not unit or not UnitIsPlayer(unit) then return end
 
   local class = select(2, UnitClass(unit))
+
+  if issecretvalue(class) then return end
 
   local color = RAID_CLASS_COLORS[class]
   if not color then return end
