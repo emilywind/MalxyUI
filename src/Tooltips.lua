@@ -116,15 +116,13 @@ function InitTooltips()
 
 		local specNames = LibFroznFunctions:CreatePushArray()
 
-		if (hideSpecializationAndClassText) then
-			if not issecretvalue(unitInfo.classID) then
-				local specCount = C_SpecializationInfo.GetNumSpecializationsForClassID(unitInfo.classID)
+		if (hideSpecializationAndClassText and not issecretvalue(unitInfo.classID)) then
+			local specCount = C_SpecializationInfo.GetNumSpecializationsForClassID(unitInfo.classID)
 
-				for i = 1, specCount do
-					local _, specName = GetSpecializationInfoForClassID(unitInfo.classID, i, unitInfo.sex)
+			for i = 1, specCount do
+				local _, specName = GetSpecializationInfoForClassID(unitInfo.classID, i, unitInfo.sex)
 
-					specNames:Push(specName)
-				end
+				specNames:Push(specName)
 			end
 		end
 
